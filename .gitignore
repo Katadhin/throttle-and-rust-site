@@ -1,0 +1,13 @@
+assets/staging/
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*~
+.env
+.env.local
+node_modules/
+dist/
+build/
+.cache/
+*.log

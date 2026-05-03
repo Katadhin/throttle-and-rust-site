@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Throttle &amp; Rust</title>
+<meta name="description" content="Caleb &amp; Sarah Whitaker. Happy Valley, North Carolina." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f3eddf;
+    --bg-deep: #ebe3d1;
+    --ink: #1c1f26;
+    --ink-soft: #4a4d55;
+    --ink-faint: #8a8c92;
+    --rust: #a23b1f;
+    --max-width: 980px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 400;
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: 0.06;
+    mix-blend-mode: multiply;
+  }
+  .topbar {
+    position: relative;
+    z-index: 10;
+    padding: 22px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .topbar .place, .topbar .year { font-family: 'Special Elite', monospace; }
+  .hero {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 32px 32px 0;
+    position: relative;
+    z-index: 2;
+  }
+  .logo-block { text-align: center; margin-bottom: 64px; }
+  .logo-mark {
+    width: 240px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    filter: drop-shadow(0 2px 8px rgba(28, 31, 38, 0.14));
+  }
+  .pull {
+    max-width: 720px;
+    margin: 0 auto 56px;
+    padding: 0 16px;
+    text-align: center;
+  }
+  .pull-line {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(24px, 4vw, 38px);
+    line-height: 1.35;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .pull-line .accent { color: var(--rust); }
+  .pull-attr {
+    margin-top: 24px;
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .photo {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--ink);
+    position: relative;
+    margin-bottom: 8px;
+  }
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .photo-caption {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-align: right;
+    padding-right: 4px;
+  }
+  .note {
+    max-width: 560px;
+    margin: 80px auto 0;
+    padding: 0 20px;
+    text-align: center;
+  }
+  .note-body {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .note-body .em { color: var(--rust); font-style: italic; }
+  .note-attr {
+    margin-top: 18px;
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .about {
+    max-width: 580px;
+    margin: 88px auto 0;
+    padding: 0 20px;
+  }
+  .about-eyebrow {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rust);
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .about-eyebrow::before, .about-eyebrow::after {
+    content: "";
+    display: inline-block;
+    width: 28px;
+    height: 1px;
+    background: var(--rust);
+    vertical-align: middle;
+    margin: 0 14px;
+  }
+  .about p {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 22px;
+  }
+  .about p:last-of-type { margin-bottom: 0; }
+  .about-signoff {
+    margin-top: 36px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink);
+    text-align: right;
+  }
+  .about-signoff::before { content: "— "; color: var(--rust); font-style: normal; }
+  .contact {
+    max-width: 580px;
+    margin: 96px auto 0;
+    padding: 0 20px;
+    text-align: center;
+  }
+  .contact-line {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+  .contact a {
+    color: var(--rust);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rust);
+  }
+  .contact a:hover { color: var(--ink); border-bottom-color: var(--ink); }
+  footer {
+    margin-top: 120px;
+    padding: 36px 32px 32px;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    border-top: 1px solid var(--ink);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-left {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .footer-right {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+  }
+  .credit { font-style: italic; }
+  @media (max-width: 720px) {
+    .topbar { padding: 18px 20px; font-size: 10px; }
+    .hero { padding: 24px 20px 0; }
+    .logo-mark { width: 180px; }
+    .pull { margin-bottom: 40px; }
+    .pull-line { font-size: 22px; }
+    .about { margin-top: 64px; }
+    .about p { font-size: 15px; }
+    .note { margin-top: 56px; }
+    .note-body { font-size: 17px; }
+    .contact { margin-top: 72px; }
+    footer { padding: 28px 20px; }
+    .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+  }
+  .fade-in {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  }
+  .fade-in.d1 { animation-delay: 0.1s; }
+  .fade-in.d2 { animation-delay: 0.3s; }
+  .fade-in.d3 { animation-delay: 0.55s; }
+  .fade-in.d4 { animation-delay: 0.8s; }
+  @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<div class="topbar fade-in d1">
+  <span class="place">Happy Valley, N.C.</span>
+  <span class="year">Est. 2026</span>
+</div>
+
+<section class="hero">
+
+  <div class="logo-block fade-in d2">
+    <img class="logo-mark" src="images/logo.png" alt="Throttle and Rust" />
+  </div>
+
+  <div class="pull fade-in d3">
+    <div class="pull-line">
+      Old trucks, slow meat, and the race on the radio. <span class="accent">That's pretty much it.</span>
+    </div>
+    <div class="pull-attr">Caleb &amp; Sarah Whitaker</div>
+  </div>
+
+  <div class="photo fade-in d4">
+    <img src="images/hero-property.png" alt="The property at golden hour" />
+  </div>
+  <div class="photo-caption">Late afternoon, the valley.</div>
+
+  <div class="note">
+    <div class="note-body">
+      I kept telling Caleb we should write some of this down. The
+      Saturdays, the people, the things that get fixed and the things
+      that don't. So <span class="em">this is that.</span> A small place
+      to put the photos and a few sentences about what was happening
+      when we took them. Megan, my friend from school, put this
+      together for us one weekend. She has more taste than the two
+      of us combined.
+    </div>
+    <div class="note-attr">— Sarah</div>
+  </div>
+
+  <div class="about">
+    <div class="about-eyebrow">About us</div>
+    <p>
+      I'm Caleb. My wife Sarah and I started this little corner of the
+      internet because we kept taking pictures of stuff in the driveway
+      and didn't really have anywhere to put them.
+    </p>
+    <p>
+      I run a landscaping company. Spent a lot of years on crews
+      working high-end properties — a couple NASCAR guys' places out
+      toward Mooresville, a few others — before I went out on my own.
+      Sarah went to App State for teaching and now stays home with
+      our kids. Her dad raced short-track for years up at Wilkesboro
+      and Hickory, and the radio in the garage was his father's
+      before that. So the race on Saturday isn't a new thing for us.
+      It's just always been there.
+    </p>
+    <p>
+      Most weekends I'm under a hood and Sarah's got the smoker
+      going. Friends drift in and out. Crank finds shade. The duck
+      gets into something he shouldn't. That's about the size of it.
+    </p>
+    <div class="about-signoff">— Caleb &amp; Sarah</div>
+  </div>
+
+  <div class="contact">
+    <div class="contact-line">If you need us, write Sarah.</div>
+    <a href="mailto:sarah@throttleandrust.com">sarah@throttleandrust.com</a>
+  </div>
+
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">Throttle &amp; Rust</div>
+    <div class="footer-right">
+      <span class="credit">site by the Meg</span> · 2026
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
