@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Journal — Throttle &amp; Rust</title>
+<meta name="description" content="Notes from the driveway. Caleb &amp; Sarah Whitaker." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f3eddf;
+    --bg-deep: #ebe3d1;
+    --ink: #1c1f26;
+    --ink-soft: #4a4d55;
+    --ink-faint: #8a8c92;
+    --rust: #a23b1f;
+    --max-width: 720px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 400;
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: 0.06;
+    mix-blend-mode: multiply;
+  }
+  .topbar {
+    position: relative;
+    z-index: 10;
+    padding: 22px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 980px;
+    margin: 0 auto;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .topbar .place, .topbar .year { font-family: 'Special Elite', monospace; }
+  .topbar a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .topbar a:hover { border-bottom-color: var(--ink-soft); }
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 32px 32px 0;
+    position: relative;
+    z-index: 2;
+  }
+  .header {
+    text-align: center;
+    margin: 24px 0 64px;
+  }
+  .header-eyebrow {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 12px;
+  }
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(32px, 5vw, 44px);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .header-sub {
+    margin-top: 18px;
+    font-size: 14px;
+    color: var(--ink-soft);
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+  }
+  .entries { margin-top: 32px; }
+  .entry {
+    padding: 32px 0;
+    border-bottom: 1px solid rgba(28, 31, 38, 0.15);
+  }
+  .entry:last-child { border-bottom: none; }
+  .entry-date {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 10px;
+  }
+  .entry-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+  .entry-title a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+  .entry-title a:hover { color: var(--rust); border-bottom-color: var(--rust); }
+  .entry-blurb {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  .entry-meta {
+    font-family: 'Special Elite', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  footer {
+    margin-top: 120px;
+    padding: 36px 32px 32px;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    border-top: 1px solid var(--ink);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-left {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .footer-left a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .footer-left a:hover { border-bottom-color: var(--ink); }
+  .footer-right {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+  }
+  .credit { font-style: italic; }
+  @media (max-width: 720px) {
+    .topbar { padding: 18px 20px; font-size: 10px; }
+    .container { padding: 24px 20px 0; }
+    .header { margin: 16px 0 48px; }
+    .entry { padding: 24px 0; }
+    .entry-title { font-size: 20px; }
+    .entry-blurb { font-size: 14px; }
+    footer { padding: 28px 20px; }
+    .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="place"><a href="/">Throttle &amp; Rust</a></span>
+  <span class="year">Happy Valley, N.C.</span>
+</div>
+
+<div class="container">
+
+  <div class="header">
+    <div class="header-eyebrow">The Journal</div>
+    <h1 class="header-title">Notes from the driveway.</h1>
+    <div class="header-sub">Saturdays, mostly. — Caleb &amp; Sarah</div>
+  </div>
+
+  <div class="entries">
+
+    <article class="entry">
+      <div class="entry-date">May 6, 2026</div>
+      <h2 class="entry-title">
+        <a href="/journal/skipping-the-glen/">Skipping the Glen</a>
+      </h2>
+      <p class="entry-blurb">
+        The race is at Watkins Glen this weekend and we're not going.
+        We talked about it for two weeks, looked at the dog, and that
+        was pretty much the conversation.
+      </p>
+      <div class="entry-meta">— Caleb, with Sarah</div>
+    </article>
+
+    <article class="entry">
+      <div class="entry-date">May 5, 2026</div>
+      <h2 class="entry-title">
+        <a href="/journal/the-year-we-went/">The Year We Went</a>
+      </h2>
+      <p class="entry-blurb">
+        Ten years ago we drove up to the Glen in this truck. It was
+        nine hours. The smoker was in the bed because Caleb insisted.
+        We slept in the cab Friday night because the campground was full.
+      </p>
+      <div class="entry-meta">— Sarah</div>
+    </article>
+
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left"><a href="/">Throttle &amp; Rust</a></div>
+    <div class="footer-right">
+      <span class="credit">site by the Meg</span> · 2026
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

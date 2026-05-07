@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Skipping the Glen — Throttle &amp; Rust</title>
+<meta name="description" content="The race is at Watkins Glen this weekend and we're not going." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f3eddf;
+    --bg-deep: #ebe3d1;
+    --ink: #1c1f26;
+    --ink-soft: #4a4d55;
+    --ink-faint: #8a8c92;
+    --rust: #a23b1f;
+    --max-width: 660px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 400;
+    line-height: 1.75;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: 0.06;
+    mix-blend-mode: multiply;
+  }
+  .topbar {
+    position: relative;
+    z-index: 10;
+    padding: 22px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 980px;
+    margin: 0 auto;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .topbar .place, .topbar .year { font-family: 'Special Elite', monospace; }
+  .topbar a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .topbar a:hover { border-bottom-color: var(--ink-soft); }
+  article {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 32px 24px 0;
+    position: relative;
+    z-index: 2;
+  }
+  .breadcrumb {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 24px 0 48px;
+    text-align: center;
+  }
+  .breadcrumb a {
+    color: var(--ink-faint);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .breadcrumb a:hover { color: var(--rust); border-bottom-color: var(--rust); }
+  .post-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .post-date {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 16px;
+  }
+  .post-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .post-byline {
+    margin-top: 18px;
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .post-body p {
+    font-size: 16px;
+    line-height: 1.85;
+    margin-bottom: 22px;
+  }
+  .post-body em { font-style: italic; }
+  .post-body strong { font-weight: 500; }
+  .divider {
+    text-align: center;
+    margin: 48px 0;
+    color: var(--ink-faint);
+    font-family: 'Special Elite', monospace;
+    letter-spacing: 0.5em;
+  }
+  .divider::before { content: "* * *"; }
+  .signoff {
+    margin-top: 48px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink);
+    text-align: right;
+  }
+  .signoff::before { content: "— "; color: var(--rust); font-style: normal; }
+  .recipe {
+    margin-top: 64px;
+    padding: 36px 32px;
+    background: var(--bg-deep);
+    border: 1px solid rgba(28, 31, 38, 0.15);
+  }
+  .recipe-eyebrow {
+    font-family: 'Special Elite', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rust);
+    text-align: center;
+    margin-bottom: 14px;
+  }
+  .recipe-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .recipe-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+  .ingredients {
+    list-style: none;
+    margin-bottom: 28px;
+    padding-left: 0;
+  }
+  .ingredients li {
+    font-size: 14px;
+    line-height: 1.9;
+    padding-left: 18px;
+    position: relative;
+  }
+  .ingredients li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--rust);
+  }
+  .ingredients .secret {
+    font-style: italic;
+    color: var(--ink-soft);
+  }
+  .recipe-method p {
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .sarah-note {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(28, 31, 38, 0.15);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-soft);
+    text-align: center;
+  }
+  footer {
+    margin-top: 120px;
+    padding: 36px 32px 32px;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    border-top: 1px solid var(--ink);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-left {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .footer-left a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .footer-left a:hover { border-bottom-color: var(--ink); }
+  .footer-right {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+  }
+  .credit { font-style: italic; }
+  @media (max-width: 720px) {
+    .topbar { padding: 18px 20px; font-size: 10px; }
+    article { padding: 24px 20px 0; }
+    .post-title { font-size: 28px; }
+    .post-body p { font-size: 15px; }
+    .recipe { padding: 28px 22px; }
+    .recipe-title { font-size: 22px; }
+    footer { padding: 28px 20px; }
+    .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="place"><a href="/">Throttle &amp; Rust</a></span>
+  <span class="year">Happy Valley, N.C.</span>
+</div>
+
+<article>
+
+  <div class="breadcrumb">
+    <a href="/journal/">← The Journal</a>
+  </div>
+
+  <header class="post-header">
+    <div class="post-date">May 6, 2026</div>
+    <h1 class="post-title">Skipping the Glen</h1>
+    <div class="post-byline">Caleb, with Sarah</div>
+  </header>
+
+  <div class="post-body">
+
+    <p>Race is at Watkins Glen this weekend and we're not going.</p>
+
+    <p>We talked about it for two weeks. Sarah pulled up the Airbnb she always books, the one with the kitchen big enough to actually cook in, and we sat there at the table looking at it. Then we looked at Crank, who was asleep under it, and that was pretty much the conversation.</p>
+
+    <p>He's eight. He's not sick. He's just turned into the kind of dog who follows you from room to room and looks personally insulted when you close a door. The thought of dropping him at a kennel for four nights — concrete floor, strangers, a chain-link run — neither of us could get there. He's never been boarded. Starting now, at this age, on a weekend we don't strictly need to be gone for, didn't sit right.</p>
+
+    <p>So we're staying.</p>
+
+    <p>The harder part is that this would've been the weekend Ricky's chili comes out.</p>
+
+    <div class="divider"></div>
+
+    <p>Sarah's dad has a chili he used to make in the pits. Not at home — at the track. Cast iron pot on a propane burner, set up next to the hauler, lid on, ignored for most of the day while he worked on the car. He'd hand bowls out to anyone who came by. Other drivers, their crews, the guy from the tire vendor. By the last race of the season people would walk past his stall just to check.</p>
+
+    <p>He stopped racing in '95 and the chili mostly stopped with it. Started making it again a few years back when Sarah talked him into it. Now it's a race-weekend thing — wherever we go, the pot goes. Brisket trim, three peppers, dark beer, the kind of long simmering that doesn't really need watching but you watch anyway because that's the point.</p>
+
+    <p>We were going to make it Saturday. Sarah already had the brisket trim in the freezer.</p>
+
+    <p>So we're making it here instead. Fire pit, same pot, Ricky and Ella Mae driving over from Wilkesboro Friday afternoon. Wes said he'd come. The Meg's already in. Hank will turn up because Hank always turns up.</p>
+
+    <div class="divider"></div>
+
+    <p>Sarah will probably have MRN on out by the smoker. She'll know who's running where without looking at the standings. Ricky will sit in his folding chair and watch the trees more than the radio. Ella Mae will read between cautions, the way she always has. Crank will be asleep in the gravel within ten feet of whoever's cooking.</p>
+
+    <p>It's not the Glen. But Ricky's chili is going to be on the fire, and the dog is going to be home, and that's the trade we made.</p>
+
+    <p>We'll catch the next one.</p>
+
+    <div class="signoff">Caleb</div>
+
+  </div>
+
+  <div class="recipe">
+    <div class="recipe-eyebrow">From the pit stall, mostly</div>
+    <h2 class="recipe-title">Ricky's Chili</h2>
+    <p class="recipe-sub">He won't give up the last ingredient. I've asked. Sarah's asked. Wes asked once and Ricky just looked at him. So this is the recipe minus one thing. It's still good. It's just not <em>his.</em></p>
+
+    <ul class="ingredients">
+      <li>3 lbs brisket trim, cubed rough — don't be neat about it</li>
+      <li>1 yellow onion, diced</li>
+      <li>6 cloves garlic, smashed</li>
+      <li>2 poblanos, charred and chopped</li>
+      <li>2 anaheims, same</li>
+      <li>1 jalapeño, seeded if you're a coward</li>
+      <li>1 can fire-roasted tomatoes</li>
+      <li>1 can tomato paste</li>
+      <li>1 bottle dark beer (whatever's cold)</li>
+      <li>2 cups beef stock</li>
+      <li>2 tbsp chili powder</li>
+      <li>1 tbsp cumin</li>
+      <li>1 tbsp smoked paprika</li>
+      <li>1 tsp Mexican oregano</li>
+      <li>Salt, pepper, to taste — be generous</li>
+      <li>2 cans pinto beans, drained (fight us)</li>
+      <li class="secret">[the thing Ricky won't tell us]</li>
+    </ul>
+
+    <div class="recipe-method">
+      <p>Brown the brisket in batches in the cast iron. Don't crowd it. Pull it out, sweat the onion and garlic in the fond, add the peppers, let them go a few minutes. Tomato paste in, stir it around until it darkens. Deglaze with the beer. Everything else in. Brisket back. Stock to cover.</p>
+      <p>Lid on, low fire, three to four hours. Stir when you walk by. Beans in the last thirty minutes.</p>
+      <p>If it tastes like it's missing something, that's because it is. Call Ricky.</p>
+    </div>
+
+    <div class="sarah-note">The chili's better when he makes it. Don't let him tell you otherwise. — S</div>
+  </div>
+
+</article>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left"><a href="/">Throttle &amp; Rust</a></div>
+    <div class="footer-right">
+      <span class="credit">site by the Meg</span> · 2026
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
