@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Shirt — Throttle &amp; Rust</title>
+<meta name="description" content="Pulled the shirt out this morning. Dad's from '88. I've worn it to every race weekend since I was sixteen." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f3eddf;
+    --bg-deep: #ebe3d1;
+    --ink: #1c1f26;
+    --ink-soft: #4a4d55;
+    --ink-faint: #8a8c92;
+    --rust: #a23b1f;
+    --max-width: 660px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 400;
+    line-height: 1.75;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: 0.06;
+    mix-blend-mode: multiply;
+  }
+  .topbar {
+    position: relative;
+    z-index: 10;
+    padding: 22px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 980px;
+    margin: 0 auto;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .topbar .place, .topbar .year { font-family: 'Special Elite', monospace; }
+  .topbar a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .topbar a:hover { border-bottom-color: var(--ink-soft); }
+  article {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 32px 24px 0;
+    position: relative;
+    z-index: 2;
+  }
+  .breadcrumb {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 24px 0 48px;
+    text-align: center;
+  }
+  .breadcrumb a {
+    color: var(--ink-faint);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .breadcrumb a:hover { color: var(--rust); border-bottom-color: var(--rust); }
+  .post-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .post-date {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 16px;
+  }
+  .post-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .post-byline {
+    margin-top: 18px;
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .post-body p {
+    font-size: 16px;
+    line-height: 1.85;
+    margin-bottom: 22px;
+  }
+  .post-body em { font-style: italic; }
+  .post-body strong { font-weight: 500; }
+  .divider {
+    text-align: center;
+    margin: 48px 0;
+    color: var(--ink-faint);
+    font-family: 'Special Elite', monospace;
+    letter-spacing: 0.5em;
+  }
+  .divider::before { content: "* * *"; }
+  .signoff {
+    margin-top: 48px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink);
+    text-align: right;
+  }
+  .signoff::before { content: "— "; color: var(--rust); font-style: normal; }
+  footer {
+    margin-top: 120px;
+    padding: 36px 32px 32px;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    border-top: 1px solid var(--ink);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-left {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .footer-left a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .footer-left a:hover { border-bottom-color: var(--ink); }
+  .footer-right {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+  }
+  .credit { font-style: italic; }
+  @media (max-width: 720px) {
+    .topbar { padding: 18px 20px; font-size: 10px; }
+    article { padding: 24px 20px 0; }
+    .post-title { font-size: 28px; }
+    .post-body p { font-size: 15px; }
+    footer { padding: 28px 20px; }
+    .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="place"><a href="../../">Throttle &amp; Rust</a></span>
+  <span class="year">Happy Valley, N.C.</span>
+</div>
+
+<article>
+
+  <div class="breadcrumb">
+    <a href="../">← The Journal</a>
+  </div>
+
+  <header class="post-header">
+    <div class="post-date">May 21, 2026</div>
+    <h1 class="post-title">The Shirt</h1>
+    <div class="post-byline">Sarah</div>
+  </header>
+
+  <div class="post-body">
+
+    <p>Pulled the shirt out this morning.</p>
+
+    <p>It's been folded in the same drawer since the last race weekend, and the one before that, and the one before that. Faded gray. <em>HAMMERS Racing</em> across the chest in red that used to be redder. Dad's from '88.</p>
+
+    <p>He raced for them maybe four times. Not a full season. Not even close. The team folded inside a year. He kept the shirt because he kept everything from that part of his life — the helmet, the gloves, two boxes of trophies that aren't really trophies, three plaques from sponsors that don't exist anymore. The shirt's the only thing that ever left his closet.</p>
+
+    <p>I started wearing it in high school. He didn't say anything about it. Mom did once — said I'd ruin it. I have not ruined it. I've worn it to every race weekend since I was sixteen.</p>
+
+    <p>It doesn't quite fit anymore. Two kids and twenty years will do that to a shirt and a person. I wear it anyway. I wear it under a flannel half the time. It's the wearing that matters.</p>
+
+    <div class="divider"></div>
+
+    <p>Dad called last night. He wanted to know if we needed anything from the store before he and Mom drive over Saturday. I said no. He asked again. I said no, Dad, we have everything. He said <em>all right then</em>, in the way he says it that means he'll bring something anyway.</p>
+
+    <p>He'll bring something anyway. He always does.</p>
+
+    <p>He asked if I was wearing the shirt. He asks every race weekend. I said yes. He said <em>good</em>, and we hung up.</p>
+
+    <p>That's the conversation, mostly. It's been the conversation for thirty years.</p>
+
+    <div class="divider"></div>
+
+    <p>The smoker's coming up to temp out back. Pork shoulder's been salted since this morning. I'll get it on tonight, low heat, and it'll be ready by Saturday afternoon for sandwiches before the race even starts. The chili's Sunday — that's Dad's pot, not mine.</p>
+
+    <p>Caleb's in the garage with the carburetor in pieces on a towel. He'll have it back together by Sunday morning. He says by Saturday. He's lying. He knows he's lying. I know he's lying. We've been through this.</p>
+
+    <p>Crank's asleep on the porch. The duck is somewhere he shouldn't be. The radio in the garage is on low, working through Friday practice down at Charlotte. Caleb keeps stopping what he's doing to listen when a name comes up he recognizes.</p>
+
+    <p>It's quiet, mostly. The kind of quiet that has a Sunday in it.</p>
+
+    <p>I'll wear the shirt Saturday morning and again Sunday. I'll wash it Monday. I'll fold it back into the drawer.</p>
+
+    <p>That's the thing about ritual. It only counts if you do it.</p>
+
+    <div class="signoff">S</div>
+
+  </div>
+
+</article>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left"><a href="../../">Throttle &amp; Rust</a></div>
+    <div class="footer-right">
+      <span class="credit">site by the Meg</span> · 2026
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

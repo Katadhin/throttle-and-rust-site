@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Six Hundred Miles — Throttle &amp; Rust</title>
+<meta name="description" content="Race is at Charlotte this weekend. Coca-Cola 600. The long one. We're not going." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f3eddf;
+    --bg-deep: #ebe3d1;
+    --ink: #1c1f26;
+    --ink-soft: #4a4d55;
+    --ink-faint: #8a8c92;
+    --rust: #a23b1f;
+    --max-width: 660px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 400;
+    line-height: 1.75;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: 0.06;
+    mix-blend-mode: multiply;
+  }
+  .topbar {
+    position: relative;
+    z-index: 10;
+    padding: 22px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 980px;
+    margin: 0 auto;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .topbar .place, .topbar .year { font-family: 'Special Elite', monospace; }
+  .topbar a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .topbar a:hover { border-bottom-color: var(--ink-soft); }
+  article {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 32px 24px 0;
+    position: relative;
+    z-index: 2;
+  }
+  .breadcrumb {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 24px 0 48px;
+    text-align: center;
+  }
+  .breadcrumb a {
+    color: var(--ink-faint);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .breadcrumb a:hover { color: var(--rust); border-bottom-color: var(--rust); }
+  .post-header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+  .post-date {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 16px;
+  }
+  .post-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(32px, 5vw, 48px);
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .post-byline {
+    margin-top: 18px;
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .post-body p {
+    font-size: 16px;
+    line-height: 1.85;
+    margin-bottom: 22px;
+  }
+  .post-body em { font-style: italic; }
+  .post-body strong { font-weight: 500; }
+  .divider {
+    text-align: center;
+    margin: 48px 0;
+    color: var(--ink-faint);
+    font-family: 'Special Elite', monospace;
+    letter-spacing: 0.5em;
+  }
+  .divider::before { content: "* * *"; }
+  .signoff {
+    margin-top: 48px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink);
+    text-align: right;
+  }
+  .signoff::before { content: "— "; color: var(--rust); font-style: normal; }
+  .signoff-sub {
+    margin-top: 8px;
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    text-align: right;
+  }
+  footer {
+    margin-top: 120px;
+    padding: 36px 32px 32px;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    border-top: 1px solid var(--ink);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-left {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .footer-left a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .footer-left a:hover { border-bottom-color: var(--ink); }
+  .footer-right {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+  }
+  .credit { font-style: italic; }
+  @media (max-width: 720px) {
+    .topbar { padding: 18px 20px; font-size: 10px; }
+    article { padding: 24px 20px 0; }
+    .post-title { font-size: 28px; }
+    .post-body p { font-size: 15px; }
+    footer { padding: 28px 20px; }
+    .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="place"><a href="../../">Throttle &amp; Rust</a></span>
+  <span class="year">Happy Valley, N.C.</span>
+</div>
+
+<article>
+
+  <div class="breadcrumb">
+    <a href="../">← The Journal</a>
+  </div>
+
+  <header class="post-header">
+    <div class="post-date">May 19, 2026</div>
+    <h1 class="post-title">Six Hundred Miles</h1>
+    <div class="post-byline">Caleb</div>
+  </header>
+
+  <div class="post-body">
+
+    <p>Race is at Charlotte this weekend. Coca-Cola 600. The long one.</p>
+
+    <p>We're not going. We weren't going to go. Charlotte's two hours south and the speedway draws a hundred thousand people and the only thing worse than that traffic on a Sunday night is that traffic on a Sunday night in the rain. Forecast is leaning that way. Sarah pulled it up this morning and we both looked at it and that was the conversation.</p>
+
+    <p>So the property's getting set up for the long one instead.</p>
+
+    <div class="divider"></div>
+
+    <p>Sarah's got the smoker scrubbed down. She'll start it Friday night — pork shoulder, low and slow, the way her dad taught her before he taught me anything. She doesn't trust me with the smoker and she's right not to. I've ruined two of them. The current one's hers and I'm not allowed near the vents.</p>
+
+    <p>I've got the truck pulled out into the driveway. Carburetor's been off for two weeks. I'd planned to have it back together by now and I don't. That's fine. Saturday afternoon, if it's not raining, I'll be under it with the race on. If it is raining I'll be in the garage with the door rolled up and the race on. Either way the race is on.</p>
+
+    <p>Ricky and Ella Mae are coming Saturday morning. They'll stay through Sunday. Ricky's bringing the pot — chili Sunday during the race, because six hundred miles is enough time to cook chili from scratch and then some. Ella Mae's bringing a book and a folding chair and the same look she's had at every race for forty years. She doesn't like it. She's still going to be there.</p>
+
+    <div class="divider"></div>
+
+    <p>The Meg drove down to Cornelius last weekend.</p>
+
+    <p>She came back with a six-pack from that Waltrip place — Eleven Lakes, the one tucked into the business park nobody can find on the first try. She brought it over Sunday night. The Big One, the double lager. We had two each on the porch and then I had a third because Sarah said I shouldn't and that's the kind of thing that just decides itself.</p>
+
+    <p>The six-pack's in the cooler for this weekend. Four left. They'll go before Sunday's halfway over.</p>
+
+    <p>Sarah said something about driving down there sometime. Not this weekend. Sometime. I said sure.</p>
+
+    <p>The Meg said it was worth the trip. I trust the Meg on this kind of thing. She has more taste than I do and she'll tell you so.</p>
+
+    <div class="divider"></div>
+
+    <p>Wes is coming Saturday. Hank will turn up Sunday because Hank always turns up Sunday. Mara might drive over from Boone if the weather holds. Crank is going to be asleep in the gravel within ten feet of whoever's cooking, and the duck is going to get into something he shouldn't, and the race is going to be on the radio in the garage the whole time.</p>
+
+    <p>Six hundred miles is a long time to sit anywhere. It's the right amount of time to be home.</p>
+
+    <p>We'll catch the next one.</p>
+
+    <div class="signoff">Caleb</div>
+    <div class="signoff-sub">From the pit stall, mostly</div>
+
+  </div>
+
+</article>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left"><a href="../../">Throttle &amp; Rust</a></div>
+    <div class="footer-right">
+      <span class="credit">site by the Meg</span> · 2026
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
