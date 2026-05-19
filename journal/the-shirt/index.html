@@ -86,7 +86,7 @@
   .breadcrumb a:hover { color: var(--rust); border-bottom-color: var(--rust); }
   .post-header {
     text-align: center;
-    margin-bottom: 56px;
+    margin-bottom: 40px;
   }
   .post-date {
     font-family: 'Special Elite', monospace;
@@ -111,6 +111,23 @@
     letter-spacing: 0.25em;
     text-transform: uppercase;
     color: var(--ink-faint);
+  }
+  .post-hero {
+    margin: 0 auto 56px;
+    max-width: 100%;
+  }
+  .post-hero img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .post-hero figcaption {
+    margin-top: 14px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-align: center;
   }
   .post-body p {
     font-size: 16px;
@@ -177,6 +194,7 @@
     article { padding: 24px 20px 0; }
     .post-title { font-size: 28px; }
     .post-body p { font-size: 15px; }
+    .post-hero { margin-bottom: 40px; }
     footer { padding: 28px 20px; }
     .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
   }
@@ -200,6 +218,11 @@
     <h1 class="post-title">The Shirt</h1>
     <div class="post-byline">Sarah</div>
   </header>
+
+  <figure class="post-hero">
+    <img src="../../images/the-shirt-hero.png" alt="A faded gray Hammers Racing t-shirt folded on the seat of a beat-up wooden kitchen chair, morning light through the window, Crank dozing on the floor." />
+    <figcaption>Pulled out of the drawer. Set on the chair. Waiting.</figcaption>
+  </figure>
 
   <div class="post-body">
 
