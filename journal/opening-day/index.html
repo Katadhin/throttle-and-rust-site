@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Opening Day | Throttle & Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Opening Day" />
+  <meta property="og:description" content="My cousin Wade's been texting me pictures of a grocery store all afternoon. Kannapolis gets its Lowes Foods tomorrow. Then I saw what he found in the beer cooler." />
+  <meta property="og:image" content="https://throttleandrust.com/images/opening-day-hero.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/opening-day" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 60%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-figure {
+      margin: 40px 0;
+    }
+
+    .post-figure img {
+      width: 100%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-figure figcaption {
+      margin-top: 12px;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      color: var(--charcoal);
+      opacity: 0.55;
+      font-style: italic;
+    }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/opening-day-hero.jpg"
+    alt="The new Lowes Foods in Kannapolis the day before it opened — flags out front, parking lot still empty."
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Caleb</span>
+      <span class="divider"></span>
+      <span class="location">Happy Valley, NC</span>
+    </div>
+
+    <h1>Opening Day</h1>
+
+    <div class="post-body">
+
+      <p>My cousin Wade called this afternoon, then texted, then called again. Kannapolis is getting a Lowes Foods. Opens tomorrow morning. From the way he was carrying on you'd have thought somebody was cutting a ribbon on a speedway.</p>
+
+      <p>He sent pictures. A whole roll of them. The building first. Brick front, green roof, flags out by the road, the lot still black and clean before anybody'd had a chance to track it up. There's a truck parked in the corner of the frame that could pass for mine, if mine were ten years newer and had never worked a day.</p>
+
+      <p>Then the inside. Watermelons stacked in a bin about the size of a kiddie pool, three ninety-nine apiece, under a sign that said Pick &amp; Prep like the produce came with its own pit crew. Wade has never cooked a vegetable in his life. He sent the picture anyway.</p>
+
+      <p>He saved the good one for last.</p>
+
+      <p>A beer cooler, door after door of it. Four rows down, sitting on a Kannapolis shelf like it had always been there, The Big One. The double lager. Same one the Meg hauled back from that Waltrip place over in Cornelius, the one we drank on the porch until Sarah took the rest away from me.</p>
+
+      <figure class="post-figure">
+        <img src="../../images/opening-day-beer.jpg" alt="The beer cooler at the new Kannapolis Lowes Foods, rows of craft cans behind the glass." />
+        <figcaption>Wade's photo. Four rows down, if you know what you're looking for.</figcaption>
+      </figure>
+
+      <p>Didn't know it had gotten that far. Last I checked you had to drive to the brewery to put your hands on it. Now my cousin can walk in off the street and set a six-pack in the cart next to his watermelon.</p>
+
+      <p>Sarah read it over my shoulder. Said her dad would have something to say about a beer called The Big One showing up for sale in Earnhardt's hometown. She's probably right. He'd say it with a straight face, too.</p>
+
+      <p>Wade wants us to come down for the opening. Hour and a half south, on a Thursday, for a grocery store. Told him we'd get there. Sometime. Not tomorrow.</p>
+
+      <p>He's going to be first in line either way. For a grocery store. Don't think I've ever been prouder of him.</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Happy Valley, NC &nbsp;·&nbsp; Cold Ones &amp; Tall Tales</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+  </footer>
+
+</body>
+</html>
