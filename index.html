@@ -216,6 +216,20 @@
     border-bottom: 1px solid var(--rust);
   }
   .contact a:hover { color: var(--ink); border-bottom-color: var(--ink); }
+  .contact-social {
+    margin-top: 18px;
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .contact-social a {
+    color: var(--rust);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .contact-social a:hover { border-bottom-color: var(--rust); }
   footer {
     margin-top: 120px;
     padding: 36px 32px 32px;
@@ -246,6 +260,12 @@
     color: var(--ink-faint);
   }
   .credit { font-style: italic; }
+  .footer-social a {
+    color: var(--ink-faint);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .footer-social a:hover { color: var(--rust); border-bottom-color: var(--rust); }
   @media (max-width: 720px) {
     .topbar { padding: 18px 20px; font-size: 10px; }
     .hero { padding: 24px 20px 0; }
@@ -338,6 +358,7 @@
   <div class="contact">
     <div class="contact-line">If you need us, write Sarah.</div>
     <a href="mailto:sarah@throttleandrust.com">sarah@throttleandrust.com</a>
+    <div class="contact-social"><a href="https://www.facebook.com/throttleandrust" target="_blank" rel="noopener">Facebook</a> · <a href="https://x.com/throttleandrust" target="_blank" rel="noopener">X</a></div>
   </div>
 
 
@@ -356,6 +377,7 @@
   <div class="footer-inner">
     <div class="footer-left">Throttle &amp; Rust</div>
     <div class="footer-right">
+      <span class="footer-social"><a href="https://www.facebook.com/throttleandrust" target="_blank" rel="noopener">Facebook</a> · <a href="https://x.com/throttleandrust" target="_blank" rel="noopener">X</a></span><br />
       <span class="credit">site by the Meg</span> · 2026
     </div>
   </div>
