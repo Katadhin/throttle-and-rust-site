@@ -290,6 +290,121 @@
   .fade-in.d3 { animation-delay: 0.55s; }
   .fade-in.d4 { animation-delay: 0.8s; }
   @keyframes rise { to { opacity: 1; transform: translateY(0); } }
+
+  /* Journal carousel */
+  .carousel-wrap { max-width: 880px; margin: 96px auto 0; padding: 0 32px; }
+  .carousel-eyebrow {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rust);
+    text-align: center;
+    margin-bottom: 22px;
+  }
+  .carousel {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--ink);
+  }
+  .c-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease;
+    text-decoration: none;
+    display: block;
+  }
+  .c-slide.is-active { opacity: 1; visibility: visible; }
+  .c-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .c-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(20,20,24,0.85) 0%, rgba(20,20,24,0.4) 40%, rgba(20,20,24,0) 72%);
+  }
+  .c-text { position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 34px; }
+  .c-date {
+    font-family: 'Special Elite', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(243,237,223,0.72);
+    margin-bottom: 8px;
+  }
+  .c-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(24px, 3.4vw, 32px);
+    line-height: 1.25;
+    color: #f6f0e3;
+    margin-bottom: 8px;
+  }
+  .c-blurb {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(243,237,223,0.9);
+    max-width: 560px;
+  }
+  .c-read {
+    display: inline-block;
+    margin-top: 14px;
+    font-family: 'Special Elite', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #f6f0e3;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .c-slide:hover .c-read { border-bottom-color: rgba(246,240,227,0.7); }
+  .c-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
+    border: none;
+    cursor: pointer;
+    background: rgba(20,20,24,0.4);
+    color: #f3eddf;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    line-height: 1;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+  }
+  .c-nav:hover { background: var(--rust); }
+  .c-prev { left: 0; }
+  .c-next { right: 0; }
+  .c-dots { display: flex; justify-content: center; gap: 10px; margin-top: 18px; }
+  .c-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    background: rgba(28,31,38,0.25);
+    transition: background 0.2s ease;
+  }
+  .c-dot:hover { background: rgba(162,59,31,0.6); }
+  .c-dot.is-active { background: var(--rust); }
+  @media (max-width: 720px) {
+    .carousel-wrap { padding: 0 20px; margin-top: 64px; }
+    .c-text { padding: 18px 20px; }
+    .c-blurb { font-size: 12px; }
+    .c-nav { width: 34px; height: 34px; font-size: 18px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .c-slide { transition: none; }
+  }
 </style>
 </head>
 <body>
@@ -362,13 +477,47 @@
   </div>
 
 
-  <div class="latest" style="max-width:580px;margin:96px auto 0;padding:0 20px;text-align:center;">
-    <div style="font-family:'Special Elite',monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:#a23b1f;margin-bottom:14px;">Latest from the journal</div>
-    <a href="journal/tomato-pie/" style="text-decoration:none;color:inherit;display:block;">
-      <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:24px;line-height:1.35;color:#1c1f26;margin-bottom:10px;">Tomato Pie</div>
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#4a4d55;line-height:1.65;">The race is in San Diego this year. A street course on a Navy base, three time zones away. The tomato pie goes in at four.</div>
-      <div style="font-family:'Special Elite',monospace;font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:#8a8c92;margin-top:14px;">Read &rarr;</div>
-    </a>
+  <div class="carousel-wrap fade-in">
+    <div class="carousel-eyebrow">Latest from the journal</div>
+    <div class="carousel" id="journalCarousel" aria-label="Latest journal posts" aria-roledescription="carousel">
+
+      <a class="c-slide is-active" href="journal/tomato-pie/">
+        <img src="images/tomato-pie-hero.jpg" alt="Sarah's tomato pie cooling on the kitchen counter" />
+        <div class="c-overlay"></div>
+        <div class="c-text">
+          <div class="c-date">June 21, 2026 &middot; Sarah</div>
+          <div class="c-title">Tomato Pie</div>
+          <div class="c-blurb">The race is in San Diego this year. A street course on a Navy base, three time zones away. The tomato pie goes in at four.</div>
+          <span class="c-read">Read &rarr;</span>
+        </div>
+      </a>
+
+      <a class="c-slide" href="journal/opening-day/">
+        <img src="images/opening-day-hero.jpg" alt="The new Lowes Foods on opening day in Kannapolis" />
+        <div class="c-overlay"></div>
+        <div class="c-text">
+          <div class="c-date">June 17, 2026 &middot; Caleb</div>
+          <div class="c-title">Opening Day</div>
+          <div class="c-blurb">My cousin Wade's been texting me pictures of a grocery store all afternoon. Kannapolis gets its Lowes Foods tomorrow. Then I saw what he found in the beer cooler.</div>
+          <span class="c-read">Read &rarr;</span>
+        </div>
+      </a>
+
+      <a class="c-slide" href="journal/the-rain-gauge/">
+        <img src="images/rain-gauge-hero.jpg" alt="The rain gauge on the back fence, weather moving in over the valley" />
+        <div class="c-overlay"></div>
+        <div class="c-text">
+          <div class="c-date">June 13, 2026 &middot; Caleb</div>
+          <div class="c-title">The Rain Gauge</div>
+          <div class="c-blurb">I've been watching two radars all week. One for Pocono. One for here.</div>
+          <span class="c-read">Read &rarr;</span>
+        </div>
+      </a>
+
+      <button class="c-nav c-prev" type="button" aria-label="Previous post">&#8249;</button>
+      <button class="c-nav c-next" type="button" aria-label="Next post">&#8250;</button>
+    </div>
+    <div class="c-dots" id="journalDots" role="tablist" aria-label="Choose a post"></div>
   </div>
 
   <div class="upcoming" style="max-width:580px;margin:64px auto 0;padding:0 20px;text-align:center;">
@@ -388,6 +537,48 @@
     </div>
   </div>
 </footer>
+
+<script>
+(function () {
+  var car = document.getElementById('journalCarousel');
+  if (!car) return;
+  var slides = Array.prototype.slice.call(car.querySelectorAll('.c-slide'));
+  var dotsWrap = document.getElementById('journalDots');
+  if (slides.length < 2) return;
+  var i = 0, timer = null;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  slides.forEach(function (s, idx) {
+    var b = document.createElement('button');
+    b.className = 'c-dot' + (idx === 0 ? ' is-active' : '');
+    b.type = 'button';
+    b.setAttribute('aria-label', 'Go to post ' + (idx + 1));
+    b.addEventListener('click', function () { go(idx); reset(); });
+    dotsWrap.appendChild(b);
+  });
+  var dots = Array.prototype.slice.call(dotsWrap.children);
+
+  function go(n) {
+    i = (n + slides.length) % slides.length;
+    slides.forEach(function (s, idx) { s.classList.toggle('is-active', idx === i); });
+    dots.forEach(function (d, idx) { d.classList.toggle('is-active', idx === i); });
+  }
+  function next() { go(i + 1); }
+  function prev() { go(i - 1); }
+  function start() { if (!reduce) timer = setInterval(next, 6000); }
+  function stop() { if (timer) { clearInterval(timer); timer = null; } }
+  function reset() { stop(); start(); }
+
+  car.querySelector('.c-next').addEventListener('click', function (e) { e.preventDefault(); next(); reset(); });
+  car.querySelector('.c-prev').addEventListener('click', function (e) { e.preventDefault(); prev(); reset(); });
+  car.addEventListener('mouseenter', stop);
+  car.addEventListener('mouseleave', start);
+  car.addEventListener('focusin', stop);
+  car.addEventListener('focusout', start);
+
+  start();
+})();
+</script>
 
 </body>
 </html>
