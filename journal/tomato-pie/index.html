@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tomato Pie | Throttle & Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Tomato Pie" />
+  <meta property="og:description" content="The race is in San Diego this year. A street course on a Navy base, three time zones away. The tomato pie goes in at four." />
+  <meta property="og:image" content="https://throttleandrust.com/images/tomato-pie-hero.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/tomato-pie" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 60%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-figure { margin: 44px 0; }
+
+    .post-figure img {
+      width: 100%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-figure figcaption {
+      font-family: 'Special Elite', serif;
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.45;
+      margin-top: 10px;
+      text-align: right;
+    }
+
+    .recipe-card {
+      border: 1px solid var(--light-rule);
+      background-color: rgba(255, 255, 255, 0.4);
+      padding: 36px 32px 32px;
+      margin: 56px 0 8px;
+    }
+
+    .recipe-card .recipe-eyebrow {
+      font-family: 'Special Elite', serif;
+      font-size: 0.66rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 12px;
+    }
+
+    .recipe-card h2 {
+      font-family: 'Special Elite', serif;
+      color: var(--navy);
+      font-size: 1.6rem;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .recipe-card .recipe-note {
+      font-style: italic;
+      font-size: 0.9rem;
+      opacity: 0.72;
+      margin-bottom: 18px;
+    }
+
+    .recipe-card .recipe-yield {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.5;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--light-rule);
+      margin-bottom: 4px;
+    }
+
+    .recipe-card h3 {
+      font-family: 'Special Elite', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin: 24px 0 12px;
+    }
+
+    .recipe-card ul { list-style: none; }
+
+    .recipe-card ul li {
+      padding: 7px 0;
+      border-bottom: 1px dotted var(--light-rule);
+      font-size: 0.9rem;
+    }
+
+    .recipe-card ul li:last-child { border-bottom: none; }
+
+    .recipe-card ol {
+      margin: 0;
+      padding-left: 1.2em;
+    }
+
+    .recipe-card ol li {
+      margin-bottom: 14px;
+      font-size: 0.92rem;
+      padding-left: 6px;
+    }
+
+    .recipe-card ol li:last-child { margin-bottom: 0; }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+      .recipe-card { padding: 28px 22px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/recipes">Recipes</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/tomato-pie-hero.jpg"
+    alt="Sarah's tomato pie, fresh from the oven and cooling on the kitchen counter — Happy Valley, NC"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Sarah</span>
+      <span class="divider"></span>
+      <span class="location">Happy Valley, NC</span>
+    </div>
+
+    <h1>Tomato Pie</h1>
+
+    <div class="post-body">
+
+      <p>The tomato pie goes in the oven at four.</p>
+
+      <p>That gives it time to set and cool enough to cut by the time the green flag drops out in California. The race is in San Diego this year. A street course on a Navy base, of all things, three time zones away, which means it won't start until the afternoon's mostly gone and the light in the yard has gone long and gold.</p>
+
+      <p>Dad will have something to say about that. He and Mom are driving over from Wilkesboro this afternoon, and I already know the speech. Racing on a Navy base. In California. On city streets. He ran North Wilkesboro and Hickory and Caraway, hard little half-miles you could see all the way around, and the notion of running stock cars down a runway by the ocean strikes him as something close to a costume. He'll watch every lap of it. He always does.</p>
+
+      <p>It's Father's Day, which is the real reason for the drive, though nobody in this family would say it that plainly. There'll be a card on the table the kids made. Caleb will get one too. The two of them will do the thing the men do where they thank each other for nothing in particular and then go stand around the truck.</p>
+
+      <p>The tomato pie is the new part. Picked it up last summer down in Southport, where we spent a few days near the water doing close to nothing. A woman there made one for a porch supper, and I asked how, and she told me the way people tell you a recipe they've made a thousand times, which is to say not precisely at all. Tomatoes sliced and salted and left to drain so the whole thing doesn't go to soup. Good mayonnaise. Sharp cheddar with a little parmesan. Basil if you've got it. A crust you blind-bake first. The rest is just paying attention.</p>
+
+      <p>This is the fourth one I've made. The tomatoes came from the stand out on 268. The basil's from the pot by the back step the duck keeps trying to eat.</p>
+
+      <p>Caleb's in the garage. The carburetor that was supposed to be done Saturday is, naturally, not done. The radio's on low out there, working through the pre-race. He keeps drifting to the door to catch it and then drifting back to the bench. Crank has located the one cool square of concrete by the roll-up door and given his whole day to it.</p>
+
+      <figure class="post-figure">
+        <img src="../../images/tomato-pie-radio.jpg" alt="The garage radio on the workbench, tuned low to the pre-race, late afternoon light coming through the open door" />
+        <figcaption>The radio on the bench. Grandpa's, then ours.</figcaption>
+      </figure>
+
+      <p>The shirt's already on. It's always on by now.</p>
+
+      <p>So the pie goes in at four. Mom and Dad get here by five. The race runs late and far away, down streets none of us have ever raced on, and Dad will grumble at it for three hours and remember it fondly for thirty years. We'll eat tomato pie from a town we visited once and sandwiches off the smoker, and somewhere in the middle of all of it, quietly, it'll have been Father's Day. The good ones mostly sneak up like that.</p>
+
+    </div>
+
+    <div class="recipe-card">
+      <div class="recipe-eyebrow">From the kitchen</div>
+      <h2>Sarah's Tomato Pie</h2>
+      <p class="recipe-note">Sarah doesn't measure. This is the version for people who do.</p>
+      <div class="recipe-yield">Makes one 9-inch pie · Serves 6, or 4 if it's been a long week</div>
+
+      <h3>You'll need</h3>
+      <ul>
+        <li>1 pie crust, 9-inch, blind-baked and cooled</li>
+        <li>3 to 4 ripe tomatoes (about 2 lbs), sliced 1/4-inch thick</li>
+        <li>1 teaspoon salt, for drawing the water out</li>
+        <li>1/2 cup good mayonnaise (Duke's, if we're being honest)</li>
+        <li>1 cup sharp cheddar, grated</li>
+        <li>1/4 cup parmesan, grated</li>
+        <li>2 green onions, thinly sliced</li>
+        <li>A handful of fresh basil, torn or chopped</li>
+        <li>Black pepper, and a pinch of cayenne if you like</li>
+        <li>1 teaspoon sugar (optional, for early-season tomatoes)</li>
+      </ul>
+
+      <h3>How it goes</h3>
+      <ol>
+        <li>Blind-bake the crust at 375&deg;F until just golden, 12 to 15 minutes. Let it cool. Don't skip this. A wet crust is a sad thing.</li>
+        <li>Lay the tomato slices on paper towels or in a colander, salt them, and let them drain at least 30 minutes. Pat them dry. This is the whole secret. Rush it and you'll have soup.</li>
+        <li>Stir together the mayonnaise, both cheeses, the basil, a good amount of black pepper, and the cayenne.</li>
+        <li>Layer the tomatoes and green onion into the crust, seasoning as you go. Sugar now if you're using it. Spread the cheese mixture over the top, edge to edge.</li>
+        <li>Bake at 350&deg;F for 30 to 35 minutes, until the top is golden and bubbling.</li>
+        <li>Let it rest at least 20 minutes before you cut it. It needs to set. This is the hardest step and the most important one.</li>
+      </ol>
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Happy Valley, NC &nbsp;·&nbsp; Race Day &amp; Ritual</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+  </footer>
+
+</body>
+</html>

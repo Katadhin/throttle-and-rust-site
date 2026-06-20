@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ricky's Chili | Throttle & Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Ricky's Chili" />
+  <meta property="og:description" content="Brisket trim, three peppers, dark beer, and the kind of long simmering that doesn't need watching but you watch anyway. He won't give up the last ingredient." />
+  <meta property="og:image" content="https://throttleandrust.com/images/hero-property.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/recipes/ricky-chili" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 64px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 24px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-intro p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-intro p:last-child { margin-bottom: 0; }
+
+    .recipe-card {
+      border: 1px solid var(--light-rule);
+      background-color: rgba(255, 255, 255, 0.4);
+      padding: 36px 32px 32px;
+      margin: 40px 0 8px;
+    }
+
+    .recipe-card .recipe-eyebrow {
+      font-family: 'Special Elite', serif;
+      font-size: 0.66rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 12px;
+    }
+
+    .recipe-card .recipe-yield {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.5;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--light-rule);
+      margin-bottom: 4px;
+    }
+
+    .recipe-card h2 {
+      font-family: 'Special Elite', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin: 24px 0 12px;
+    }
+
+    .recipe-card ul { list-style: none; }
+
+    .recipe-card ul li {
+      padding: 7px 0;
+      border-bottom: 1px dotted var(--light-rule);
+      font-size: 0.9rem;
+    }
+
+    .recipe-card ul li:last-child { border-bottom: none; }
+
+    .recipe-card ul li.secret {
+      font-style: italic;
+      color: var(--charcoal);
+      opacity: 0.6;
+    }
+
+    .recipe-card ol {
+      margin: 0;
+      padding-left: 1.2em;
+    }
+
+    .recipe-card ol li {
+      margin-bottom: 14px;
+      font-size: 0.92rem;
+      padding-left: 6px;
+    }
+
+    .recipe-card ol li:last-child { margin-bottom: 0; }
+
+    .sarah-note {
+      margin-top: 26px;
+      padding-top: 20px;
+      border-top: 1px solid var(--light-rule);
+      font-style: italic;
+      font-size: 0.9rem;
+      color: var(--charcoal);
+      opacity: 0.75;
+      text-align: center;
+    }
+
+    .story-link {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--charcoal);
+      opacity: 0.8;
+    }
+
+    .story-link a {
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+      font-style: normal;
+    }
+
+    .story-link a:hover { border-bottom-color: var(--rust); }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 48px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 48px 20px 72px; }
+      .recipe-card { padding: 28px 22px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/recipes">Recipes</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Ricky, by way of Sarah</span>
+      <span class="divider"></span>
+      <span class="location">Wilkesboro, NC</span>
+    </div>
+
+    <h1>Ricky's Chili</h1>
+
+    <div class="post-intro">
+      <p>Sarah's dad used to make this in the pits. Not at home, at the track. Cast iron pot on a propane burner next to the hauler, lid on, ignored for most of the day while he worked on the car. He'd hand bowls out to anyone who came by. Now the pot travels to every race weekend the family keeps.</p>
+    </div>
+
+    <div class="recipe-card">
+      <div class="recipe-eyebrow">From the pit stall, mostly</div>
+      <div class="recipe-yield">Feeds a stall · He won't give up the last ingredient. We've asked.</div>
+
+      <h2>You'll need</h2>
+      <ul>
+        <li>3 lbs brisket trim, cubed rough — don't be neat about it</li>
+        <li>1 yellow onion, diced</li>
+        <li>6 cloves garlic, smashed</li>
+        <li>2 poblanos, charred and chopped</li>
+        <li>2 anaheims, same</li>
+        <li>1 jalape&ntilde;o, seeded if you're a coward</li>
+        <li>1 can fire-roasted tomatoes</li>
+        <li>1 can tomato paste</li>
+        <li>1 bottle dark beer (whatever's cold)</li>
+        <li>2 cups beef stock</li>
+        <li>2 tbsp chili powder</li>
+        <li>1 tbsp cumin</li>
+        <li>1 tbsp smoked paprika</li>
+        <li>1 tsp Mexican oregano</li>
+        <li>Salt, pepper, to taste — be generous</li>
+        <li>2 cans pinto beans, drained (fight us)</li>
+        <li class="secret">[the thing Ricky won't tell us]</li>
+      </ul>
+
+      <h2>How it goes</h2>
+      <ol>
+        <li>Brown the brisket in batches in the cast iron. Don't crowd it. Pull it out, sweat the onion and garlic in the fond, add the peppers, let them go a few minutes. Tomato paste in, stir it around until it darkens. Deglaze with the beer. Everything else in. Brisket back. Stock to cover.</li>
+        <li>Lid on, low fire, three to four hours. Stir when you walk by. Beans in the last thirty minutes.</li>
+        <li>If it tastes like it's missing something, that's because it is. Call Ricky.</li>
+      </ol>
+
+      <div class="sarah-note">The chili's better when he makes it. Don't let him tell you otherwise. — S</div>
+    </div>
+
+    <p class="story-link">The weekend we made it at home instead of the Glen. <a href="/journal/skipping-the-glen/">Read the story →</a></p>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Wilkesboro, NC &nbsp;·&nbsp; From the Kitchen</span>
+
+    <br />
+    <a href="/recipes" class="back-link">← Back to the recipes</a>
+
+  </div>
+
+  <footer>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+  </footer>
+
+</body>
+</html>
