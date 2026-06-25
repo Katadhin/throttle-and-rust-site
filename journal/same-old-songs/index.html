@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Same Old Songs | Throttle & Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Same Old Songs" />
+  <meta property="og:description" content="Wes brought the guitar, which meant the night was going to run long. The race was over by dark, and by the time the fire burned down the old songs and the old stories were running in the same key." />
+  <meta property="og:image" content="https://throttleandrust.com/images/same-old-songs-fire.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/same-old-songs" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 55%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/recipes">Recipes</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/same-old-songs-fire.jpg"
+    alt="Wes playing guitar at the fire pit after dark, the family in folding chairs around the low flames — Happy Valley, NC"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Caleb</span>
+      <span class="divider"></span>
+      <span class="location">Happy Valley, NC</span>
+    </div>
+
+    <h1>Same Old Songs</h1>
+
+    <div class="post-body">
+
+      <p>Wes brought the guitar, which meant the night was going to run long. He always brings it and he always leaves it in the truck until somebody asks, and somebody always asks, so the asking is a formality we all keep up out of politeness.</p>
+
+      <p>The race had been over since the afternoon. By dark the radio was off and the talk had moved outside, to the fire and the folding chairs in their crooked circle and the one good chair, which is Ricky's. Nobody decided that. It just is.</p>
+
+      <p>Wes started slow, the way he does. Something old. The kind of song that sounds like it was written on a porch, about a porch, by a man who was in no particular hurry. Half the circle knew the words. The other half hummed the part they thought they knew, and nobody minded the difference.</p>
+
+      <p>Here is the thing about my father-in-law. Get three or four songs in and he starts to talk. Not over the music. Alongside it. Wes will work into some Haggard and the next thing I know Ricky is back at Hickory, a Saturday night a long time ago, the motor letting go coming off two with a lap and a half to run. He tells it quiet, mostly to the fire. The song and the story turn out to be in the same key. They usually are.</p>
+
+      <p>Sarah watches him when he gets like that. Not the way you watch to be sure somebody's alright. The other way. Wes watches him too, and picks the next song to land wherever Ricky has already gone, so the man never has to come all the way back before he is ready.</p>
+
+      <p>Crank gave up early and went under Ricky's chair. The duck made one pass through the firelight to be certain he was not missing food, learned that he was not, and left in protest.</p>
+
+      <p>It occurred to me somewhere in there that the songs and the racing come from the same small place. Saturday nights in towns nobody drives to on purpose. Things that are loud, and over too fast, and worth doing anyway. You do not say that out loud at a fire. You let Wes play the next one.</p>
+
+      <p>We went later than we should have. The fire got down to the part where everybody is quiet and pretending they are not about to call it. Ricky asked for one more, a slow one, and Wes gave it to him. Then Ella Mae said it was time, and it was.</p>
+
+      <p>Same songs as last race weekend. Same stories. Took me a while to work out that this is the whole point.</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Happy Valley, NC &nbsp;·&nbsp; Songs &amp; Stories</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+  </footer>
+
+</body>
+</html>

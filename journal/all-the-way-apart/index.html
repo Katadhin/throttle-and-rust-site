@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All the Way Apart | Throttle & Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="All the Way Apart" />
+  <meta property="og:description" content="Five years into this truck and I'd never had the carburetor all the way off. My week is install work, the kind that sets and stays. This is the other kind." />
+  <meta property="og:image" content="https://throttleandrust.com/images/all-the-way-apart-hero.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/all-the-way-apart" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 60%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/all-the-way-apart-hero.jpg"
+    alt="The '54 Chevy's carburetor disassembled on the garage workbench, small parts in an old coffee can, late afternoon light through the open door"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Caleb</span>
+      <span class="divider"></span>
+      <span class="location">Happy Valley, NC</span>
+    </div>
+
+    <h1>All the Way Apart</h1>
+
+    <div class="post-body">
+
+      <p>Pulled the carburetor off the '54 this afternoon. Five years into this truck and I'd never had it all the way off, just cleaned around it and hoped. Today there was nothing else that needed doing, so it came off.</p>
+
+      <p>Forty-some parts once you stop counting bolts as one thing. Jets, springs, the little brass pieces that roll if you breathe on them. They went in the Bustelo can. That can has been on the bench longer than the truck has been in the garage, and the coffee's been gone from it for years. It holds the small stuff now, the things you lose if you set them down loose.</p>
+
+      <p>Set the body itself on a rag and looked at it a while. A carburetor is a strange thing to hold in your hands. Looks like its own little engine. It's mostly air and timing and a few passages drilled in the right places, and somehow that's the whole difference between a truck that runs mean and one that runs sad.</p>
+
+      <p>My week is install work. Retaining walls, irrigation, a patio that has to drain right the first time. You pour it, it sets, and that's the deal you made. There's no taking it back apart to find where you went wrong. You stand there and you live with the call you made on a Tuesday.</p>
+
+      <p>This is the other kind. You can take it all the way down to the parts and still have a shot at putting it back together better than it was. Nobody's in the driveway waiting on it. The only clock is the light coming through the door.</p>
+
+      <p>Crank slept through the whole thing on his bed in the corner. The radio was on low, doing what it does. The duck got into something out back that I decided not to go look at. The afternoon ran warm and long and I didn't have anywhere to be.</p>
+
+      <p>Got it cleaned, laid out, soaking. Tomorrow it goes back together, or it doesn't and I figure out why. Either way I'll know more about this truck at supper than I did at lunch.</p>
+
+      <p>Some jobs you finish. Some you just put down for the night. This one's on the bench under a rag, forty-some parts deep, and that's exactly where I want it.</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Happy Valley, NC &nbsp;·&nbsp; Built Not Bought</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+  </footer>
+
+</body>
+</html>
