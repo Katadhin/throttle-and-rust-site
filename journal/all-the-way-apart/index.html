@@ -252,7 +252,7 @@
         <line x1="8.6" y1="13.5" x2="15.4" y2="17.5"></line>
         <line x1="15.4" y1="6.5" x2="8.6" y2="10.5"></line>
       </svg>
-      Share
+      Pass it on
     </button>
     <span class="share-toast" id="shareToast">Link copied</span>
   </div>
@@ -307,7 +307,7 @@
     var toast = document.getElementById('shareToast');
     var shareData = {
       title: 'All the Way Apart — Throttle & Rust',
-      text: 'All the Way Apart — a note from the driveway.',
+      text: 'A note from the driveway. — Throttle & Rust',
       url: location.href
     };
 
@@ -318,15 +318,64 @@
       setTimeout(function () { toast.classList.remove('show'); }, 1800);
     }
 
+    // Composite a T&R wordmark + domain onto a copy of the hero (canvas).
+    // The on-page hero is never modified — this only brands the shared file.
+    async function buildBrandedBlob() {
+      var img = document.querySelector('.post-hero');
+      var src = img ? (img.currentSrc || img.src) : null;
+      if (!src) return null;
+      var im = new Image();
+      im.src = src;
+      await im.decode();
+      var w = im.naturalWidth, h = im.naturalHeight;
+      if (!w || !h) return null;
+
+      var c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      var ctx = c.getContext('2d');
+      ctx.drawImage(im, 0, 0, w, h);
+
+      // Scrim along the bottom so the mark reads on any background.
+      var g = ctx.createLinearGradient(0, h * 0.66, 0, h);
+      g.addColorStop(0, 'rgba(18,22,28,0)');
+      g.addColorStop(1, 'rgba(18,22,28,0.66)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, Math.round(h * 0.6), w, Math.round(h * 0.4));
+
+      try { await document.fonts.ready; } catch (e) {}
+
+      var pad = Math.round(w * 0.045);
+      var wmSize = Math.round(w * 0.042);
+      var dmSize = Math.round(w * 0.020);
+      ctx.textBaseline = 'alphabetic';
+      var domainY = h - pad;
+      var wordY = domainY - dmSize - Math.round(w * 0.014);
+
+      // Wordmark: "Throttle & Rust" with a rust ampersand.
+      ctx.font = wmSize + "px 'Special Elite', monospace";
+      var p1 = 'Throttle ', amp = '&', p2 = ' Rust';
+      var x = pad;
+      ctx.fillStyle = '#f5f0e8';
+      ctx.fillText(p1, x, wordY); x += ctx.measureText(p1).width;
+      ctx.fillStyle = '#b94a2c';
+      ctx.fillText(amp, x, wordY); x += ctx.measureText(amp).width;
+      ctx.fillStyle = '#f5f0e8';
+      ctx.fillText(p2, x, wordY);
+
+      // Domain line.
+      ctx.font = dmSize + "px 'IBM Plex Mono', monospace";
+      ctx.fillStyle = 'rgba(245,240,232,0.86)';
+      ctx.fillText('throttleandrust.com', pad, domainY);
+
+      return await new Promise(function (res) { c.toBlob(res, 'image/jpeg', 0.9); });
+    }
+
     async function tryFileShare() {
       try {
         if (!navigator.canShare) return false;
-        var img = document.querySelector('.post-hero');
-        var src = img ? (img.currentSrc || img.src) : null;
-        if (!src) return false;
-        var resp = await fetch(src);
-        var blob = await resp.blob();
-        var file = new File([blob], 'all-the-way-apart.jpg', { type: blob.type || 'image/jpeg' });
+        var blob = await buildBrandedBlob();
+        if (!blob) return false;
+        var file = new File([blob], 'all-the-way-apart-throttle-and-rust.jpg', { type: 'image/jpeg' });
         if (!navigator.canShare({ files: [file] })) return false;
         await navigator.share({ files: [file], title: shareData.title, text: shareData.text });
         return true;
