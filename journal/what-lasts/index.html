@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What Lasts | Throttle & Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="What Lasts" />
+  <meta property="og:description" content="The fireworks tents went up by the highway this week, same as every June. There's a big anniversary riding on this one, but down here it lands quiet. We'll do the Fourth the way we always do, which is probably the only reason any of it lasts." />
+  <meta property="og:image" content="https://throttleandrust.com/images/what-lasts-hero.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/what-lasts" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 60%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .hero-wrap { position: relative; line-height: 0; }
+
+    .hero-share {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 14px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.66rem;
+      line-height: 1;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: rgba(28, 43, 58, 0.78);
+      border: 1px solid rgba(245, 240, 232, 0.35);
+      -webkit-backdrop-filter: blur(2px);
+      backdrop-filter: blur(2px);
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+
+    .hero-share:hover { background: var(--rust); border-color: var(--rust); }
+    .hero-share svg { width: 13px; height: 13px; display: block; }
+
+    .share-toast {
+      position: absolute;
+      right: 16px;
+      bottom: 60px;
+      padding: 7px 12px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      line-height: 1;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: var(--cream);
+      border: 1px solid var(--light-rule);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.25s, transform 0.25s;
+      pointer-events: none;
+    }
+
+    .share-toast.show { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 600px) {
+      .hero-share { right: 12px; bottom: 12px; }
+      .share-toast { right: 12px; bottom: 54px; }
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-figure { margin: 44px 0; }
+    .post-figure img {
+      width: 100%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+    .post-figure figcaption {
+      margin-top: 10px;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero-wrap">
+    <img
+      class="post-hero"
+      src="../../images/what-lasts-hero.jpg"
+      alt="A berry galette cooling on a weathered porch rail, a flag and the foothills ridge behind it at golden hour"
+    />
+    <button class="hero-share" type="button" id="shareBtn" aria-label="Share this post">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="18" cy="5" r="3"></circle>
+        <circle cx="6" cy="12" r="3"></circle>
+        <circle cx="18" cy="19" r="3"></circle>
+        <line x1="8.6" y1="13.5" x2="15.4" y2="17.5"></line>
+        <line x1="15.4" y1="6.5" x2="8.6" y2="10.5"></line>
+      </svg>
+      Pass it on
+    </button>
+    <span class="share-toast" id="shareToast">Link copied</span>
+  </div>
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Caleb</span>
+      <span class="divider"></span>
+      <span class="location">Happy Valley, NC</span>
+    </div>
+
+    <h1>What Lasts</h1>
+
+    <div class="post-body">
+
+      <p>The fireworks tents went up by the highway this week. Same striped tents in the same gravel lot they take every June, somebody's kid out front in a folding chair, a hand-lettered sign leaned on a sawhorse. You could set a calendar by it.</p>
+
+      <p>There's a big anniversary riding on this one, a round number the whole country has been loud about. Down here it lands quieter. We'll do the Fourth the way we always do the Fourth, which when you sit with it is about the only reason any of it has lasted this long.</p>
+
+      <p>Drove through Lenoir on Friday and they'd started hanging the bunting downtown. Red, white and blue on the lampposts, a banner strung across the street that's been folded and hung so many years you can read the creases in it. The county runs the same things every summer, the parade and the history displays and all of it, and nobody acts like it's new. That is the point of it. It was never supposed to be new.</p>
+
+      <p>Sarah's got a galette going. Berries, that loose crust she folds over by hand, the same one her grandmother made and her grandmother before that, near as anybody can tell. She doesn't write it down. It lives in her hands. That is a thing that lasts too, maybe the truest kind. A recipe nobody can lose because nobody ever set it on paper to begin with.</p>
+
+      <p>She'll have the smoker lit before the parade, which down here is two fire trucks, a couple of horses, and every kid in the county on a bike with streamers in the spokes. It is over in about the time it takes to drink a beer. We watch all of it anyway. Her folks come up. A few cousins. People in the kitchen, the screen door going all afternoon.</p>
+
+      <p>Nobody at that parade is going to stand up and explain what any of it means. They will run the trucks and let the kids ride and everybody will go home and eat. A country does not get old on speeches. It gets old on this. On families that keep showing up. On a town that hangs the same creased banner every year. On a recipe handed down so many times nobody remembers whose it was. The big thing is just a whole lot of the small things that refused to quit.</p>
+
+      <p>We'll be out back when the town sets off whatever this year's budget covered. You can catch most of the show from the yard. Crank hates every second of it and rides it out under the porch. The duck has been into everybody's business all day, including a boot that wasn't bothering a soul.</p>
+
+      <figure class="post-figure">
+        <img
+          src="../../images/what-lasts-crank-duck.jpg"
+          alt="Crank the yellow lab asleep on the porch boards while the duck tugs at the laces of a muddy work boot, the ridge behind at golden hour"
+        />
+      </figure>
+
+      <p>Same as last year. Same as the year before that. That is not a small thing, the sameness. It is the whole thing, near as I can tell.</p>
+
+      <p>A couple hundred years and change, and the plan around here is brisket and a galette and a folding chair and a dog hiding from the fireworks. Seems about right. Seems like the point of the whole exercise, actually.</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Happy Valley, NC &nbsp;·&nbsp; Handed Down</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+  </footer>
+
+  <script>
+  (function () {
+    var btn = document.getElementById('shareBtn');
+    if (!btn) return;
+    var toast = document.getElementById('shareToast');
+    var shareData = {
+      title: 'What Lasts — Throttle & Rust',
+      text: 'A note from the driveway. — Throttle & Rust',
+      url: location.href
+    };
+
+    function showToast(msg) {
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(function () { toast.classList.remove('show'); }, 1800);
+    }
+
+    // Composite a T&R wordmark + domain onto a copy of the hero (canvas).
+    // The on-page hero is never modified — this only brands the shared file.
+    async function buildBrandedBlob() {
+      var img = document.querySelector('.post-hero');
+      var src = img ? (img.currentSrc || img.src) : null;
+      if (!src) return null;
+      var im = new Image();
+      im.src = src;
+      await im.decode();
+      var w = im.naturalWidth, h = im.naturalHeight;
+      if (!w || !h) return null;
+
+      var c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      var ctx = c.getContext('2d');
+      ctx.drawImage(im, 0, 0, w, h);
+
+      // Scrim along the bottom so the mark reads on any background.
+      var g = ctx.createLinearGradient(0, h * 0.66, 0, h);
+      g.addColorStop(0, 'rgba(18,22,28,0)');
+      g.addColorStop(1, 'rgba(18,22,28,0.66)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, Math.round(h * 0.6), w, Math.round(h * 0.4));
+
+      try { await document.fonts.ready; } catch (e) {}
+
+      var pad = Math.round(w * 0.045);
+      var wmSize = Math.round(w * 0.042);
+      var dmSize = Math.round(w * 0.020);
+      ctx.textBaseline = 'alphabetic';
+      var domainY = h - pad;
+      var wordY = domainY - dmSize - Math.round(w * 0.014);
+
+      // Wordmark: "Throttle & Rust" with a rust ampersand.
+      ctx.font = wmSize + "px 'Special Elite', monospace";
+      var p1 = 'Throttle ', amp = '&', p2 = ' Rust';
+      var x = pad;
+      ctx.fillStyle = '#f5f0e8';
+      ctx.fillText(p1, x, wordY); x += ctx.measureText(p1).width;
+      ctx.fillStyle = '#b94a2c';
+      ctx.fillText(amp, x, wordY); x += ctx.measureText(amp).width;
+      ctx.fillStyle = '#f5f0e8';
+      ctx.fillText(p2, x, wordY);
+
+      // Domain line.
+      ctx.font = dmSize + "px 'IBM Plex Mono', monospace";
+      ctx.fillStyle = 'rgba(245,240,232,0.86)';
+      ctx.fillText('throttleandrust.com', pad, domainY);
+
+      return await new Promise(function (res) { c.toBlob(res, 'image/jpeg', 0.9); });
+    }
+
+    async function tryFileShare() {
+      try {
+        if (!navigator.canShare) return false;
+        var blob = await buildBrandedBlob();
+        if (!blob) return false;
+        var file = new File([blob], 'what-lasts-throttle-and-rust.jpg', { type: 'image/jpeg' });
+        if (!navigator.canShare({ files: [file] })) return false;
+        await navigator.share({ files: [file], title: shareData.title, text: shareData.text });
+        return true;
+      } catch (e) {
+        if (e && e.name === 'AbortError') return true;
+        return false;
+      }
+    }
+
+    btn.addEventListener('click', async function () {
+      if (await tryFileShare()) return;
+      if (navigator.share) {
+        try { await navigator.share(shareData); return; }
+        catch (e) { if (e && e.name === 'AbortError') return; }
+      }
+      try {
+        await navigator.clipboard.writeText(shareData.url);
+        showToast('Link copied');
+      } catch (e) {
+        window.prompt('Copy this link', shareData.url);
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>
