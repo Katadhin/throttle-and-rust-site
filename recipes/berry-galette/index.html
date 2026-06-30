@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sarah's Berry Galette | Throttle & Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Sarah's Berry Galette" />
+  <meta property="og:description" content="My grandmother never wrote it down, and neither did I, until now. Cold butter, a ragged crust, whatever berries are ripe. The rest is nerve." />
+  <meta property="og:image" content="https://throttleandrust.com/images/what-lasts-hero.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/recipes/berry-galette" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 55%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 24px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-intro p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-intro p:last-child { margin-bottom: 0; }
+
+    .recipe-card {
+      border: 1px solid var(--light-rule);
+      background-color: rgba(255, 255, 255, 0.4);
+      padding: 36px 32px 32px;
+      margin: 40px 0 8px;
+    }
+
+    .recipe-card .recipe-eyebrow {
+      font-family: 'Special Elite', serif;
+      font-size: 0.66rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 12px;
+    }
+
+    .recipe-card .recipe-yield {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.5;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--light-rule);
+      margin-bottom: 4px;
+    }
+
+    .recipe-card h2 {
+      font-family: 'Special Elite', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin: 24px 0 12px;
+    }
+
+    .recipe-card ul { list-style: none; }
+
+    .recipe-card ul li {
+      padding: 7px 0;
+      border-bottom: 1px dotted var(--light-rule);
+      font-size: 0.9rem;
+    }
+
+    .recipe-card ul li:last-child { border-bottom: none; }
+
+    .recipe-card ol {
+      margin: 0;
+      padding-left: 1.2em;
+    }
+
+    .recipe-card ol li {
+      margin-bottom: 14px;
+      font-size: 0.92rem;
+      padding-left: 6px;
+    }
+
+    .recipe-card ol li:last-child { margin-bottom: 0; }
+
+    .story-link {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--charcoal);
+      opacity: 0.8;
+    }
+
+    .story-link a {
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+      font-style: normal;
+    }
+
+    .story-link a:hover { border-bottom-color: var(--rust); }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 48px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+      .recipe-card { padding: 28px 22px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/recipes">Recipes</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/what-lasts-hero.jpg"
+    alt="A berry galette cooling on a weathered porch rail, the foothills ridge behind it at golden hour — Happy Valley, NC"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Sarah</span>
+      <span class="divider"></span>
+      <span class="location">Happy Valley, NC</span>
+    </div>
+
+    <h1>Sarah's Berry Galette</h1>
+
+    <div class="post-intro">
+      <p>My grandmother never wrote this down, and her mother never wrote it down before her, so setting it on paper now feels a little like telling on somebody. There were never real measurements. There still aren't. What's below is me guessing at numbers I have never once used, because a galette is a forgiving thing and you ought to make one. The crust wants to be cold and a little ragged. The berries want to be whatever is ripe. The rest is nerve.</p>
+    </div>
+
+    <div class="recipe-card">
+      <div class="recipe-eyebrow">From the kitchen</div>
+      <div class="recipe-yield">Makes one big galette · Serves a porch full, or four if the duck gets into it</div>
+
+      <h2>You'll need, more or less</h2>
+      <ul>
+        <li>Flour, a couple of cups, enough to make a crust feel like a crust</li>
+        <li>Butter, cold, most of a stick, and do not you dare skimp. Cut it in chunks</li>
+        <li>A pinch of salt, a spoonful of sugar for the dough</li>
+        <li>Ice water, a splash at a time, until it just barely holds. Stop early</li>
+        <li>Berries, two big handfuls or three, whatever the patch gives up. We lean blackberry and blueberry</li>
+        <li>A little sugar for the berries, less than you think, more if they're tart</li>
+        <li>A spoonful of flour or cornstarch to catch the juice</li>
+        <li>A squeeze of lemon, if you've got one</li>
+        <li>An egg for the wash, and coarse sugar on top if you're feeling fancy</li>
+      </ul>
+
+      <h2>How it goes</h2>
+      <ol>
+        <li>Make the dough first and then leave it be. Flour, salt, sugar, the cold butter cut in until it's a rubble with some big flakes left whole. Add the ice water a splash at a time until it just comes together. Don't work it. Wrap it and put it in the cold an hour, longer if you can stand to.</li>
+        <li>Toss the berries with the sugar, the spoon of flour, the lemon. Let them sit and get acquainted while the dough rests.</li>
+        <li>Roll the dough out on a floured counter into a rough circle. Rough is correct. It should not look like a store had anything to do with it.</li>
+        <li>Pile the berries in the middle and leave yourself a wide border. Fold the edges up and over, pleating as you go, and leave the center open. It will not be neat. That is the whole idea.</li>
+        <li>Brush the crust with the egg and scatter the coarse sugar. Slide it onto a sheet pan.</li>
+        <li>Hot oven, 400 or so, until the crust goes deep gold and the juice bubbles thick at the edges. Forty minutes, give or take. Trust your nose over the clock.</li>
+        <li>Let it cool on the pan so the bottom sets up. Eat it warm, off the pan, standing in the kitchen, which is the only way it has ever really been eaten.</li>
+      </ol>
+    </div>
+
+    <p class="story-link">This is the Fourth of July galette, the one nobody ever wrote down until now. <a href="/journal/what-lasts">Read the story →</a></p>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Happy Valley, NC &nbsp;·&nbsp; From the Kitchen</span>
+
+    <br />
+    <a href="/recipes" class="back-link">← Back to the recipes</a>
+
+  </div>
+
+  <footer>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+  </footer>
+
+</body>
+</html>
