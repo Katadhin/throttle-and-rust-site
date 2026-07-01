@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Places We Love — Throttle &amp; Rust</title>
+<meta name="description" content="The places we actually go. Not a list anybody paid for. Caleb &amp; Sarah Whitaker." />
+
+<link rel="canonical" href="https://throttleandrust.com/places/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Throttle &amp; Rust" />
+<meta property="og:title" content="Places We Love — Throttle &amp; Rust" />
+<meta property="og:description" content="The places we actually go. Not a list anybody paid for. Just ours." />
+<meta property="og:url" content="https://throttleandrust.com/places/" />
+<meta property="og:image" content="https://throttleandrust.com/images/places-filling-station.jpeg" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f3eddf;
+    --bg-deep: #ebe3d1;
+    --ink: #1c1f26;
+    --ink-soft: #4a4d55;
+    --ink-faint: #8a8c92;
+    --rust: #a23b1f;
+    --max-width: 620px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 400;
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: 0.06;
+    mix-blend-mode: multiply;
+  }
+  .topbar {
+    position: relative;
+    z-index: 10;
+    padding: 22px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 980px;
+    margin: 0 auto;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .topbar .place-brand, .topbar .links { font-family: 'Special Elite', monospace; }
+  .topbar a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .topbar a:hover { border-bottom-color: var(--ink-soft); }
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 32px 24px 0;
+    position: relative;
+    z-index: 2;
+  }
+  .header {
+    text-align: center;
+    margin: 24px 0 48px;
+  }
+  .header-eyebrow {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 12px;
+  }
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(32px, 5vw, 44px);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .header-sub {
+    margin-top: 18px;
+    font-size: 14px;
+    color: var(--ink-soft);
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+  }
+  .places { margin-top: 8px; }
+  .place {
+    padding: 16px 0 44px;
+    border-bottom: 1px solid rgba(28, 31, 38, 0.15);
+    margin-bottom: 8px;
+  }
+  .place:last-child { border-bottom: none; }
+  .place-photo {
+    display: block;
+    width: 100%;
+    margin-bottom: 22px;
+    border: 1px solid rgba(28, 31, 38, 0.12);
+    overflow: hidden;
+    background: var(--bg-deep);
+  }
+  .place-photo img {
+    width: 100%;
+    display: block;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .place-photo:hover img { transform: scale(1.03); }
+  .place-loc {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 8px;
+  }
+  .place-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.25;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+  .place-blurb {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+  .place-move {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13.5px;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .place-move span {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-right: 10px;
+  }
+  .place-links { display: flex; gap: 22px; flex-wrap: wrap; }
+  .place-links a {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .place-links a:hover { border-bottom-color: var(--rust); }
+  footer {
+    margin-top: 90px;
+    padding: 36px 32px 32px;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    border-top: 1px solid var(--ink);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-left {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .footer-left a { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; }
+  .footer-left a:hover { border-bottom-color: var(--ink); }
+  .footer-right {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+  }
+  .credit { font-style: italic; }
+  .footer-social a { color: var(--ink-faint); text-decoration: none; border-bottom: 1px solid transparent; }
+  .footer-social a:hover { color: var(--rust); border-bottom-color: var(--rust); }
+  @media (max-width: 660px) {
+    .topbar { padding: 18px 20px; font-size: 10px; }
+    .container { padding: 24px 18px 0; }
+    .header { margin: 16px 0 36px; }
+    .place-name { font-size: 22px; }
+    footer { padding: 28px 20px; }
+    .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="place-brand"><a href="../">Throttle &amp; Rust</a></span>
+  <span class="links"><a href="/journal/">Journal</a> &middot; <a href="/recipes/">Recipes</a> &middot; <a href="/places/">Places</a></span>
+</div>
+
+<div class="container">
+
+  <div class="header">
+    <div class="header-eyebrow">Places We Love</div>
+    <h1 class="header-title">Places we actually go.</h1>
+    <div class="header-sub">Not a list anybody paid for. Just ours. — Caleb &amp; Sarah</div>
+  </div>
+
+  <div class="places">
+
+    <article class="place">
+      <a class="place-photo" href="/journal/filling-station" aria-label="Happy Valley Filling Station">
+        <img src="/images/places-filling-station.jpeg" alt="The Sunday Carbonara pizza with a fried egg and a caviar bump at Happy Valley Filling Station" />
+      </a>
+      <div class="place-loc">Lenoir, NC</div>
+      <h2 class="place-name">Happy Valley Filling Station</h2>
+      <p class="place-blurb">
+        Five minutes from the house on foot, which is the whole reason it
+        works. Walk down, no plan, let the afternoon land where it lands. On
+        a Sunday they run a Carbonara pizza with a fried egg thrown on top
+        and, if you're feeling reckless, a bump of caviar. We ate the entire
+        thing without saying a word. Sarah still orders the Bianca.
+      </p>
+      <div class="place-move"><span>The move</span> the Carbonara. Sundays only, and yes, put the egg on it.</div>
+      <div class="place-links">
+        <a href="https://www.happyvalleyfillingstation.com/" target="_blank" rel="noopener">Visit &rarr;</a>
+        <a href="/journal/filling-station">The story &rarr;</a>
+      </div>
+    </article>
+
+    <article class="place">
+      <a class="place-photo" href="/journal/up-the-hill" aria-label="Famous Toastery">
+        <img src="/images/places-famous-toastery.jpeg" alt="A Famous Toastery storefront on a brick sidewalk with sidewalk tables" />
+      </a>
+      <div class="place-loc">North Carolina</div>
+      <h2 class="place-name">Famous Toastery</h2>
+      <p class="place-blurb">
+        When a morning has earned the right to take its time, we point the
+        truck up the hill to the Famous Toastery in Blowing Rock. Big plates,
+        coffee that keeps coming, a patio worth lingering on with the ridge
+        behind it. There are others scattered across the state and we won't
+        tell you which to pick, but the one up the hill is ours.
+      </p>
+      <div class="place-move"><span>The move</span> breakfast, and don't watch the clock.</div>
+      <div class="place-links">
+        <a href="https://famoustoastery.com/" target="_blank" rel="noopener">Visit &rarr;</a>
+        <a href="/journal/up-the-hill">The story &rarr;</a>
+      </div>
+    </article>
+
+    <article class="place">
+      <a class="place-photo" href="/journal/six-hundred-miles" aria-label="Eleven Lakes Brewing">
+        <img src="/images/places-eleven-lakes.jpg" alt="Two Eleven Lakes Brewing pints on a barrel table, the picnic-table patio behind" />
+      </a>
+      <div class="place-loc">Cornelius, NC</div>
+      <h2 class="place-name">Eleven Lakes Brewing</h2>
+      <p class="place-blurb">
+        Down on the west side of Lake Norman, worth the trip when we're that
+        way. Picnic tables, cold pours, the kind of place you end up sitting
+        longer than you meant to. The Meg hauled a six-pack back to the porch
+        one evening and it has been in the rotation ever since, which is about
+        the highest honor a beer gets around here.
+      </p>
+      <div class="place-move"><span>The move</span> a flight at the picnic tables. Ask about The Big One.</div>
+      <div class="place-links">
+        <a href="https://elevenlakesbrewing.com/" target="_blank" rel="noopener">Visit &rarr;</a>
+        <a href="/journal/six-hundred-miles">The story &rarr;</a>
+      </div>
+    </article>
+
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left"><a href="../">Throttle &amp; Rust</a></div>
+    <div class="footer-right">
+      <span class="footer-social"><a href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener">TikTok</a> · <a href="https://x.com/throttleandrust" target="_blank" rel="noopener">X</a></span><br />
+      <span class="credit">site by the Meg</span> · 2026
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
