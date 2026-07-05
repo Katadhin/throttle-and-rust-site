@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nobody Told Them | Throttle & Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Nobody Told Them" />
+  <meta property="og:description" content="The gate on the back straightaway is the same one they chained in 1996. In two weeks the place fills again with people who never knew it was ever empty." />
+  <meta property="og:image" content="https://throttleandrust.com/images/nobody-told-them-hero.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/nobody-told-them" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 55%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/nobody-told-them-hero.jpg"
+    alt="A rusted chain-link gate on the back straightaway at North Wilkesboro, a working hand on the wire, empty grandstands and the foothills behind at golden hour"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Sarah</span>
+      <span class="divider"></span>
+      <span class="location">North Wilkesboro, NC</span>
+    </div>
+
+    <h1>Nobody Told Them</h1>
+
+    <div class="post-body">
+
+      <p>The gate on the back straightaway is the same one they chained shut in 1996. Nobody ever took it down. The rust has grown right into the mesh the way it does when a thing is left alone long enough, and if you put your hand on it the cold comes off the metal even in July.</p>
+
+      <p>My father raced through a gate like that when the asphalt out there was already going soft at the edges. Mid-pack most nights. A good run now and then. He knew every seam in the place, and then for twenty-seven years the only thing that knew this track was the weeds coming up through the frontstretch.</p>
+
+      <p>In two weeks the haulers come back. First points race here in thirty years, they keep saying, like they still can't quite believe the sentence. Dad believes it. He has started driving over on no particular errand, parking where he can see the fourth turn, sitting a while, driving home.</p>
+
+      <p>The tickets this time were priced so a kid could come. That is the part that gets me. There will be a grandstand full of them in two weeks, college kids mostly, and near about none of them ever saw this place dead. To them it is just a track that has always been here, loud on a summer night, the way the ridges have always been here. Nobody told them it was ever gone. Nobody needs to.</p>
+
+      <p>Dad stands at the fence and I watch him do the math on that. Behind him the chained gate. In front of him the empty seats that won't be empty long. He gets quiet at the good ones the same as the bad ones, and by now you learn not to fill it.</p>
+
+      <p>Mom will be there, of course. Book on her knee, forty years of reading between cautions, looking up more than she reads. She says the noise is going to be worse than she remembers. She has already picked out what she is bringing to sit on.</p>
+
+      <p>There were people down by the fence the last time we drove over, a camera on a man in a track shirt, asking him what the place means. He was giving a good answer. It is an easy question to answer well and a hard one to answer true, and you could tell he was reaching for true, which is more than most manage.</p>
+
+      <p>Here is what I keep coming back to. The gate they left chained is the truest thing out there. Somebody could have cut it loose years ago and never did, and soon it will sit a stone's throw from a packed house that wouldn't believe you if you told them what it was for. A place can be both. Emptied out and rung full, the same fence, the same summer. Most things don't get the second half. This one did.</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">North Wilkesboro, NC &nbsp;·&nbsp; Race Weekends</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+  </footer>
+
+</body>
+</html>
