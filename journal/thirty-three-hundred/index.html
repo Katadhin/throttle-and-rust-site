@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thirty-Three Hundred | Throttle & Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Thirty-Three Hundred" />
+  <meta property="og:description" content="There is a Chambourcin they pour up in Banner Elk with a number on the label instead of a name. The number is the elevation. A day up the Watauga to go find where it comes from." />
+  <meta property="og:image" content="https://throttleandrust.com/images/thirty-three-hundred-hero.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/thirty-three-hundred" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 42%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-figure { margin: 44px 0; }
+
+    .post-figure img {
+      width: 100%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-figure figcaption {
+      font-family: 'Special Elite', serif;
+      font-size: 0.66rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.45;
+      margin-top: 10px;
+      text-align: right;
+    }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/recipes">Recipes</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/thirty-three-hundred-hero.jpg"
+    alt="A creekside patio at a mountain vineyard near Banner Elk, NC — umbrellas along the Watauga River with Grandfather Mountain going soft behind under a summer sky"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Sarah</span>
+      <span class="divider"></span>
+      <span class="location">Banner Elk, NC</span>
+    </div>
+
+    <h1>Thirty-Three Hundred</h1>
+
+    <div class="post-body">
+
+      <p>Mara has a way of deciding things. A text on Tuesday that said the mountain was calling and she had already checked the weather, which meant the day was mostly settled before I answered. Caleb took the kids down to the river so I could go. That is the kind of trade a marriage runs on, and I have stopped keeping score of who owes who.</p>
+
+      <p>We drove up the hill toward Banner Elk, past Boone, into the country where I went to school and later stood in front of a room of third graders. The air drops the higher you go. By the time we found the vineyard, the heat we had left down in the valley felt like someone else's problem.</p>
+
+      <p>Grandfather Vineyard sits right down on the Watauga, terraced into the slope at the foot of the mountain. There is a gravel patio along the creek, umbrellas leaning over the tables, water going by loud enough that you lean in to talk. Children were turning over rocks at the edge of the stream. A dog slept under the next table like he owned the deed.</p>
+
+      <figure class="post-figure">
+        <img src="../../images/thirty-three-hundred-arrival.jpg" alt="Two figures walking in from behind toward the tasting room, gravel path, hostas and wine barrels alongside, no faces" />
+        <figcaption>Grandfather Vineyard &middot; Banner Elk</figcaption>
+      </figure>
+
+      <p>They pour a Chambourcin there called Thirty-Three Hundred. The number is the elevation. That is the whole story of the wine, if you want it. A grape stubborn enough to make it through a mountain winter, grown on a slope you can see from your chair, poured a mile up a river I have known my whole life.</p>
+
+      <figure class="post-figure">
+        <img src="../../images/thirty-three-hundred-chambourcin.jpg" alt="A bottle of Thirty-Three Hundred Chambourcin and a poured glass of red on a weathered crate, the creekside patio behind" />
+        <figcaption>The number on the label is the elevation</figcaption>
+      </figure>
+
+      <p>First tasted it at the Filling Station, of all places. Ordered it because I did not recognize the name, and Caleb reached for the beer the way he always does. It stayed with me enough that when Mara said mountain, this is where I steered us.</p>
+
+      <p>We ordered a bottle and some meat and cheese and did not hurry. Mara talked about Boone and the people we both still know up there. I watched the creek do what creeks do. Somewhere in the second glass I remembered that I used to live twenty minutes from here and had somehow forgotten to come back.</p>
+
+      <p>The wine was good. Not good-for-North-Carolina, which is a thing people say like they are doing you a favor. Just good. Dark and a little rough at the edges in a way I liked, the way the best things up here tend to be.</p>
+
+      <figure class="post-figure">
+        <img src="../../images/thirty-three-hundred-bottles.jpg" alt="A wall rack displaying the full range of Grandfather Vineyard bottles, empties turned label-out on weathered gray siding" />
+        <figcaption>The whole lineup, up on the wall</figcaption>
+      </figure>
+
+      <p>We bought two bottles for the porch on the way out. One will not last the week. The other I am hiding, because a wine that tastes like the place it came from is worth saving for a night that earns it.</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Banner Elk, NC &nbsp;·&nbsp; Up the Watauga</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+  </footer>
+
+</body>
+</html>
