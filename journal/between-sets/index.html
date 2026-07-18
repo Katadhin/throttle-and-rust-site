@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Between Sets | Throttle & Rust</title>
+
+  <meta property="og:title" content="Between Sets" />
+  <meta property="og:description" content="Hickory got its first jazz room, and the Meg called the day it opened. Twenty years I'd worn out the same records in the garage. A record you can play again. This you couldn't." />
+  <meta property="og:image" content="https://throttleandrust.com/images/between-sets-hero.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/between-sets" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --cream: #f5f0e8; --navy: #1c2b3a; --rust: #b94a2c; --charcoal: #2e2e2e; --light-rule: #ddd8ce; }
+    body { background-color: var(--cream); color: var(--charcoal); font-family: 'IBM Plex Mono', monospace; font-size: 15px; line-height: 1.85; }
+    nav { background-color: var(--navy); padding: 18px 32px; display: flex; align-items: center; justify-content: space-between; }
+    nav .wordmark { font-family: 'Special Elite', serif; color: var(--cream); font-size: 1.25rem; letter-spacing: 0.04em; text-decoration: none; }
+    nav .wordmark span { color: var(--rust); }
+    nav ul { list-style: none; display: flex; gap: 28px; }
+    nav ul a { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--cream); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75; transition: opacity 0.2s; }
+    nav ul a:hover { opacity: 1; }
+    .post-hero { width: 100%; max-height: 520px; object-fit: cover; object-position: center 50%; display: block; filter: saturate(0.88) contrast(1.04); }
+    .post-wrap { max-width: 680px; margin: 0 auto; padding: 56px 24px 96px; }
+    .post-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rust); }
+    .post-meta .divider { width: 32px; height: 1px; background-color: var(--rust); opacity: 0.5; }
+    .post-meta .location { color: var(--charcoal); opacity: 0.5; }
+    h1 { font-family: 'Special Elite', serif; font-size: clamp(2rem, 5vw, 2.8rem); color: var(--navy); line-height: 1.15; margin-bottom: 36px; letter-spacing: 0.01em; }
+    .post-body p { margin-bottom: 1.6em; font-size: 0.95rem; color: var(--charcoal); }
+    .post-body p:last-child { margin-bottom: 0; }
+    .post-figure { margin: 44px 0; }
+    .post-figure img { width: 100%; display: block; filter: saturate(0.88) contrast(1.04); }
+    .post-figure figcaption { font-family: 'Special Elite', serif; font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--charcoal); opacity: 0.45; margin-top: 10px; text-align: right; }
+    .post-rule { border: none; border-top: 1px solid var(--light-rule); margin: 56px 0 40px; }
+    .post-tag { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--charcoal); opacity: 0.4; }
+    .post-credit { margin-top: 16px; font-size: 0.72rem; color: var(--charcoal); opacity: 0.55; }
+    .post-credit a { color: var(--rust); text-decoration: none; border-bottom: 1px solid var(--light-rule); }
+    .post-credit a:hover { border-bottom-color: var(--rust); }
+    .back-link { display: inline-block; margin-top: 48px; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rust); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.2s; }
+    .back-link:hover { border-bottom-color: var(--rust); }
+    footer { background-color: var(--navy); padding: 32px; text-align: center; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream); opacity: 0.6; }
+    @media (max-width: 600px) { nav ul { display: none; } .post-wrap { padding: 40px 20px 72px; } }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/recipes">Recipes</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/between-sets-hero.jpg"
+    alt="A glowing LIVE JAZZ light fixture on the wall outside The Downbeat in downtown Hickory, NC"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Caleb</span>
+      <span class="divider"></span>
+      <span class="location">Hickory, NC</span>
+    </div>
+
+    <h1>Between Sets</h1>
+
+    <div class="post-body">
+
+      <p>The Meg called me the day The Downbeat opened, back in May. Said Hickory finally had a jazz room and I needed to come down. She lives in town, makes things look better than they are for a living, and she's got a good ear, so when she keeps at something I eventually go. Took me a few weeks to get there, a Saturday in June.</p>
+
+      <p>The place sits on the square downtown, half an hour from the house, new enough that the paint still feels wet. Small room. Low light. A bar, a few little tables, a stage barely up off the floor. Records on the wall for sale and records playing soft when nobody's on the stage. The Meg had a table and a cocktail I couldn't have named, and she waved me over like she owned the place.</p>
+
+      <figure class="post-figure">
+        <img src="../../images/between-sets-room.jpg" alt="The dim, warm-lit bar at The Downbeat, a lamp and two cocktails on the counter" />
+        <figcaption>Low light, records between sets</figcaption>
+      </figure>
+
+      <p>There was a chalkboard by the door for the off nights. Messenger Stage, it said, Sundays, open to whoever's got something to play. Stood there a second longer than I needed to. Whoever named it knew what they were doing. Blakey ran the Jazz Messengers for decades, and it was the room where the young ones got made before anybody knew their names. You don't hang that word over a stage by accident. Felt like a place that meant it.</p>
+
+      <p>Only catch is the Messenger Stage runs on Sundays, and Sundays at our place are already spoken for. Race on the TV, people in the kitchen, the screen door going all afternoon. So the night I'd most want is the one I can't get to. Figures.</p>
+
+      <p>Here's a thing most people who know me don't know. Jazz has been with me my whole life. Not the kind you put on to seem like something. The quiet stuff, the real stuff. Bill Evans on a Sunday with the lights off. Twenty-some years of the same handful of records going soft at the edges.</p>
+
+      <p>But it had always been records, because around here that was the only way to get it. A needle in a groove, the same notes in the same order every time, which is most of why I liked it. You know what's coming. You can always put it back to the start.</p>
+
+      <figure class="post-figure">
+        <img src="../../images/between-sets-etouffee.jpg" alt="A bowl of sausage and crayfish étouffée with a mound of rice and a glass of beer on the bar" />
+        <figcaption>8:20 Farms sausage and crayfish étouffée, before the first set</figcaption>
+      </figure>
+
+      <p>Then three guys walked up on that little stage and played, and it was not the record. Same tune, maybe, but they took it somewhere on the way through, and you could tell even they didn't know where until they got there. The piano said something and the bass answered it. Nobody looked at a phone. The whole room leaned in.</p>
+
+      <p>A record you can play again. This you couldn't. They finished and that exact version was gone, and the only place it lived after was in the room. Bothered me for a second, then it didn't. Some things you only get the once.</p>
+
+      <p>The Meg watched me through the whole first number instead of the band. When it ended she didn't say anything smart, which for her is a kind of compliment. Just ordered me whatever she was having and let me sit there.</p>
+
+      <p>Drove home with the windows down. Hands still had grease in the creases from the morning under the truck. Funny way to spend a Saturday, flat on my back under a '54 and then upright in a dark room letting a piano take its time. Both of them felt like mine.</p>
+
+      <p>Put a record on when I got back. Low, the same one as always. Good like it's always good. Just sat a little different after hearing the other kind.</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Hickory, NC &nbsp;·&nbsp; After Hours</span>
+
+    <p class="post-credit">The room: The Downbeat &nbsp;·&nbsp; <a href="https://downbeathickory.com" target="_blank" rel="noopener">downbeathickory.com</a></p>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+  </footer>
+
+</body>
+</html>
