@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>net.katadhin.tr-gemini-ingest</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/katadhin/Documents/GitHub/throttle-and-rust-site/scripts/gemini-ingest.sh</string>
+  </array>
+  <key>WatchPaths</key>
+  <array>
+    <string>/Users/katadhin/Downloads/tr-frames</string>
+  </array>
+  <key>StandardOutPath</key>
+  <string>/Users/katadhin/Documents/GitHub/throttle-and-rust-site/scripts/gemini-ingest.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/katadhin/Documents/GitHub/throttle-and-rust-site/scripts/gemini-ingest.err.log</string>
+</dict>
+</plist>

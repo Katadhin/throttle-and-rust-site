@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>From the Track | Throttle & Rust</title>
+
+  <meta property="og:title" content="From the Track — Voices We Follow" />
+  <meta property="og:description" content="We tell the heritage side of North Wilkesboro. When the green flag drops, here's who we turn up for the live read." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://throttleandrust.com/voices" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream); font-size: 1.25rem; letter-spacing: 0.04em; text-decoration: none;
+    }
+    nav .wordmark span { color: var(--rust); }
+    nav ul { list-style: none; display: flex; gap: 28px; }
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; color: var(--cream);
+      text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75;
+    }
+    nav ul a:hover { opacity: 1; }
+
+    .wrap { max-width: 760px; margin: 0 auto; padding: 72px 24px 96px; }
+    .eyebrow { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rust); margin-bottom: 18px; }
+    h1 { font-family: 'Special Elite', serif; font-size: clamp(1.9rem, 5vw, 2.6rem); color: var(--navy); line-height: 1.15; margin-bottom: 20px; }
+    .intro { font-size: 0.98rem; color: var(--charcoal); opacity: 0.9; max-width: 620px; margin-bottom: 48px; }
+    .intro a { color: var(--rust); text-decoration: none; border-bottom: 1px solid var(--rust); }
+
+    .feature {
+      display: grid; grid-template-columns: 150px 1fr; gap: 28px;
+      background: #fffdf8; border: 1px solid var(--light-rule);
+      border-radius: 4px; padding: 28px; align-items: start;
+    }
+    .art { width: 150px; height: 150px; border-radius: 4px; overflow: hidden; background: #f3c41b; border: 1px solid var(--light-rule); display: flex; align-items: center; justify-content: center; }
+    .art img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .feature .tag { font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--rust); margin-bottom: 8px; }
+    .feature h2 { font-family: 'Special Elite', serif; font-size: 1.5rem; color: var(--navy); line-height: 1.2; margin-bottom: 4px; }
+    .feature .byline { font-size: 0.8rem; letter-spacing: 0.06em; color: var(--charcoal); opacity: 0.6; margin-bottom: 16px; }
+    .feature p { font-size: 0.92rem; margin-bottom: 18px; }
+    .listen { display: inline-block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rust); text-decoration: none; border-bottom: 1px solid var(--rust); padding-bottom: 2px; }
+
+    footer { background-color: var(--navy); padding: 32px; text-align: center; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream); opacity: 0.6; }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .feature { grid-template-columns: 1fr; }
+      .art { width: 100%; height: 180px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/recipes">Recipes</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <div class="wrap">
+
+    <div class="eyebrow">This weekend &middot; North Wilkesboro</div>
+    <h1>Same short track, two takes</h1>
+    <p class="intro">
+      We tell the heritage side of North Wilkesboro — the family that came up on those
+      bullrings, the years the gate stayed chained. When the green flag drops this weekend,
+      here's who we turn up for the live side of it. Our take is in
+      <a href="/journal/nobody-told-them">Nobody Told Them</a>, and the podcast that got
+      Ricky's blessing is in <a href="/journal/between-cautions">Between Cautions</a>.
+    </p>
+
+    <div class="feature">
+      <div class="art"><img src="../images/ATYL-Live-Flag-Thumbnail.webp" alt="Above the Yellow Line — ATYL Live" /></div>
+      <div>
+        <div class="tag">North Wilkesboro &nbsp;·&nbsp; A voice we follow</div>
+        <h2>Above the Yellow Line</h2>
+        <div class="byline">with Taylor Kitchen</div>
+        <p>
+          Above the Yellow Line started in 2021 as Taylor Kitchen's podcast and grew into
+          ATYL Media, a crew that covers the sport their way, with a real love for its history
+          running underneath it all. That history is where we overlap. When North Wilkesboro
+          comes back around this weekend, hers is the live read we point you to — the practice,
+          the paint schemes, the short-track feel — and ours is the story beneath it.
+        </p>
+        <a class="listen" href="#atyl-coverage">Watch her coverage &rarr;</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+  </footer>
+
+</body>
+</html>
