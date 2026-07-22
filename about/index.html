@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About — Throttle &amp; Rust</title>
+<meta name="description" content="Caleb and Sarah Whitaker, Happy Valley, North Carolina. Old trucks, slow meat, and the race on the radio." />
+
+<link rel="canonical" href="https://throttleandrust.com/about/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Throttle &amp; Rust" />
+<meta property="og:title" content="About — Throttle &amp; Rust" />
+<meta property="og:description" content="Caleb and Sarah Whitaker, Happy Valley, North Carolina. Old trucks, slow meat, and the race on the radio." />
+<meta property="og:url" content="https://throttleandrust.com/about/" />
+<meta property="og:image" content="https://throttleandrust.com/images/hero-property.jpg" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="About — Throttle &amp; Rust" />
+<meta name="twitter:description" content="Caleb and Sarah Whitaker, Happy Valley, North Carolina." />
+<meta name="twitter:image" content="https://throttleandrust.com/images/hero-property.jpg" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f3eddf;
+    --bg-deep: #ebe3d1;
+    --ink: #1c1f26;
+    --ink-soft: #4a4d55;
+    --ink-faint: #8a8c92;
+    --rust: #a23b1f;
+    --max-width: 620px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 400;
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: 0.06;
+    mix-blend-mode: multiply;
+  }
+  .topbar {
+    position: relative;
+    z-index: 10;
+    padding: 22px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 980px;
+    margin: 0 auto;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .topbar .place, .topbar .links { font-family: 'Special Elite', monospace; }
+  .topbar a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .topbar a:hover { border-bottom-color: var(--ink-soft); }
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 32px 24px 0;
+    position: relative;
+    z-index: 2;
+  }
+  .header {
+    text-align: center;
+    margin: 24px 0 48px;
+  }
+  .header-eyebrow {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 12px;
+  }
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(32px, 5vw, 44px);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .lede {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink);
+    text-align: center;
+    margin: 0 auto 8px;
+    max-width: 520px;
+  }
+  .lede-attr {
+    text-align: center;
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 48px;
+  }
+  .prose p {
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 22px;
+  }
+  .prose p:last-of-type { margin-bottom: 0; }
+  .signoff {
+    margin-top: 36px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink);
+    text-align: right;
+  }
+  .signoff::before { content: "— "; color: var(--rust); font-style: normal; }
+  .contact {
+    margin: 64px auto 0;
+    text-align: center;
+  }
+  .contact-line {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink-soft);
+  }
+  .backlink {
+    display: inline-block;
+    margin-top: 56px;
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--rust);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .backlink:hover { border-bottom-color: var(--rust); }
+  footer {
+    margin-top: 90px;
+    padding: 36px 32px 32px;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    border-top: 1px solid var(--ink);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-left {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .footer-left a { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; }
+  .footer-left a:hover { border-bottom-color: var(--ink); }
+  .footer-right {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+  }
+  .credit { font-style: italic; }
+  .footer-social a { color: var(--ink-faint); text-decoration: none; border-bottom: 1px solid transparent; }
+  .footer-social a:hover { color: var(--rust); border-bottom-color: var(--rust); }
+  @media (max-width: 660px) {
+    .topbar { padding: 18px 20px; font-size: 10px; }
+    .container { padding: 24px 18px 0; }
+    .header { margin: 16px 0 36px; }
+    footer { padding: 28px 20px; }
+    .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "About — Throttle & Rust",
+  "url": "https://throttleandrust.com/about/",
+  "description": "Caleb and Sarah Whitaker, Happy Valley, North Carolina. Old trucks, slow meat, and the race on the radio.",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Throttle & Rust",
+    "url": "https://throttleandrust.com/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://throttleandrust.com/images/logo.png"
+    },
+    "founder": [
+      { "@type": "Person", "name": "Caleb Whitaker" },
+      { "@type": "Person", "name": "Sarah Whitaker" }
+    ],
+    "location": {
+      "@type": "Place",
+      "address": {
+        "@type": "PostalAddress",
+        "addressRegion": "NC",
+        "addressLocality": "Happy Valley",
+        "addressCountry": "US"
+      }
+    }
+  }
+}
+</script>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="place"><a href="../">Throttle &amp; Rust</a></span>
+  <span class="links"><a href="/journal/">Journal</a> &middot; <a href="/recipes/">Recipes</a> &middot; <a href="/places/">Places</a></span>
+</div>
+
+<div class="container">
+
+  <div class="header">
+    <div class="header-eyebrow">About us</div>
+    <h1 class="header-title">Old trucks, slow meat, and the race on the radio.</h1>
+  </div>
+
+  <p class="lede">I kept telling Caleb we should write some of this down. The Saturdays, the people, the things that get fixed and the things that don't. So this is that.</p>
+  <div class="lede-attr">— Sarah</div>
+
+  <div class="prose">
+    <p>I'm Caleb. My wife Sarah and I started this little corner of the internet because we kept taking pictures of stuff in the driveway and didn't really have anywhere to put them.</p>
+
+    <p>I run a landscaping company. Spent a lot of years on crews working high-end properties, a couple NASCAR guys' places out toward Mooresville and a few others, before I went out on my own. Sarah went to App State for teaching and now stays home with our kids. Her dad raced short-track for years up at Wilkesboro and Hickory, and the radio in the garage was his father's before that. So the race on Saturday isn't a new thing for us. It's just always been there.</p>
+
+    <p>Most weekends I'm under a hood and Sarah's got the smoker going. Friends drift in and out. Crank finds shade. The duck gets into something he shouldn't. That's about the size of it.</p>
+
+    <div class="signoff">Caleb &amp; Sarah</div>
+  </div>
+
+  <div class="contact">
+    <p class="contact-line">If you need us, write Sarah.</p>
+  </div>
+
+  <a href="/journal/" class="backlink">&larr; Read the journal</a>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left"><a href="../">Throttle &amp; Rust</a></div>
+    <div class="footer-right">
+      <span class="footer-social"><a href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener">TikTok</a> · <a href="https://x.com/throttleandrust" target="_blank" rel="noopener">X</a> · <a href="https://www.youtube.com/@Throttle_and_Rust" target="_blank" rel="noopener">YouTube</a></span><br />
+      <span class="credit">site by the Meg</span> · 2026
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
