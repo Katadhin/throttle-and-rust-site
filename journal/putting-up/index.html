@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Putting Up | Throttle &amp; Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Putting Up" />
+  <meta property="og:description" content="The tomatoes came in all at once this week, faster than four people can eat them. So you stand at the table and put summer in jars. What you're really keeping isn't the tomatoes." />
+  <meta property="og:image" content="https://throttleandrust.com/images/putting-up-tomatoes.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/putting-up" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 60%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Putting Up",
+  "description": "The tomatoes came in all at once this week, faster than four people can eat them. So you stand at the table and put summer in jars. What you're really keeping isn't the tomatoes.",
+  "image": "https://throttleandrust.com/images/putting-up-tomatoes.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Sarah Whitaker"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Throttle & Rust",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://throttleandrust.com/images/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://throttleandrust.com/journal/putting-up"
+  },
+  "url": "https://throttleandrust.com/journal/putting-up",
+  "datePublished": "2026-08-01",
+  "dateModified": "2026-08-01"
+}
+  </script>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/putting-up-tomatoes.jpg"
+    alt="A woman's hands halving ripe tomatoes into a dented enamel pot on a porch table at golden hour, a row of filled mason jars glowing on the rail, a duck in a spilled bucket of skins and an old yellow lab low in the frame, hazy ridges behind"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Sarah</span>
+      <span class="divider"></span>
+      <span class="location">Happy Valley, NC</span>
+    </div>
+
+    <h1>Putting Up</h1>
+
+    <div class="post-body">
+
+      <p>The garden gave up everything at once. One day there are a few coming ripe, the next there's a bushel on the counter and more on the vine, all of it going soft on the same afternoon. Nobody plans it that way. It just happens, every August, like it forgot it did the same thing last year.</p>
+
+      <p>My mother put up tomatoes. Ella Mae still does, a few jars, more out of habit than need. Her mother did it because you had to. Somewhere in there it stopped being about getting through winter and started being about the doing of it, though nobody in my family would ever say a thing like that out loud.</p>
+
+      <p>The method doesn't change. Score the bottoms, drop them in the boiling pot, count to thirty, and the skins slip off like the tomato was waiting to be let out of it. Cold water, then the knife. Your hands are red to the wrist inside of an hour and they stay that way past supper.</p>
+
+      <p>Caleb offered to help, which is its own kind of help, and then found something to do in the garage when I handed him a knife. That's the arrangement. He builds the shelves the jars sit on. Everything after that is mine.</p>
+
+      <p>Crank picked the coolest board on the porch and made it his for the afternoon. The duck got into the bucket of skins twice, wore half of them, and came back for a third round like the first two had gone great. I let him. It's hard to be short with something that happy about garbage.</p>
+
+      <p>There's a sound a lid makes when a jar seals. A small flat ping, sometimes an hour later, from the counter, when you've half forgotten. You count them without meaning to. Nine so far. Then ten.</p>
+
+      <p>That's the part I'd try to explain to somebody who asked why bother, when the store has cans of the same thing for a dollar. It isn't the same thing. A store can't sell you the afternoon you spent on it.</p>
+
+      <p>Come January the ridges will be bare and the light will quit by five. And there will be a shelf of jars that still have this week inside them, this heat, this porch, the duck in the skins. You open one and it's August again for as long as supper takes.</p>
+
+      <p>You can't keep the summer. You knew that going in. But you can keep enough of it to get you to the next one.</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Happy Valley, NC &nbsp;·&nbsp; Handed Down</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+  </footer>
+
+</body>
+</html>
