@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Both Sides of 268 | Throttle &amp; Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Both Sides of 268" />
+  <meta property="og:description" content="The corn on 268 came up into a wall this month, both sides of the road, taller than the truck. It put the race Sunday in my head before I knew it had." />
+  <meta property="og:image" content="https://throttleandrust.com/images/corn-both-sides-268.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/both-sides-of-268" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 60%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Both Sides of 268",
+  "description": "The corn on 268 came up into a wall this month, both sides of the road, taller than the truck. It put the race Sunday in my head before I knew it had.",
+  "image": "https://throttleandrust.com/images/corn-both-sides-268.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Caleb Whitaker"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Throttle & Rust",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://throttleandrust.com/images/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://throttleandrust.com/journal/both-sides-of-268"
+  },
+  "url": "https://throttleandrust.com/journal/both-sides-of-268",
+  "datePublished": "2026-08-03",
+  "dateModified": "2026-08-03"
+}
+  </script>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/corn-both-sides-268.jpg"
+    alt="An old pickup driving away down NC 268 between two walls of tall August corn at golden hour, dust off the tires, hazy foothill ridges ahead"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Caleb</span>
+      <span class="divider"></span>
+      <span class="location">Happy Valley, NC</span>
+    </div>
+
+    <h1>Both Sides of 268</h1>
+
+    <div class="post-body">
+
+      <p>The corn on 268 came up while I wasn't looking. Both sides of the road now, taller than the truck, close enough to the shoulder you could put a hand out the window and drag it through the leaves. Old two-lane, double yellow down the center, a white line at each edge, and now two green walls closing it in. A few weeks back it was knee-high and you could see clear across the field. Now it's a wall and the road just runs straight through the middle of it.</p>
+
+      <p>Drove it slow over the weekend. No reason to hurry, nowhere we had to be. Sarah in the passenger seat with her arm out the window. The kind of green that only holds for about three weeks, and then the whole thing goes to tassel and dries down and it's over.</p>
+
+      <p>The corn's what put the race in my head. There's one Sunday, out in Iowa, a track laid into the middle of corn country, the whole event named for the stuff they grow out there. Corn made into a way to go fast. I don't know that I'd have thought about it at all if I hadn't been driving through the same crop to get home.</p>
+
+      <p>They talk about the heartland like it's a thousand miles the other direction. Some flatter country with straighter roads and bigger sky. And there it was, growing up over both shoulders of the road to the pizza place, close enough to touch.</p>
+
+      <p>Ricky will tell you the good corn's local anyway. There's a stand at the bend that's been there longer than the pavement, run by people who've run it forever, and he won't buy it anywhere else. Says the stuff that travels isn't worth the gas. He's usually right about things like that.</p>
+
+      <p>Sarah spent the back half of last week putting summer in jars. Tomatoes, mostly, the counter red to the edges. Corn's next if the stand holds out. There's something about August that makes you want to catch it and hold it before it quits on you.</p>
+
+      <p>Sunday the race will run and I'll catch some of it. Corn on the television, corn on 268, and a shelf of jars with this week sealed inside them, all the same few days. You could drive right past every bit of it and not think twice.</p>
+
+      <p>The heartland's supposed to be somewhere else. Turns out it's just 268, both sides, first week of August, a double yellow running straight through the middle of it.</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Happy Valley, NC &nbsp;·&nbsp; Down the Road</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+  </footer>
+
+</body>
+</html>
