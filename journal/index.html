@@ -124,10 +124,31 @@
   }
   .entries { margin-top: 32px; }
   .entry {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
     padding: 32px 0;
     border-bottom: 1px solid rgba(28, 31, 38, 0.15);
   }
   .entry:last-child { border-bottom: none; }
+  .entry-thumb {
+    flex: 0 0 150px;
+    display: block;
+    line-height: 0;
+    border: 1px solid rgba(28, 31, 38, 0.12);
+    background: var(--bg-deep);
+    overflow: hidden;
+  }
+  .entry-thumb img {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.92) contrast(0.98);
+    transition: transform 0.4s ease;
+  }
+  .entry-thumb:hover img { transform: scale(1.04); }
+  .entry-text { flex: 1 1 auto; min-width: 0; }
   .entry-date {
     font-family: 'Special Elite', monospace;
     font-size: 11px;
@@ -209,7 +230,9 @@
     .topbar { padding: 18px 20px; font-size: 10px; }
     .container { padding: 24px 20px 0; }
     .header { margin: 16px 0 48px; }
-    .entry { padding: 24px 0; }
+    .entry { padding: 24px 0; gap: 16px; }
+    .entry-thumb { flex-basis: 108px; }
+    .entry-thumb img { width: 108px; height: 72px; }
     .entry-title { font-size: 20px; }
     .entry-blurb { font-size: 14px; }
     footer { padding: 28px 20px; }
@@ -235,346 +258,424 @@
   <div class="entries">
 
     <article class="entry">
-      <div class="entry-date">August 13, 2026</div>
-      <h2 class="entry-title">
-        <a href="just-to-look-at/">Just to Look At</a>
-      </h2>
-      <p class="entry-blurb">
-        Two weeks of canning turns a kitchen into a ledger, every jar earning
-        its place against the coming frost. So one cool morning goes to the one
-        thing the garden grows that can't be put up. Some of what you keep, you
-        keep just to look at.
-      </p>
-      <div class="entry-meta">— Sarah</div>
+      <a class="entry-thumb" href="just-to-look-at/" tabindex="-1" aria-hidden="true"><img src="/images/zinnias-earn-their-keep.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">August 13, 2026</div>
+          <h2 class="entry-title">
+            <a href="just-to-look-at/">Just to Look At</a>
+          </h2>
+          <p class="entry-blurb">
+            Two weeks of canning turns a kitchen into a ledger, every jar earning
+            its place against the coming frost. So one cool morning goes to the one
+            thing the garden grows that can't be put up. Some of what you keep, you
+            keep just to look at.
+          </p>
+          <div class="entry-meta">— Sarah</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">August 3, 2026</div>
-      <h2 class="entry-title">
-        <a href="both-sides-of-268/">Both Sides of 268</a>
-      </h2>
-      <p class="entry-blurb">
-        The corn on 268 came up into a wall this week, both sides of the road,
-        taller than the truck. There's a race Sunday out in corn country, and
-        driving through the same crop put it in my head before I knew it had.
-        The heartland everybody talks about is growing on the road to the pizza
-        place.
-      </p>
-      <div class="entry-meta">— Caleb</div>
+      <a class="entry-thumb" href="both-sides-of-268/" tabindex="-1" aria-hidden="true"><img src="/images/corn-both-sides-268.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">August 3, 2026</div>
+          <h2 class="entry-title">
+            <a href="both-sides-of-268/">Both Sides of 268</a>
+          </h2>
+          <p class="entry-blurb">
+            The corn on 268 came up into a wall this week, both sides of the road,
+            taller than the truck. There's a race Sunday out in corn country, and
+            driving through the same crop put it in my head before I knew it had.
+            The heartland everybody talks about is growing on the road to the pizza
+            place.
+          </p>
+          <div class="entry-meta">— Caleb</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">August 1, 2026</div>
-      <h2 class="entry-title">
-        <a href="putting-up/">Putting Up</a>
-      </h2>
-      <p class="entry-blurb">
-        The tomatoes came in all at once this week, the way they always do,
-        faster than four people can eat them. So you stand at the table and put
-        summer in jars. What you're really keeping isn't the tomatoes.
-      </p>
-      <div class="entry-meta">— Sarah</div>
+      <a class="entry-thumb" href="putting-up/" tabindex="-1" aria-hidden="true"><img src="/images/putting-up-tomatoes.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">August 1, 2026</div>
+          <h2 class="entry-title">
+            <a href="putting-up/">Putting Up</a>
+          </h2>
+          <p class="entry-blurb">
+            The tomatoes came in all at once this week, the way they always do,
+            faster than four people can eat them. So you stand at the table and put
+            summer in jars. What you're really keeping isn't the tomatoes.
+          </p>
+          <div class="entry-meta">— Sarah</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">July 27, 2026</div>
-      <h2 class="entry-title">
-        <a href="a-boat-we-didnt-have-to-fix/">A Boat We Didn't Have to Fix</a>
-      </h2>
-      <p class="entry-blurb">
-        Mara had been talking up a marina pub over on Lake Hickory since spring. A
-        couple named Dan and Meagen Kelly left their careful corporate life a few
-        years back and put it all on a dock and a grill at the edge of the water.
-        Turns out the best kind of boat is the one that is somebody else's to
-        worry about.
-      </p>
-      <div class="entry-meta">— Sarah</div>
+      <a class="entry-thumb" href="a-boat-we-didnt-have-to-fix/" tabindex="-1" aria-hidden="true"><img src="/images/a-boat-we-didnt-have-to-fix-hero.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">July 27, 2026</div>
+          <h2 class="entry-title">
+            <a href="a-boat-we-didnt-have-to-fix/">A Boat We Didn't Have to Fix</a>
+          </h2>
+          <p class="entry-blurb">
+            Mara had been talking up a marina pub over on Lake Hickory since spring. A
+            couple named Dan and Meagen Kelly left their careful corporate life a few
+            years back and put it all on a dock and a grill at the edge of the water.
+            Turns out the best kind of boat is the one that is somebody else's to
+            worry about.
+          </p>
+          <div class="entry-meta">— Sarah</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">July 26, 2026</div>
-      <h2 class="entry-title">
-        <a href="one-yard-left/">One Yard Left</a>
-      </h2>
-      <p class="entry-blurb">
-        They paved over the Brickyard in 1961, all but a single yard of it at the
-        start-finish line. Three million bricks buried under the asphalt, one
-        strip left to kiss. Daddy never ran that place, but he can tell you every
-        layer of it.
-      </p>
-      <div class="entry-meta">— Sarah</div>
+      <a class="entry-thumb" href="one-yard-left/" tabindex="-1" aria-hidden="true"><img src="/images/one-yard-left-hero.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">July 26, 2026</div>
+          <h2 class="entry-title">
+            <a href="one-yard-left/">One Yard Left</a>
+          </h2>
+          <p class="entry-blurb">
+            They paved over the Brickyard in 1961, all but a single yard of it at the
+            start-finish line. Three million bricks buried under the asphalt, one
+            strip left to kiss. Daddy never ran that place, but he can tell you every
+            layer of it.
+          </p>
+          <div class="entry-meta">— Sarah</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">July 25, 2026</div>
-      <h2 class="entry-title">
-        <a href="which-one-to-buy/">Which One to Buy</a>
-      </h2>
-      <p class="entry-blurb">
-        People find out I run the smoker and the first thing they want is a
-        recommendation. The machine matters less than showing up to feed it. But
-        if you're set on spending the money, some friends of ours did the homework.
-      </p>
-      <div class="entry-meta">— Sarah</div>
+      <a class="entry-thumb" href="which-one-to-buy/" tabindex="-1" aria-hidden="true"><img src="/images/which-one-to-buy-hero.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">July 25, 2026</div>
+          <h2 class="entry-title">
+            <a href="which-one-to-buy/">Which One to Buy</a>
+          </h2>
+          <p class="entry-blurb">
+            People find out I run the smoker and the first thing they want is a
+            recommendation. The machine matters less than showing up to feed it. But
+            if you're set on spending the money, some friends of ours did the homework.
+          </p>
+          <div class="entry-meta">— Sarah</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">July 22, 2026</div>
-      <h2 class="entry-title">
-        <a href="ahead-of-the-weekend/">Ahead of the Weekend</a>
-      </h2>
-      <p class="entry-blurb">
-        The Meg turned up with a can that isn't supposed to be out until the
-        weekend. Cinnamon roll in a glass, she said, like that settled it. Took
-        a porch and a cold biscuit to work out what it actually wanted.
-      </p>
-      <div class="entry-meta">— Caleb</div>
+      <a class="entry-thumb" href="ahead-of-the-weekend/" tabindex="-1" aria-hidden="true"><img src="/images/ahead-of-the-weekend-hero.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">July 22, 2026</div>
+          <h2 class="entry-title">
+            <a href="ahead-of-the-weekend/">Ahead of the Weekend</a>
+          </h2>
+          <p class="entry-blurb">
+            The Meg turned up with a can that isn't supposed to be out until the
+            weekend. Cinnamon roll in a glass, she said, like that settled it. Took
+            a porch and a cold biscuit to work out what it actually wanted.
+          </p>
+          <div class="entry-meta">— Caleb</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">July 20, 2026</div>
-      <h2 class="entry-title">
-        <a href="last-on-the-list/">Last on the List</a>
-      </h2>
-      <p class="entry-blurb">
-        Stone walls are the one thing people actually pay me to build. My own
-        riverbank has sat half-done for five years, waiting on an evening I've
-        got nothing left to give it. Turns out those are the only evenings it
-        ever gets.
-      </p>
-      <div class="entry-meta">— Caleb</div>
+      <a class="entry-thumb" href="last-on-the-list/" tabindex="-1" aria-hidden="true"><img src="/images/last-on-the-list-hero.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">July 20, 2026</div>
+          <h2 class="entry-title">
+            <a href="last-on-the-list/">Last on the List</a>
+          </h2>
+          <p class="entry-blurb">
+            Stone walls are the one thing people actually pay me to build. My own
+            riverbank has sat half-done for five years, waiting on an evening I've
+            got nothing left to give it. Turns out those are the only evenings it
+            ever gets.
+          </p>
+          <div class="entry-meta">— Caleb</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">July 18, 2026</div>
-      <h2 class="entry-title">
-        <a href="never-on-the-road/">Never on the Road</a>
-      </h2>
-      <p class="entry-blurb">
-        Everybody in Wilkes County claims a piece of Junior Johnson. My daddy
-        raced the tail end of what he started. They never caught that man on the
-        road. Only ever standing still.
-      </p>
-      <div class="entry-meta">— Sarah</div>
+      <a class="entry-thumb" href="never-on-the-road/" tabindex="-1" aria-hidden="true"><img src="/images/never-on-the-road-hero.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">July 18, 2026</div>
+          <h2 class="entry-title">
+            <a href="never-on-the-road/">Never on the Road</a>
+          </h2>
+          <p class="entry-blurb">
+            Everybody in Wilkes County claims a piece of Junior Johnson. My daddy
+            raced the tail end of what he started. They never caught that man on the
+            road. Only ever standing still.
+          </p>
+          <div class="entry-meta">— Sarah</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">July 18, 2026</div>
-      <h2 class="entry-title">
-        <a href="between-sets/">Between Sets</a>
-      </h2>
-      <p class="entry-blurb">
-        Hickory got its first jazz room, and the Meg called the day it opened.
-        Twenty years I'd worn out the same records in the garage. A record you
-        can play again. This you couldn't.
-      </p>
-      <div class="entry-meta">— Caleb</div>
+      <a class="entry-thumb" href="between-sets/" tabindex="-1" aria-hidden="true"><img src="/images/between-sets-hero.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">July 18, 2026</div>
+          <h2 class="entry-title">
+            <a href="between-sets/">Between Sets</a>
+          </h2>
+          <p class="entry-blurb">
+            Hickory got its first jazz room, and the Meg called the day it opened.
+            Twenty years I'd worn out the same records in the garage. A record you
+            can play again. This you couldn't.
+          </p>
+          <div class="entry-meta">— Caleb</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">July 13, 2026</div>
-      <h2 class="entry-title">
-        <a href="between-cautions/">Between Cautions</a>
-      </h2>
-      <p class="entry-blurb">
-        Race weekend, and Daddy has a podcast going on his phone. He does not
-        trust anybody under fifty to talk about racing, so hearing him turn it
-        up meant something. Some torches get passed quiet.
-      </p>
-      <div class="entry-meta">— Sarah</div>
+      <a class="entry-thumb" href="between-cautions/" tabindex="-1" aria-hidden="true"><img src="/images/between-cautions-hero.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">July 13, 2026</div>
+          <h2 class="entry-title">
+            <a href="between-cautions/">Between Cautions</a>
+          </h2>
+          <p class="entry-blurb">
+            Race weekend, and Daddy has a podcast going on his phone. He does not
+            trust anybody under fifty to talk about racing, so hearing him turn it
+            up meant something. Some torches get passed quiet.
+          </p>
+          <div class="entry-meta">— Sarah</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">July 8, 2026</div>
-      <h2 class="entry-title">
-        <a href="thirty-three-hundred/">Thirty-Three Hundred</a>
-      </h2>
-      <p class="entry-blurb">
-        There's a Chambourcin they pour up in Banner Elk with a number on the
-        label instead of a name. The number is the elevation. A day up the
-        Watauga to go find where it comes from.
-      </p>
-      <div class="entry-meta">— Sarah</div>
+      <a class="entry-thumb" href="thirty-three-hundred/" tabindex="-1" aria-hidden="true"><img src="/images/grandfather-vineyard-banner-elk.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">July 8, 2026</div>
+          <h2 class="entry-title">
+            <a href="thirty-three-hundred/">Thirty-Three Hundred</a>
+          </h2>
+          <p class="entry-blurb">
+            There's a Chambourcin they pour up in Banner Elk with a number on the
+            label instead of a name. The number is the elevation. A day up the
+            Watauga to go find where it comes from.
+          </p>
+          <div class="entry-meta">— Sarah</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">July 5, 2026</div>
-      <h2 class="entry-title">
-        <a href="nobody-told-them/">Nobody Told Them</a>
-      </h2>
-      <p class="entry-blurb">
-        They chained the gate in 1996 and left it twenty-seven years.
-        The All-Star show came back a few summers ago, but the points
-        race is the real one, and it's two weeks out. Most things
-        don't get a second half.
-      </p>
-      <div class="entry-meta">— Sarah</div>
+      <a class="entry-thumb" href="nobody-told-them/" tabindex="-1" aria-hidden="true"><img src="/images/nobody-told-them-hero.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">July 5, 2026</div>
+          <h2 class="entry-title">
+            <a href="nobody-told-them/">Nobody Told Them</a>
+          </h2>
+          <p class="entry-blurb">
+            They chained the gate in 1996 and left it twenty-seven years.
+            The All-Star show came back a few summers ago, but the points
+            race is the real one, and it's two weeks out. Most things
+            don't get a second half.
+          </p>
+          <div class="entry-meta">— Sarah</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">June 29, 2026</div>
-      <h2 class="entry-title">
-        <a href="what-lasts/">What Lasts</a>
-      </h2>
-      <p class="entry-blurb">
-        The fireworks tents went up by the highway this week, same as
-        every June. There's a big anniversary riding on this one, but
-        down here it lands quiet. We'll do the Fourth the way we always
-        do, which is probably the only reason any of it lasts.
-      </p>
-      <div class="entry-meta">— Caleb</div>
+      <a class="entry-thumb" href="what-lasts/" tabindex="-1" aria-hidden="true"><img src="/images/what-lasts-hero.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">June 29, 2026</div>
+          <h2 class="entry-title">
+            <a href="what-lasts/">What Lasts</a>
+          </h2>
+          <p class="entry-blurb">
+            The fireworks tents went up by the highway this week, same as
+            every June. There's a big anniversary riding on this one, but
+            down here it lands quiet. We'll do the Fourth the way we always
+            do, which is probably the only reason any of it lasts.
+          </p>
+          <div class="entry-meta">— Caleb</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">June 24, 2026</div>
-      <h2 class="entry-title">
-        <a href="all-the-way-apart/">All the Way Apart</a>
-      </h2>
-      <p class="entry-blurb">
-        Five years into this truck and I'd never had the carburetor all
-        the way off. My week is install work, the kind that sets and
-        stays. This is the other kind.
-      </p>
-      <div class="entry-meta">— Caleb</div>
+      <a class="entry-thumb" href="all-the-way-apart/" tabindex="-1" aria-hidden="true"><img src="/images/all-the-way-apart-hero.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">June 24, 2026</div>
+          <h2 class="entry-title">
+            <a href="all-the-way-apart/">All the Way Apart</a>
+          </h2>
+          <p class="entry-blurb">
+            Five years into this truck and I'd never had the carburetor all
+            the way off. My week is install work, the kind that sets and
+            stays. This is the other kind.
+          </p>
+          <div class="entry-meta">— Caleb</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">June 22, 2026</div>
-      <h2 class="entry-title">
-        <a href="up-the-hill/">Up the Hill</a>
-      </h2>
-      <p class="entry-blurb">
-        Sunday belonged to everybody else, so my dad's Father's Day got
-        saved for a Monday. We drove him up the hill to Blowing Rock, to
-        a patio with the whole ridge behind it.
-      </p>
-      <div class="entry-meta">— Sarah</div>
+      <a class="entry-thumb" href="up-the-hill/" tabindex="-1" aria-hidden="true"><img src="/images/blowing-rock-breakfast.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">June 22, 2026</div>
+          <h2 class="entry-title">
+            <a href="up-the-hill/">Up the Hill</a>
+          </h2>
+          <p class="entry-blurb">
+            Sunday belonged to everybody else, so my dad's Father's Day got
+            saved for a Monday. We drove him up the hill to Blowing Rock, to
+            a patio with the whole ridge behind it.
+          </p>
+          <div class="entry-meta">— Sarah</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">June 21, 2026</div>
-      <h2 class="entry-title">
-        <a href="same-old-songs/">Same Old Songs</a>
-      </h2>
-      <p class="entry-blurb">
-        Wes brought the guitar, which meant the night was going to run
-        long. By the time the fire burned down, the old songs and the
-        old stories were running in the same key.
-      </p>
-      <div class="entry-meta">— Caleb</div>
+      <a class="entry-thumb" href="same-old-songs/" tabindex="-1" aria-hidden="true"><img src="/images/same-old-songs-fire.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">June 21, 2026</div>
+          <h2 class="entry-title">
+            <a href="same-old-songs/">Same Old Songs</a>
+          </h2>
+          <p class="entry-blurb">
+            Wes brought the guitar, which meant the night was going to run
+            long. By the time the fire burned down, the old songs and the
+            old stories were running in the same key.
+          </p>
+          <div class="entry-meta">— Caleb</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">June 21, 2026</div>
-      <h2 class="entry-title">
-        <a href="tomato-pie/">Tomato Pie</a>
-      </h2>
-      <p class="entry-blurb">
-        The race is in San Diego this year. A street course on a Navy
-        base, three time zones away. The tomato pie goes in at four.
-      </p>
-      <div class="entry-meta">— Sarah</div>
+      <a class="entry-thumb" href="tomato-pie/" tabindex="-1" aria-hidden="true"><img src="/images/tomato-pie-hero.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">June 21, 2026</div>
+          <h2 class="entry-title">
+            <a href="tomato-pie/">Tomato Pie</a>
+          </h2>
+          <p class="entry-blurb">
+            The race is in San Diego this year. A street course on a Navy
+            base, three time zones away. The tomato pie goes in at four.
+          </p>
+          <div class="entry-meta">— Sarah</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">June 17, 2026</div>
-      <h2 class="entry-title">
-        <a href="opening-day/">Opening Day</a>
-      </h2>
-      <p class="entry-blurb">
-        My cousin Wade's been texting me pictures of a grocery store
-        all afternoon. Kannapolis gets its Lowes Foods tomorrow. Then
-        I saw what he found in the beer cooler.
-      </p>
-      <div class="entry-meta">— Caleb</div>
+      <a class="entry-thumb" href="opening-day/" tabindex="-1" aria-hidden="true"><img src="/images/opening-day-hero.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">June 17, 2026</div>
+          <h2 class="entry-title">
+            <a href="opening-day/">Opening Day</a>
+          </h2>
+          <p class="entry-blurb">
+            My cousin Wade's been texting me pictures of a grocery store
+            all afternoon. Kannapolis gets its Lowes Foods tomorrow. Then
+            I saw what he found in the beer cooler.
+          </p>
+          <div class="entry-meta">— Caleb</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">June 13, 2026</div>
-      <h2 class="entry-title">
-        <a href="the-rain-gauge/">The Rain Gauge</a>
-      </h2>
-      <p class="entry-blurb">
-        I've been watching two radars all week. One for Pocono.
-        One for here.
-      </p>
-      <div class="entry-meta">— Caleb</div>
+      <a class="entry-thumb" href="the-rain-gauge/" tabindex="-1" aria-hidden="true"><img src="/images/rain-gauge-hero.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">June 13, 2026</div>
+          <h2 class="entry-title">
+            <a href="the-rain-gauge/">The Rain Gauge</a>
+          </h2>
+          <p class="entry-blurb">
+            I've been watching two radars all week. One for Pocono.
+            One for here.
+          </p>
+          <div class="entry-meta">— Caleb</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">June 11, 2026</div>
-      <h2 class="entry-title">
-        <a href="filling-station/">Filling Station</a>
-      </h2>
-      <p class="entry-blurb">
-        We didn't plan it. That's the thing about living five minutes
-        from a place — you stop planning and start just going.
-      </p>
-      <div class="entry-meta">— Sarah</div>
+      <a class="entry-thumb" href="filling-station/" tabindex="-1" aria-hidden="true"><img src="/images/filling-station-pizza.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">June 11, 2026</div>
+          <h2 class="entry-title">
+            <a href="filling-station/">Filling Station</a>
+          </h2>
+          <p class="entry-blurb">
+            We didn't plan it. That's the thing about living five minutes
+            from a place — you stop planning and start just going.
+          </p>
+          <div class="entry-meta">— Sarah</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">May 28, 2026</div>
-      <h2 class="entry-title">
-        <a href="19th-and-long/">19th and Long</a>
-      </h2>
-      <p class="entry-blurb">
-        The Meg called me from Nashville on Tuesday. She was at a
-        butcher shop. She wanted me to know about it.
-      </p>
-      <div class="entry-meta">— Sarah</div>
+      <a class="entry-thumb" href="19th-and-long/" tabindex="-1" aria-hidden="true"><img src="/images/19th-and-long-hero.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">May 28, 2026</div>
+          <h2 class="entry-title">
+            <a href="19th-and-long/">19th and Long</a>
+          </h2>
+          <p class="entry-blurb">
+            The Meg called me from Nashville on Tuesday. She was at a
+            butcher shop. She wanted me to know about it.
+          </p>
+          <div class="entry-meta">— Sarah</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">May 21, 2026</div>
-      <h2 class="entry-title">
-        <a href="the-shirt/">The Shirt</a>
-      </h2>
-      <p class="entry-blurb">
-        Pulled the shirt out this morning. Dad's from '88. It doesn't
-        quite fit anymore. I wear it anyway. It's the wearing that
-        matters.
-      </p>
-      <div class="entry-meta">— Sarah</div>
+      <a class="entry-thumb" href="the-shirt/" tabindex="-1" aria-hidden="true"><img src="/images/the-shirt-hero.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">May 21, 2026</div>
+          <h2 class="entry-title">
+            <a href="the-shirt/">The Shirt</a>
+          </h2>
+          <p class="entry-blurb">
+            Pulled the shirt out this morning. Dad's from '88. It doesn't
+            quite fit anymore. I wear it anyway. It's the wearing that
+            matters.
+          </p>
+          <div class="entry-meta">— Sarah</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">May 19, 2026</div>
-      <h2 class="entry-title">
-        <a href="six-hundred-miles/">Six Hundred Miles</a>
-      </h2>
-      <p class="entry-blurb">
-        Race is at Charlotte this weekend. Coca-Cola 600. The long one.
-        We're not going. The property's getting set up for the long one
-        instead.
-      </p>
-      <div class="entry-meta">— Caleb</div>
+      <a class="entry-thumb" href="six-hundred-miles/" tabindex="-1" aria-hidden="true"><img src="/images/six-hundred-miles-hero.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">May 19, 2026</div>
+          <h2 class="entry-title">
+            <a href="six-hundred-miles/">Six Hundred Miles</a>
+          </h2>
+          <p class="entry-blurb">
+            Race is at Charlotte this weekend. Coca-Cola 600. The long one.
+            We're not going. The property's getting set up for the long one
+            instead.
+          </p>
+          <div class="entry-meta">— Caleb</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">May 6, 2026</div>
-      <h2 class="entry-title">
-        <a href="skipping-the-glen/">Skipping the Glen</a>
-      </h2>
-      <p class="entry-blurb">
-        The race is at Watkins Glen this weekend and we're not going.
-        We talked about it for two weeks, looked at the dog, and that
-        was pretty much the conversation.
-      </p>
-      <div class="entry-meta">— Caleb, with Sarah</div>
+      <a class="entry-thumb" href="skipping-the-glen/" tabindex="-1" aria-hidden="true"><img src="/images/hero-property.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">May 6, 2026</div>
+          <h2 class="entry-title">
+            <a href="skipping-the-glen/">Skipping the Glen</a>
+          </h2>
+          <p class="entry-blurb">
+            The race is at Watkins Glen this weekend and we're not going.
+            We talked about it for two weeks, looked at the dog, and that
+            was pretty much the conversation.
+          </p>
+          <div class="entry-meta">— Caleb, with Sarah</div>
+      </div>
     </article>
 
     <article class="entry">
-      <div class="entry-date">May 5, 2026</div>
-      <h2 class="entry-title">
-        <a href="the-year-we-went/">The Year We Went</a>
-      </h2>
-      <p class="entry-blurb">
-        Ten years ago we drove up to the Glen in this truck. It was
-        nine hours. The smoker was in the bed because Caleb insisted.
-        We slept in the cab Friday night because the campground was full.
-      </p>
-      <div class="entry-meta">— Sarah</div>
+      <a class="entry-thumb" href="the-year-we-went/" tabindex="-1" aria-hidden="true"><img src="/images/glen-2016.jpg" alt="" loading="lazy" width="150" height="100" /></a>
+      <div class="entry-text">
+    <div class="entry-date">May 5, 2026</div>
+          <h2 class="entry-title">
+            <a href="the-year-we-went/">The Year We Went</a>
+          </h2>
+          <p class="entry-blurb">
+            Ten years ago we drove up to the Glen in this truck. It was
+            nine hours. The smoker was in the bed because Caleb insisted.
+            We slept in the cab Friday night because the campground was full.
+          </p>
+          <div class="entry-meta">— Sarah</div>
+      </div>
     </article>
 
   </div>
