@@ -11,3 +11,10 @@ dist/
 build/
 .cache/
 *.log
+
+# Local scratch, not part of the published site
+*.bak
+images/*.png
+!images/favicon-*.png
+!images/apple-touch-icon.png
+!images/logo.png

@@ -665,13 +665,42 @@
     <div class="c-dots" id="journalDots" role="tablist" aria-label="Choose a post"></div>
   </div>
 
+  <!-- On the calendar. Copy lives in /calendar.js and advances by date on its
+       own. The markup below is the no-JS fallback; keep it current-ish but it
+       does not need weekly attention. -->
   <div class="upcoming" style="max-width:580px;margin:64px auto 0;padding:0 20px;text-align:center;">
     <div style="font-family:'Special Elite',monospace;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:#a23b1f;margin-bottom:14px;">On the calendar</div>
-    <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:24px;line-height:1.35;color:#1c1f26;margin-bottom:10px;">Bristol. September 19.</div>
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#4a4d55;line-height:1.65;">Cup cars run the night race at Bristol on the nineteenth, half a mile of concrete banked up like a coliseum. Ricky ran bullrings a fraction the size of it, and he'll tell you Bristol is the last big track that still races like the little ones did. The pot goes on the burner either way.</div>
+    <div id="calKicker" style="font-family:'Playfair Display',serif;font-style:italic;font-size:24px;line-height:1.35;color:#1c1f26;margin-bottom:10px;">Darlington. Labor Day.</div>
+    <div id="calBody" style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#4a4d55;line-height:1.65;">The Southern 500 runs Sunday evening on a track shaped wrong on purpose, and the cars come out in paint from thirty and forty years back. Ricky watches his own decade go by in somebody else's colors. Sarah wears the shirt, which is not a throwback because it never left.</div>
   </div>
 
 </section>
+
+<script src="/calendar.js"></script>
+<script>
+(function () {
+  var list = window.TR_CALENDAR;
+  var kickerEl = document.getElementById('calKicker');
+  var bodyEl = document.getElementById('calBody');
+  if (!kickerEl || !bodyEl || !list || !list.length) return;
+
+  // Local midnight today as YYYY-MM-DD, so an entry stays up through its own day.
+  var n = new Date();
+  var today = n.getFullYear() + '-' +
+              String(n.getMonth() + 1).padStart(2, '0') + '-' +
+              String(n.getDate()).padStart(2, '0');
+
+  var next = null;
+  for (var i = 0; i < list.length; i++) {
+    if (list[i].date >= today) { next = list[i]; break; }
+  }
+  if (!next) next = window.TR_CALENDAR_OFFSEASON;
+  if (!next) return;
+
+  kickerEl.textContent = next.kicker;
+  bodyEl.textContent = next.body;
+})();
+</script>
 
 <footer>
   <div class="footer-inner">
