@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1c1f26" />
+  <title>Low Water | Throttle &amp; Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Low Water" />
+  <meta property="og:description" content="The river came up twice this summer, hard enough both times to move things that had not moved in fifty years. Now the heat is back and it has dropped far enough to hand over a gravel bar and everything the high water set down on it." />
+  <meta property="og:image" content="https://throttleandrust.com/images/low-water.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/low-water" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 60%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Low Water",
+  "description": "The river came up twice this summer, hard enough both times to move things that had not moved in fifty years. Now the heat is back and it has dropped far enough to hand over a gravel bar and everything the high water set down on it.",
+  "image": "https://throttleandrust.com/images/low-water.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Sarah Whitaker"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Throttle & Rust",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://throttleandrust.com/images/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://throttleandrust.com/journal/low-water"
+  },
+  "url": "https://throttleandrust.com/journal/low-water",
+  "datePublished": "2026-09-03",
+  "dateModified": "2026-09-03"
+}
+  </script>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/low-water.jpg"
+    alt="Wet hands cupping smooth river stones and a piece of worn green bottle glass above a pale gravel bar, canvas sneakers and an upturned ball cap holding a rusted horseshoe and a bolt in the foreground, an old yellow lab asleep and soft on the bank behind, low ridge and tree line across the water"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Sarah</span>
+      <span class="divider"></span>
+      <span class="location">Happy Valley, NC</span>
+    </div>
+
+    <h1>Low Water</h1>
+
+    <div class="post-body">
+
+      <p>The river has not made up its mind all year.</p>
+
+      <p>It came up twice this summer. Once in the spring and once again in July, both times fast, both times higher than anybody wanted. Then it quit raining the way it quits around here, all at once and for good, and the heat came back, and now there is a bar of gravel out behind the house that is not there in June. June it is four feet of moving water. Right now you can walk out on it barefoot and stand where the middle of the river usually is.</p>
+
+      <p>Went down before supper because the light was good and the water is still warm on top, which it only is for about two weeks a year.</p>
+
+      <p>What is out there now is not what was out there in May.</p>
+
+      <p>A horseshoe, rusted down thin as a bookmark. A bolt as big around as my thumb, which Caleb looked at a while and then said had not come off anything he has ever owned, said it like it was a compliment to the bolt. Half a brick with one flat face still square. A piece of bottle glass, pale green, worn cloudy on every edge and small enough to close a hand around. A shoe sole with no shoe left on it.</p>
+
+      <p>None of that washed up from nowhere. It came from somewhere upstream, off somebody's bank or out from under somebody's barn, and the water carried it down here and set it down and went on. Lost is a word for things that went somewhere and cannot be found. Every one of those got found. Just not by the person who dropped it.</p>
+
+      <p>It went harder on people closer to town than it went on us, and we knew that while it was happening. A gravel bar full of other people's things is an easy thing to enjoy from up here on a dry evening. Worth saying out loud that it cost somebody something to put it there.</p>
+
+      <p>The kids have been down twice since Friday and come back with pockets full and wet to the shoulder.</p>
+
+      <p>Crank walked down with me and made it about as far as the sycamore before he laid down in the grass and was asleep before I had my shoes off. The duck was already in the shallows and stayed in the shallows and was, as usual, pleased with itself.</p>
+
+      <p>It will come up again. It always does, and the bar goes under, and by the time the leaves turn you would not know any of it was down there. Nothing gets taken back. It just gets moved and covered up and handed to somebody else.</p>
+
+      <p>Which is a strange thing to like about a river, and I like it.</p>
+
+      <p>S</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Happy Valley, NC &nbsp;·&nbsp; What the Water Leaves</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+  </footer>
+
+</body>
+</html>
