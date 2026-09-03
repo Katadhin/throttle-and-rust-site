@@ -146,6 +146,23 @@
       margin: 56px 0 40px;
     }
 
+    .post-note {
+      font-size: 0.8rem;
+      line-height: 1.7;
+      color: var(--charcoal);
+      opacity: 0.55;
+      margin-bottom: 22px;
+    }
+
+    .post-note a {
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .post-note a:hover { border-bottom-color: var(--rust); }
+
     .post-tag {
       font-size: 0.68rem;
       letter-spacing: 0.14em;
@@ -183,6 +200,10 @@
       nav ul { display: none; }
       .post-wrap { padding: 40px 20px 72px; }
     }
+
+    .footer-social { margin-bottom: 12px; }
+    footer a { color: var(--cream); text-decoration: none; border-bottom: 1px solid transparent; }
+    footer a:hover { border-bottom-color: var(--cream); }
   </style>
   <script type="application/ld+json">
 {
@@ -277,6 +298,8 @@
 
     <hr class="post-rule" />
 
+    <p class="post-note">The place is <a href="https://www.lakehickorypubandmarina.com/" target="_blank" rel="noopener">Lake Hickory Pub &amp; Marina</a>, on Limbaugh Lane in Hickory.</p>
+
     <span class="post-tag">Hickory, NC &nbsp;·&nbsp; Places We Go</span>
 
     <br />
@@ -285,7 +308,8 @@
   </div>
 
   <footer>
-    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+    <div class="footer-social"><a href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener">TikTok</a> · <a href="https://x.com/throttleandrust" target="_blank" rel="noopener">X</a> · <a href="https://www.youtube.com/@Throttle_and_Rust" target="_blank" rel="noopener">YouTube</a></div>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA &nbsp;·&nbsp; <a class="footer-note" href="/about/#how-this-is-made">How this is made</a>
   </footer>
 
 </body>

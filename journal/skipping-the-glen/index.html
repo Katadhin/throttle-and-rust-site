@@ -258,7 +258,12 @@
     footer { padding: 28px 20px; }
     .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
   }
-</style>
+
+  .footer-social a { color: var(--ink-faint); text-decoration: none; border-bottom: 1px solid transparent; }
+  .footer-social a:hover { color: var(--rust); border-bottom-color: var(--rust); }
+  .footer-note { color: var(--ink-faint); text-decoration: none; border-bottom: 1px solid transparent; }
+  .footer-note:hover { color: var(--rust); border-bottom-color: var(--rust); }
+  </style>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -387,7 +392,8 @@
   <div class="footer-inner">
     <div class="footer-left"><a href="../../">Throttle &amp; Rust</a></div>
     <div class="footer-right">
-      <span class="credit">site by the Meg</span> · 2026
+      <span class="footer-social"><a href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener">TikTok</a> · <a href="https://x.com/throttleandrust" target="_blank" rel="noopener">X</a> · <a href="https://www.youtube.com/@Throttle_and_Rust" target="_blank" rel="noopener">YouTube</a></span><br />
+      <span class="credit">site by the Meg</span> · 2026 · <a class="footer-note" href="/about/#how-this-is-made">How this is made</a>
     </div>
   </div>
 </footer>

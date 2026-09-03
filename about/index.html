@@ -145,6 +145,35 @@
     text-align: right;
   }
   .signoff::before { content: "— "; color: var(--rust); font-style: normal; }
+  .disclosure {
+    max-width: var(--max-width);
+    margin: 64px auto 0;
+    border-top: 1px solid var(--ink);
+    padding-top: 28px;
+  }
+  .disclosure-title {
+    font-family: 'Special Elite', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .disclosure p {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    line-height: 1.9;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  .disclosure p:last-child { margin-bottom: 0; }
+  .disclosure a {
+    color: var(--ink-soft);
+    border-bottom: 1px solid var(--ink-faint);
+    text-decoration: none;
+  }
+  .disclosure a:hover { color: var(--rust); border-bottom-color: var(--rust); }
+
   .contact {
     margin: 64px auto 0;
     text-align: center;
@@ -272,6 +301,18 @@
   <div class="contact">
     <p class="contact-line">If you need us, write Sarah.</p>
   </div>
+
+  <section class="disclosure" id="how-this-is-made">
+    <h2 class="disclosure-title">How this is made</h2>
+
+    <p>Throttle &amp; Rust is a work of fiction. Caleb and Sarah Whitaker are characters. The property, the truck, the dog, the duck, and the people who turn up at the fire were invented, and the journal entries are stories rather than reporting.</p>
+
+    <p>The writing and most of the photography are made with AI tools, directed and edited by a person, and reviewed before anything goes up. Nothing here is a photograph of a real family.</p>
+
+    <p>Real places do turn up. Happy Valley, the Yadkin, North Wilkesboro, Hickory, and a handful of businesses around the North Carolina foothills are real, and they get named the way you would name them in conversation. A mention is not an endorsement and does not imply any affiliation. Where a business has actually worked with us, the entry says so plainly. Real racing history stays inside what the record supports.</p>
+
+    <p>If you own or run a place named here and would rather not be, write to <a href="mailto:sarah@throttleandrust.com">sarah@throttleandrust.com</a> and it comes down. No argument and no delay.</p>
+  </section>
 
   <a href="/journal/" class="backlink">&larr; Read the journal</a>
 
