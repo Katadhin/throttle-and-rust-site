@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1c1f26" />
+  <title>Somebody Else's 1988 | Throttle &amp; Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Somebody Else's 1988" />
+  <meta property="og:description" content="The paint for Sunday is already out, schemes from the year my dad drove four races for a team that folded inside it. He scrolled through pictures of his own decade for sale and said about four words. My shirt is from that year too, and nobody ever put it on a car." />
+  <meta property="og:image" content="https://throttleandrust.com/images/somebody-elses-1988-hero.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/somebody-elses-1988" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 60%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+
+
+    .post-figure { margin: 44px 0; }
+    .post-figure img { width: 100%; display: block; filter: saturate(0.88) contrast(1.04); }
+    .post-figure figcaption {
+      margin-top: 10px;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.45;
+    }
+    .footer-social { margin-bottom: 12px; }
+    footer a { color: var(--cream); text-decoration: none; border-bottom: 1px solid transparent; }
+    footer a:hover { border-bottom-color: var(--cream); }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Somebody Else's 1988",
+  "description": "The paint for Sunday is already out, schemes from the year my dad drove four races for a team that folded inside it. He scrolled through pictures of his own decade for sale and said about four words. My shirt is from that year too, and nobody ever put it on a car.",
+  "image": "https://throttleandrust.com/images/somebody-elses-1988-hero.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Sarah Whitaker"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Throttle & Rust",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://throttleandrust.com/images/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://throttleandrust.com/journal/somebody-elses-1988"
+  },
+  "url": "https://throttleandrust.com/journal/somebody-elses-1988",
+  "datePublished": "2026-09-03",
+  "dateModified": "2026-09-03"
+}
+  </script>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/somebody-elses-1988-hero.jpg"
+    alt="A woman seen from behind in a thin faded gray t-shirt in a side yard at golden hour, an older man's hands resting on the arm of a green canvas folding chair at the edge of the frame, a cast-iron pot steaming on a low propane burner behind her, an old yellow lab asleep and soft near the far chair legs, one low tree-covered ridge across the grass"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Sarah</span>
+      <span class="divider"></span>
+      <span class="location">Happy Valley, NC</span>
+    </div>
+
+    <h1>Somebody Else's 1988</h1>
+
+    <div class="post-body">
+
+      <p>The shirt is out of the drawer. Faded gray, red letters, the same one it has been since I was sixteen. That is the rule in this house and nobody ever wrote it down. Race weekend, the shirt comes out. Daddy has never once mentioned it and would notice immediately if it did not.</p>
+
+      <p>He and Mama came over Tuesday, which they do not usually do in the middle of the week. He got the pot out and put it on anyway, six hours ahead of nothing at all, because Sunday is coming and he wanted to.</p>
+
+      <p>The paint for Sunday is already out. That is the thing they do at that track this time of year, teams putting schemes from thirty and forty years back on cars that have nothing else in common with them, and the pictures go around for a week before anybody takes a green flag. Colors that were on every hauler in the lot when Daddy was running. Big blocks of orange and yellow, numbers in a font nobody uses anymore, sponsors that have not existed since before I could drive.</p>
+
+      <p>Handed him my phone and he scrolled a while without saying anything.</p>
+
+      <figure class="post-figure">
+        <img src="../../images/ol-dogs-and-mountains.jpg" alt="A woman seen from behind in a faded gray t-shirt with a worn red back print, an older man's hands on the arm of a green folding chair, a cast-iron pot steaming on a burner, an old yellow lab asleep on a blanket, low ridge behind" />
+        <figcaption>The other shirt, a couple of weekends back</figcaption>
+      </figure>
+
+      <p>Then he went quiet. Not upset quiet. The other one, where he is somewhere else in his head and you leave him there.</p>
+
+      <p>Asked him about it. He said the colors were right and the rest of it was not, and that was as far as he went. Pressed him a little. He said it looks like a costume of a thing he used to wear to work.</p>
+
+      <p>Mama, from the other chair, not looking up: it was never that pretty when you were doing it. He said no it was not. That was the closest anybody came to talking about it.</p>
+
+      <p>The thing about a throwback is somebody decided your decade was worth selling back. Which is a compliment, and it is also a business, and Daddy has been around long enough to know both those things are true at once and to not need to say which one bothers him.</p>
+
+      <p>My shirt is from 1988 too. Four races, a team that folded inside the year, a rubber band around the box of stuff that came home with it. Nobody put that on a car. Nobody is going to. It went from his closet to my drawer and it comes out three or four times a year and goes back, and that is the entire distribution.</p>
+
+      <p>Which is the part that keeps. Not the paint. The paint is somebody else's now and there is money in it and that is fine. But there is a whole layer under the part worth selling, guys who ran mid-pack on Saturday nights and went to work Monday, and that layer does not get a scheme. It gets a drawer in a house in Caldwell County and a daughter who keeps putting the shirt on.</p>
+
+      <p>Sunday he will sit in that chair and watch every lap of it and say about four words. I will have the shirt on. Neither one of those is an accident.</p>
+
+      <p>S</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Happy Valley, NC &nbsp;·&nbsp; Handed Down</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    <div class="footer-social"><a href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener">TikTok</a> · <a href="https://x.com/throttleandrust" target="_blank" rel="noopener">X</a> · <a href="https://www.youtube.com/@Throttle_and_Rust" target="_blank" rel="noopener">YouTube</a></div>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA &nbsp;·&nbsp; <a class="footer-note" href="/about/#how-this-is-made">How this is made</a>
+  </footer>
+
+</body>
+</html>
