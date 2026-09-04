@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1c1f26" />
+  <title>Ol' Dogs and Mountains | Throttle &amp; Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Ol' Dogs and Mountains" />
+  <meta property="og:description" content="Somebody gave me a shirt two Christmases ago with a saying on the back, and it took until Sunday evening to notice the saying was not a saying. It was a list." />
+  <meta property="og:image" content="https://throttleandrust.com/images/ol-dogs-and-mountains.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/ol-dogs-and-mountains" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 40%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+
+    .footer-social { margin-bottom: 12px; }
+    footer a { color: var(--cream); text-decoration: none; border-bottom: 1px solid transparent; }
+    footer a:hover { border-bottom-color: var(--cream); }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Ol' Dogs and Mountains",
+  "description": "Somebody gave me a shirt two Christmases ago with a saying on the back, and it took until Sunday evening to notice the saying was not a saying. It was a list.",
+  "image": "https://throttleandrust.com/images/ol-dogs-and-mountains.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Sarah Whitaker"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Throttle & Rust",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://throttleandrust.com/images/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://throttleandrust.com/journal/ol-dogs-and-mountains"
+  },
+  "url": "https://throttleandrust.com/journal/ol-dogs-and-mountains",
+  "datePublished": "2026-09-03",
+  "dateModified": "2026-09-03"
+}
+  </script>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/ol-dogs-and-mountains.jpg"
+    alt="A woman seen from behind in a faded gray t-shirt in a side yard at golden hour, an older man's hands resting on the arm of a green canvas folding chair at the left edge of the frame with no face visible, a cast-iron pot steaming on a low propane burner in the grass, an old yellow lab asleep on a folded blanket, garden fence and porch to the left, a mown path running back to one low tree-covered ridge"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Sarah</span>
+      <span class="divider"></span>
+      <span class="location">Happy Valley, NC</span>
+    </div>
+
+    <h1>Ol' Dogs and Mountains</h1>
+
+    <div class="post-body">
+
+      <p>Everybody came down for the weekend. Daddy and Mama drove over Saturday, Wes came Sunday, the Meg got here late with wine nobody needed and everybody drank anyway. The table came out of the rafters Friday and did not go back until Tuesday.</p>
+
+      <p>The pot went on Sunday afternoon and sat there doing what it does, which is nothing anybody can rush. Daddy checked it twice in six hours and stirred it neither time. The race was on inside with the door open and the sound carrying out into the yard, which is how it always is when everybody is here, and nobody watched more than a third of it.</p>
+
+      <p>Wore the shirt somebody gave me two Christmases back. Gray, gone soft, red letters across the back worn thin enough that you have to be close to read them. It says OL' DOGS AND MOUNTAINS. Thought it was a nice thing to put on a shirt and did not think about it past that.</p>
+
+      <p>Came out with a plate around seven and stopped on the steps.</p>
+
+      <p>Crank was flat on the blanket next to the burner where the heat is, which is where he has been every Sunday since May, snoring hard enough that Wes had already made a joke about it. Behind the garden fence the ridge had gone that soft green it goes for about an hour before it quits for the day. Daddy had his hand on the arm of the chair and was not saying anything to anybody, which with him is a form of being pleased.</p>
+
+      <p>Stood there long enough that the plate got warm on the bottom.</p>
+
+      <p>It is not a saying. It is a list.</p>
+
+      <p>Old dog. Mountains. Both of them right there, one asleep and one going dark, and I was wearing the inventory across my back like a person who had checked.</p>
+
+      <p>The thing is neither one of those is impressive. A dog too old to get up for company and a hill you cannot see over. Nobody is putting either on a postcard. If you wanted to make this place sound like something you would have to leave both of them out and talk about the river instead.</p>
+
+      <p>But if somebody stopped you on the road and asked what you actually had, and you were not going to dress it up, that is the honest answer and it fits on a shirt. Two things that were here before us and are not going anywhere, and a whole lot of Sundays spent in between them.</p>
+
+      <p>Told Daddy what I had figured out about the shirt. He looked at it for a second and said that is about the size of it. Mama said it was a good shirt and I should quit wearing it to cook in.</p>
+
+      <p>Went back down the steps and ate standing up.</p>
+
+      <p>S</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Happy Valley, NC &nbsp;·&nbsp; What We Actually Have</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    <div class="footer-social"><a href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener">TikTok</a> · <a href="https://x.com/throttleandrust" target="_blank" rel="noopener">X</a> · <a href="https://www.youtube.com/@Throttle_and_Rust" target="_blank" rel="noopener">YouTube</a></div>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA &nbsp;·&nbsp; <a class="footer-note" href="/about/#how-this-is-made">How this is made</a>
+  </footer>
+
+</body>
+</html>
