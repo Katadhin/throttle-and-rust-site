@@ -91,6 +91,30 @@ window.TR_CALENDAR = [
     date: "2026-12-31",
     kicker: "Build season.",
     body: "Cold garage, warm tungsten, the '54 up on stands with more of it apart than together. This is the stretch where the truck actually gets worked on instead of talked about. February is a long way off and that is the point."
+  },
+
+  /* 2027 runway. These three are seasonal rather than dated to a race, on
+     purpose: the 2027 schedule is not out yet, so nothing below claims a
+     start time or a track date. Replace them with real race entries once the
+     schedule is published, and keep at least a few entries ahead of today so
+     the calendar page never runs dry. */
+
+  {
+    date: "2027-01-17",
+    kicker: "Deep winter.",
+    body: "Nothing on the schedule and nothing on the radio, which is the only stretch of the year the garage gets somebody's whole attention. The '54 is further apart in January than it is any other month. Ella Mae calls this the quiet part and means it kindly."
+  },
+
+  {
+    date: "2027-02-14",
+    kicker: "February.",
+    body: "The season comes back the way it always does, in Florida, in the cold half of the year. Ricky starts checking a long-range forecast for a place he has never once been. The pot comes off the shelf a week early."
+  },
+
+  {
+    date: "2027-03-14",
+    kicker: "Spring.",
+    body: "Water comes up in the creeks and the trout start being worth the walk, which pulls Caleb off the truck for the first weekend since October. The season is running by now and the radio stays on in the garage regardless. Nothing about March gets decided."
   }
 
 ];

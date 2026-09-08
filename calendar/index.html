@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- Favicons -->
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png" />
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#1c1f26" />
+<title>On the Calendar — Throttle &amp; Rust</title>
+<meta name="description" content="What is coming up in Happy Valley. Race dates, seasons, and the things that happen here either way." />
+
+<link rel="canonical" href="https://throttleandrust.com/calendar/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Throttle &amp; Rust" />
+<meta property="og:title" content="On the Calendar — Throttle &amp; Rust" />
+<meta property="og:description" content="What is coming up in Happy Valley. Race dates, seasons, and the things that happen here either way." />
+<meta property="og:url" content="https://throttleandrust.com/calendar/" />
+<meta property="og:image" content="https://throttleandrust.com/images/hero-property.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f3eddf;
+    --bg-deep: #ebe3d1;
+    --ink: #1c1f26;
+    --ink-soft: #4a4d55;
+    --ink-faint: #8a8c92;
+    --rust: #a23b1f;
+    --max-width: 620px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 400;
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: 0.06;
+    mix-blend-mode: multiply;
+  }
+  .topbar {
+    position: relative;
+    z-index: 10;
+    padding: 22px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 980px;
+    margin: 0 auto;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .topbar .place-brand, .topbar .links { font-family: 'Special Elite', monospace; }
+  .topbar a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .topbar a:hover { border-bottom-color: var(--ink-soft); }
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 32px 24px 0;
+    position: relative;
+    z-index: 2;
+  }
+  .header {
+    text-align: center;
+    margin: 24px 0 56px;
+  }
+  .header-eyebrow {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 12px;
+  }
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(32px, 5vw, 44px);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .header-sub {
+    margin-top: 18px;
+    font-size: 14px;
+    color: var(--ink-soft);
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* Next up */
+  .next {
+    border-top: 2px solid var(--rust);
+    border-bottom: 1px solid rgba(28, 31, 38, 0.15);
+    padding: 26px 0 40px;
+    margin-bottom: 8px;
+  }
+  .next-label {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 14px;
+  }
+  .next-kicker {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 30px;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .next-body {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+  }
+
+  /* Rolling list */
+  .ahead-label {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 44px 0 4px;
+  }
+  .entry {
+    padding: 26px 0;
+    border-bottom: 1px solid rgba(28, 31, 38, 0.15);
+  }
+  .entry:last-child { border-bottom: none; }
+  .entry-when {
+    font-family: 'Special Elite', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin-bottom: 8px;
+  }
+  .entry-kicker {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .entry-body {
+    font-size: 14.5px;
+    line-height: 1.72;
+    color: var(--ink-soft);
+  }
+
+  .tail {
+    margin-top: 56px;
+    padding-top: 26px;
+    border-top: 1px solid rgba(28, 31, 38, 0.15);
+    font-size: 13px;
+    color: var(--ink-faint);
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+    text-align: center;
+  }
+
+  footer {
+    margin-top: 90px;
+    padding: 36px 32px 32px;
+    position: relative;
+    z-index: 2;
+  }
+  .footer-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    border-top: 1px solid var(--ink);
+    padding-top: 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-family: 'Special Elite', monospace;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .footer-inner a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .footer-inner a:hover { border-bottom-color: var(--ink-soft); }
+  .footer-right { text-align: right; line-height: 2; }
+
+  @media (max-width: 600px) {
+    .topbar { padding: 18px 20px; font-size: 10px; letter-spacing: 0.12em; }
+    .next-kicker { font-size: 25px; }
+    .entry-kicker { font-size: 20px; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+    .footer-right { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="place-brand"><a href="/">Throttle &amp; Rust</a></span>
+  <span class="links"><a href="/journal/">Journal</a> &middot; <a href="/recipes/">Recipes</a> &middot; <a href="/places/">Places</a> &middot; <a href="/calendar/">Calendar</a></span>
+</div>
+
+<div class="container">
+
+  <div class="header">
+    <div class="header-eyebrow">On the calendar</div>
+    <div class="header-title">What&rsquo;s coming up.</div>
+    <div class="header-sub">Race dates, seasons, and the things that happen here either way.</div>
+  </div>
+
+  <div id="calRoot">
+    <!-- No-JS fallback. The list below is rendered from /calendar.js and rolls
+         forward on its own; this static copy is only what a reader sees with
+         scripting off. -->
+    <div class="next">
+      <div class="next-label">Next up</div>
+      <div class="next-kicker">Build season.</div>
+      <div class="next-body">Cold garage, warm tungsten, the &rsquo;54 up on stands with more of it apart than together. This is the stretch where the truck actually gets worked on instead of talked about.</div>
+    </div>
+  </div>
+
+  <div class="tail">Dates move. The pot goes on the burner either way.</div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left"><a href="/">Throttle &amp; Rust</a></div>
+    <div class="footer-right">
+      <span class="footer-social"><a href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener">TikTok</a> · <a href="https://x.com/throttleandrust" target="_blank" rel="noopener">X</a> · <a href="https://www.youtube.com/@Throttle_and_Rust" target="_blank" rel="noopener">YouTube</a></span><br />
+      <span class="credit">site by the Meg</span> &middot; 2026 &middot; <a href="/about/#how-this-is-made">How this is made</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/calendar.js"></script>
+<script>
+(function () {
+  var root = document.getElementById('calRoot');
+  var list = window.TR_CALENDAR;
+  if (!root || !list || !list.length) return;
+
+  // Local midnight today as YYYY-MM-DD, so an entry stays up through its own
+  // day. String comparison is safe because the format is zero-padded ISO.
+  var n = new Date();
+  var today = n.getFullYear() + '-' +
+              String(n.getMonth() + 1).padStart(2, '0') + '-' +
+              String(n.getDate()).padStart(2, '0');
+
+  var ahead = list.filter(function (e) { return e.date >= today; });
+
+  var DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var MONTHS = ['January','February','March','April','May','June',
+                'July','August','September','October','November','December'];
+
+  // Build the date locally rather than via Date.parse, which reads a bare
+  // ISO date as UTC and can render the day before in US time zones.
+  function label(iso) {
+    var p = iso.split('-');
+    var d = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+    return DAYS[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate();
+  }
+
+  function el(cls, text) {
+    var node = document.createElement('div');
+    node.className = cls;
+    node.textContent = text;
+    return node;
+  }
+
+  root.innerHTML = '';
+
+  if (!ahead.length) {
+    var off = window.TR_CALENDAR_OFFSEASON;
+    if (!off) return;
+    var only = document.createElement('div');
+    only.className = 'next';
+    only.appendChild(el('next-label', 'Next up'));
+    only.appendChild(el('next-kicker', off.kicker));
+    only.appendChild(el('next-body', off.body));
+    root.appendChild(only);
+    return;
+  }
+
+  var first = ahead[0];
+  var lead = document.createElement('div');
+  lead.className = 'next';
+  lead.appendChild(el('next-label', 'Next up · ' + label(first.date)));
+  lead.appendChild(el('next-kicker', first.kicker));
+  lead.appendChild(el('next-body', first.body));
+  root.appendChild(lead);
+
+  var rest = ahead.slice(1);
+  if (!rest.length) return;
+
+  root.appendChild(el('ahead-label', 'Further out'));
+
+  rest.forEach(function (e) {
+    var wrap = document.createElement('div');
+    wrap.className = 'entry';
+    wrap.appendChild(el('entry-when', label(e.date)));
+    wrap.appendChild(el('entry-kicker', e.kicker));
+    wrap.appendChild(el('entry-body', e.body));
+    root.appendChild(wrap);
+  });
+})();
+</script>
+
+</body>
+</html>
