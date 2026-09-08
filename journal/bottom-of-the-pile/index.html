@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1c1f26" />
+  <title>The Bottom of the Pile | Throttle &amp; Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="The Bottom of the Pile" />
+  <meta property="og:description" content="The bench in the garage has not been a bench since sometime in June. Anything that needed setting down got set down there, and nothing ever came back off. Turns out you can read a whole summer off a pile of it, bottom to top." />
+  <meta property="og:image" content="https://throttleandrust.com/images/bottom-of-the-pile-hero.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/bottom-of-the-pile" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 70%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+
+
+    .post-figure { margin: 44px 0; }
+    .post-figure img { width: 100%; display: block; filter: saturate(0.88) contrast(1.04); }
+    .post-figure figcaption {
+      margin-top: 10px;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.45;
+    }
+    .footer-social { margin-bottom: 12px; }
+    footer a { color: var(--cream); text-decoration: none; border-bottom: 1px solid transparent; }
+    footer a:hover { border-bottom-color: var(--cream); }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "The Bottom of the Pile",
+  "description": "The bench in the garage has not been a bench since sometime in June. Anything that needed setting down got set down there, and nothing ever came back off. Turns out you can read a whole summer off a pile of it, bottom to top.",
+  "image": "https://throttleandrust.com/images/bottom-of-the-pile-hero.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Caleb Whitaker"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Throttle & Rust",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://throttleandrust.com/images/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://throttleandrust.com/journal/bottom-of-the-pile"
+  },
+  "url": "https://throttleandrust.com/journal/bottom-of-the-pile",
+  "datePublished": "2026-09-08",
+  "dateModified": "2026-09-08"
+}
+  </script>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/bottom-of-the-pile-hero.jpg"
+    alt="A man's two hands resting on the bare edge of a scarred wooden workbench in a garage at early morning, a dented yellow and red coffee tin of loose hardware and a coil of trimmer line and two yellow tape measures in front of him, an old yellow lab asleep and soft on a bed against the far wall, the roll-up door open on a gravel drive and one low tree-covered ridge"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Caleb</span>
+      <span class="divider"></span>
+      <span class="location">Happy Valley, NC</span>
+    </div>
+
+    <h1>The Bottom of the Pile</h1>
+
+    <div class="post-body">
+
+      <p>Table went back up in the rafters this morning. Took ten minutes and both arms, and there is a particular kind of quiet in a garage the week after the house has been full.</p>
+
+      <p>Which is when I looked at the bench.</p>
+
+      <p>Bench has not been a bench since sometime in June. It has been a shelf. Every time something needed setting down in a hurry it got set down there, and once a thing lands on that bench it is very hard to talk it into leaving.</p>
+
+      <p>Went through it bottom to top, which is the only honest way to do it. Down at the bottom, a coil of trimmer line and the good tape measure I bought a second one of in July because I could not find the first one. Above that, a bag of stainless hardware left over from the stone on the riverbank. Then a busted spray nozzle. Then two garden stakes. Then a coffee cup I do not want to discuss.</p>
+
+      <p>You can date a summer off that. Not by a calendar. By which layer a thing is sitting in.</p>
+
+      <p>Nothing on there was truck. That is the part that got me. Five years at the '54 and there was not one piece of it in the stack, because from May to August that bench is where the yard business gets parked and the truck waits its turn like everybody else does.</p>
+
+      <p>Cleared it anyway. Took an hour. Most of it went to the shelf on the far wall, some of it went to the trash, and the tape measure went in the drawer next to the other tape measure where the two of them can keep each other company.</p>
+
+      <p>Can went back in the same spot. It has been on that bench longer than the truck has been in the building and it did not occur to me to put it anywhere else, which is not sentiment. It is that the can knows where it goes.</p>
+
+      <p>Door was open the whole time. Cool enough at seven to want a jacket, first morning like that. Radio on low and nothing on it worth stopping for.</p>
+
+      <p>Bench is a bench again. Nothing on it, all the way across. That will hold about a week before something needs setting down, and I knew that going in, and cleared it anyway.</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Happy Valley, NC &nbsp;·&nbsp; Build Season</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    <div class="footer-social"><a href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener">TikTok</a> · <a href="https://x.com/throttleandrust" target="_blank" rel="noopener">X</a> · <a href="https://www.youtube.com/@Throttle_and_Rust" target="_blank" rel="noopener">YouTube</a></div>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA &nbsp;·&nbsp; <a class="footer-note" href="/about/#how-this-is-made">How this is made</a>
+  </footer>
+
+</body>
+</html>
