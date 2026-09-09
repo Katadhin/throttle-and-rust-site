@@ -1,5 +1,20 @@
 [
   {
+    "slug": "texas-world-speedway",
+    "name": "Texas World Speedway",
+    "place": "College Station, Texas",
+    "state": "TX",
+    "era": "Eight Cup races, 1969–1981",
+    "body": "Texas had a two-mile superspeedway built off the same blueprint as Michigan, and almost nobody remembers it. Texas World Speedway opened in College Station in 1969, hosted eight Cup races, and Richard Petty won three of them. By 2017 it was closed and storing flood-damaged cars. More than half the site is a subdivision now.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Texas_World_Speedway",
+      "https://speedwaydigest.com/index.php/news/speedway-news/399384-history-of-texas-world-speedway-and-what-happened-to-it/",
+      "https://en.wikipedia.org/wiki/NASCAR_Cup_Series_at_Texas_World_Speedway"
+    ],
+    "first": "2026-09-08",
+    "note": "storm name deliberately omitted; the source text naming it was truncated"
+  },
+  {
     "slug": "soldier-field",
     "name": "Soldier Field",
     "place": "Chicago, Illinois",
