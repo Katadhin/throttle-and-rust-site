@@ -11,9 +11,13 @@ entry, and rewrites the ghost-track block in sitemap.xml.
 House rules this generator enforces, because the pages are permanent and the
 social posts they come from were not:
   - No byline anywhere. The section is an unattributed record.
-  - No image tags. Archive photography on this domain is a rights problem the
-    social channel does not have. If art is added later it must be generated,
-    never licensed stock or archive scans.
+  - Generated art only, and it never depicts a cited track. Archive photography
+    on this domain is a rights problem the social channel does not have, and an
+    AI photograph of a real, sourced place sitting above its own citations reads
+    as evidence of that place. So the art here is textless ephemera — a stub, a
+    program, weeds in asphalt — never a rendering of the track in the entry.
+  - Images are optional and self-healing. An entry with no "image" key, or one
+    whose file is not on disk yet, renders text-only and prints a warning.
   - Every entry carries its sources.
 """
 
@@ -26,6 +30,22 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data", "ghost-tracks.json")
 OUT = os.path.join(ROOT, "ghost-tracks")
 SITE = "https://throttleandrust.com"
+
+# Section banner. Doubles as the default social card for any entry with no art
+# of its own. Textless ephemera, no track depicted — see the house rules above.
+BANNER = "/images/ghost-tracks-banner.jpg"
+BANNER_ALT = ("A folded, sun-bleached race program on a truck dash, print worn "
+              "past reading, late afternoon light through the windshield.")
+
+# Stands under every image in this section. The register's whole credibility is
+# that its claims are sourced, so the art has to say out loud that it is not one
+# of the sources.
+DISCLAIM = "Illustration. Not an archive photograph."
+
+
+def have(path):
+    """True if a site-root-relative image path exists on disk."""
+    return bool(path) and os.path.isfile(os.path.join(ROOT, path.lstrip("/")))
 
 NAV = (
     '<span class="links"><a href="/journal/">Journal</a> &middot; '
@@ -110,6 +130,18 @@ CSS = """
   .row-name a { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; }
   .row-name a:hover { color: var(--rust); border-bottom-color: var(--rust); }
   .row-meta { font-family: 'Special Elite', monospace; font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); }
+  .art { margin: 0 0 8px; }
+  .art img {
+    display: block; width: 100%; height: auto;
+    border: 1px solid rgba(28, 31, 38, 0.18);
+    filter: saturate(0.94) contrast(0.97);
+  }
+  .art figcaption {
+    margin-top: 10px; font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: 12.5px; line-height: 1.6; color: var(--ink-faint);
+  }
+  .banner { max-width: var(--max-width); margin: 0 auto 44px; padding: 0 24px; position: relative; z-index: 2; }
+  .entry-art { margin: 26px 0 34px; }
   .entry-title { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: clamp(30px, 5vw, 40px); line-height: 1.18; color: var(--ink); margin-bottom: 14px; }
   .entry-body { font-size: 16px; line-height: 1.8; color: var(--ink); margin-top: 30px; }
   .entry-body p { margin-bottom: 1.5em; }
@@ -161,9 +193,13 @@ ICONS = """<link rel="icon" href="/favicon.ico" sizes="any" />
 <meta name="theme-color" content="#1c1f26" />"""
 
 
-def shell(title, desc, url, body):
+def shell(title, desc, url, body, image=None):
     e = html.escape
-    return f"""<!DOCTYPE html>
+    card = ""
+    if have(image):
+        card = (f'\n<meta property="og:image" content="{SITE}{image}" />'
+                f'\n<meta name="twitter:card" content="summary_large_image" />')
+    page = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -176,7 +212,7 @@ def shell(title, desc, url, body):
 <meta property="og:site_name" content="Throttle &amp; Rust" />
 <meta property="og:title" content="{e(title)}" />
 <meta property="og:description" content="{e(desc)}" />
-<meta property="og:url" content="{url}" />
+<meta property="og:url" content="{url}" />{card}
 {FONTS}
 <style>{CSS}</style>
 </head>
@@ -202,6 +238,8 @@ def shell(title, desc, url, body):
 </body>
 </html>
 """
+    # optional blocks leave gaps behind when they are empty
+    return re.sub(r"\n{3,}", "\n\n", page)
 
 
 def detail(entry, prev_e, next_e):
@@ -211,6 +249,16 @@ def detail(entry, prev_e, next_e):
         f'<li><a href="{s}" target="_blank" rel="noopener nofollow">{e(s)}</a></li>'
         for s in entry["sources"])
     note = f'<div class="note">Note: {e(entry["note"])}.</div>' if entry.get("note") else ""
+
+    art, img = "", entry.get("image")
+    if img and not have(img):
+        print("  warning: %s references %s, which is not on disk — rendering text-only"
+              % (entry["slug"], img))
+    elif img:
+        cap = (f'{e(entry["caption"])} {DISCLAIM}'
+               if entry.get("caption") else DISCLAIM)
+        art = (f'<figure class="art entry-art"><img src="{img}" alt="{e(entry.get("alt", ""))}" '
+               f'loading="lazy" /><figcaption>{cap}</figcaption></figure>')
 
     pager = '<div class="pager">'
     pager += (f'<a href="/ghost-tracks/{prev_e["slug"]}/">&larr; {e(prev_e["name"])}</a>'
@@ -223,6 +271,7 @@ def detail(entry, prev_e, next_e):
   <div class="header-eyebrow" style="margin-top:26px;">Ghost tracks</div>
   <h1 class="entry-title">{e(entry['name'])}</h1>
   <div class="meta">{e(entry['place'])} &nbsp;&middot;&nbsp; {e(entry['era'])}</div>
+  {art}
 
   <div class="entry-body">{paras}</div>
 
@@ -236,7 +285,8 @@ def detail(entry, prev_e, next_e):
 </div>"""
     desc = entry["body"].strip().split(". ")[0][:180]
     return shell(f"{entry['name']} — Ghost Tracks — Throttle & Rust", desc,
-                 f"{SITE}/ghost-tracks/{entry['slug']}/", body)
+                 f"{SITE}/ghost-tracks/{entry['slug']}/", body,
+                 image=img if have(img) else BANNER)
 
 
 def index(entries):
@@ -251,12 +301,25 @@ def index(entries):
       </div>
     </div>""" for x in rest)
 
+    banner = ""
+    if have(BANNER):
+        banner = (f'<div class="banner"><figure class="art">'
+                  f'<img src="{BANNER}" alt="{e(BANNER_ALT)}" />'
+                  f'<figcaption>{DISCLAIM}</figcaption></figure></div>')
+    else:
+        print("  warning: banner %s is not on disk — index rendering without it" % BANNER)
+
     body = f"""<div class="container">
   <div class="header">
     <div class="header-eyebrow">Ghost tracks</div>
     <div class="header-title">Tracks that are gone.</div>
     <div class="header-sub">Places that held a national-series stock car race and do not run anymore. The record on most of them is thin, so it gets kept here.</div>
   </div>
+</div>
+
+{banner}
+
+<div class="container" style="padding-top:0;">
 
   <div class="lead">
     <div class="lead-label">This week</div>
@@ -272,7 +335,7 @@ def index(entries):
 </div>"""
     return shell("Ghost Tracks — Throttle & Rust",
                  "A register of racetracks that held a national-series stock car race and do not run anymore.",
-                 f"{SITE}/ghost-tracks/", body)
+                 f"{SITE}/ghost-tracks/", body, image=BANNER)
 
 
 def sitemap(entries):

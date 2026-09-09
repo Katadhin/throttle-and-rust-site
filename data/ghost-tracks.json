@@ -12,7 +12,10 @@
       "https://en.wikipedia.org/wiki/NASCAR_Cup_Series_at_Texas_World_Speedway"
     ],
     "first": "2026-09-08",
-    "note": "storm name deliberately omitted; the source text naming it was truncated"
+    "note": "storm name deliberately omitted; the source text naming it was truncated",
+    "image": "/images/ghost-tracks-stub.jpg",
+    "alt": "A torn ticket stub gone soft and colorless on a sun-cracked vinyl bench seat, its print worn past reading.",
+    "caption": "A stub off a season that ended."
   },
   {
     "slug": "soldier-field",
