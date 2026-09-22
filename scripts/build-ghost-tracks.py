@@ -42,6 +42,14 @@ BANNER_ALT = ("A folded, sun-bleached race program on a truck dash, print worn "
 # of the sources.
 DISCLAIM = "Illustration. Not an archive photograph."
 
+# Used instead of DISCLAIM when an entry sets "imagined": true, which marks art
+# that depicts the track itself rather than an object. Permitted only in a
+# non-photographic register (see the art-lane rules in the prompts file), because
+# the hazard was never "a picture of the track" but "a picture that could pass as
+# evidence of the track." A drawing cannot. It still must not claim accuracy it
+# does not have, hence "not to scale."
+DISCLAIM_IMAGINED = "Imagined drawing. Not an archive image, and not to scale."
+
 
 def have(path):
     """True if a site-root-relative image path exists on disk."""
@@ -193,12 +201,18 @@ ICONS = """<link rel="icon" href="/favicon.ico" sizes="any" />
 <meta name="theme-color" content="#1c1f26" />"""
 
 
-def shell(title, desc, url, body, image=None):
+def shell(title, desc, url, body, image=None, image_alt=None):
     e = html.escape
     card = ""
     if have(image):
         card = (f'\n<meta property="og:image" content="{SITE}{image}" />'
                 f'\n<meta name="twitter:card" content="summary_large_image" />')
+        if image_alt:
+            card += (f'\n<meta property="og:image:alt" content="{e(image_alt)}" />'
+                     f'\n<meta name="twitter:image:alt" content="{e(image_alt)}" />')
+    else:
+        # No art on disk means no large card. Summary still beats a bare link.
+        card = '\n<meta name="twitter:card" content="summary" />'
     page = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -255,8 +269,9 @@ def detail(entry, prev_e, next_e):
         print("  warning: %s references %s, which is not on disk — rendering text-only"
               % (entry["slug"], img))
     elif img:
-        cap = (f'{e(entry["caption"])} {DISCLAIM}'
-               if entry.get("caption") else DISCLAIM)
+        stamp = DISCLAIM_IMAGINED if entry.get("imagined") else DISCLAIM
+        cap = (f'{e(entry["caption"])} {stamp}'
+               if entry.get("caption") else stamp)
         art = (f'<figure class="art entry-art"><img src="{img}" alt="{e(entry.get("alt", ""))}" '
                f'loading="lazy" /><figcaption>{cap}</figcaption></figure>')
 
@@ -286,7 +301,8 @@ def detail(entry, prev_e, next_e):
     desc = entry["body"].strip().split(". ")[0][:180]
     return shell(f"{entry['name']} — Ghost Tracks — Throttle & Rust", desc,
                  f"{SITE}/ghost-tracks/{entry['slug']}/", body,
-                 image=img if have(img) else BANNER)
+                 image=img if have(img) else BANNER,
+                 image_alt=entry.get("alt") if have(img) else BANNER_ALT)
 
 
 def index(entries):
@@ -335,7 +351,7 @@ def index(entries):
 </div>"""
     return shell("Ghost Tracks — Throttle & Rust",
                  "A register of racetracks that held a national-series stock car race and do not run anymore.",
-                 f"{SITE}/ghost-tracks/", body, image=BANNER)
+                 f"{SITE}/ghost-tracks/", body, image=BANNER, image_alt=BANNER_ALT)
 
 
 def sitemap(entries):

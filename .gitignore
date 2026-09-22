@@ -11,6 +11,8 @@ dist/
 build/
 .cache/
 *.log
+__pycache__/
+*.pyc
 
 # Local scratch, not part of the published site
 *.bak
