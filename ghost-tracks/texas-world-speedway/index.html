@@ -17,7 +17,10 @@
 <meta property="og:title" content="Texas World Speedway — Ghost Tracks — Throttle &amp; Rust" />
 <meta property="og:description" content="Texas had a two-mile superspeedway built off the same blueprint as Michigan, and almost nobody remembers it" />
 <meta property="og:url" content="https://throttleandrust.com/ghost-tracks/texas-world-speedway/" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:image" content="https://throttleandrust.com/images/ghost-tracks-stub.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="og:image:alt" content="A torn ticket stub gone soft and colorless on a sun-cracked vinyl bench seat, its print worn past reading." />
+<meta name="twitter:image:alt" content="A torn ticket stub gone soft and colorless on a sun-cracked vinyl bench seat, its print worn past reading." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet" />
@@ -75,6 +78,12 @@
     text-transform: uppercase; color: var(--ink-faint); margin-bottom: 16px;
   }
   .lead-body { font-size: 15px; line-height: 1.75; color: var(--ink-soft); }
+  .lead-art { margin: 20px 0 22px; }
+  .row-thumb { flex: 0 0 96px; display: block; }
+  .row-thumb img { display: block; width: 96px; height: 64px; object-fit: cover;
+    border: 1px solid rgba(28, 31, 38, 0.18);
+    filter: saturate(0.94) contrast(0.97); }
+  .row-thumb.is-empty { border: none; }
   .register-label {
     font-family: 'Special Elite', monospace; font-size: 11px; letter-spacing: 0.25em;
     text-transform: uppercase; color: var(--ink-faint); margin: 46px 0 6px;
@@ -135,6 +144,8 @@
     .topbar { padding: 18px 20px; font-size: 10px; letter-spacing: 0.1em; }
     .lead-name { font-size: 25px; }
     .row { gap: 12px; }
+    .row-thumb { flex-basis: 64px; }
+    .row-thumb img { width: 64px; height: 44px; }
     .footer-inner { flex-direction: column; align-items: flex-start; }
     .footer-right { text-align: left; }
   }
@@ -151,7 +162,7 @@
   <div class="header-eyebrow" style="margin-top:26px;">Ghost tracks</div>
   <h1 class="entry-title">Texas World Speedway</h1>
   <div class="meta">College Station, Texas &nbsp;&middot;&nbsp; Eight Cup races, 1969–1981</div>
-  
+  <figure class="art entry-art"><img src="/images/ghost-tracks-stub.jpg" alt="A torn ticket stub gone soft and colorless on a sun-cracked vinyl bench seat, its print worn past reading." loading="lazy" /><figcaption>A stub off a season that ended. Illustration. Not an archive photograph.</figcaption></figure>
 
   <div class="entry-body"><p>Texas had a two-mile superspeedway built off the same blueprint as Michigan, and almost nobody remembers it. Texas World Speedway opened in College Station in 1969, hosted eight Cup races, and Richard Petty won three of them. By 2017 it was closed and storing flood-damaged cars. More than half the site is a subdivision now.</p></div>
 

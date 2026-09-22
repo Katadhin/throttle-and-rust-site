@@ -17,7 +17,10 @@
 <meta property="og:title" content="Ghost Tracks — Throttle &amp; Rust" />
 <meta property="og:description" content="A register of racetracks that held a national-series stock car race and do not run anymore." />
 <meta property="og:url" content="https://throttleandrust.com/ghost-tracks/" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:image" content="https://throttleandrust.com/images/ghost-tracks-memphis-arkansas.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="og:image:alt" content="A loose sepia ink drawing of a wide banked dirt oval on aged cream paper, water at both ends, most of the sheet left blank." />
+<meta name="twitter:image:alt" content="A loose sepia ink drawing of a wide banked dirt oval on aged cream paper, water at both ends, most of the sheet left blank." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet" />
@@ -75,6 +78,12 @@
     text-transform: uppercase; color: var(--ink-faint); margin-bottom: 16px;
   }
   .lead-body { font-size: 15px; line-height: 1.75; color: var(--ink-soft); }
+  .lead-art { margin: 20px 0 22px; }
+  .row-thumb { flex: 0 0 96px; display: block; }
+  .row-thumb img { display: block; width: 96px; height: 64px; object-fit: cover;
+    border: 1px solid rgba(28, 31, 38, 0.18);
+    filter: saturate(0.94) contrast(0.97); }
+  .row-thumb.is-empty { border: none; }
   .register-label {
     font-family: 'Special Elite', monospace; font-size: 11px; letter-spacing: 0.25em;
     text-transform: uppercase; color: var(--ink-faint); margin: 46px 0 6px;
@@ -135,6 +144,8 @@
     .topbar { padding: 18px 20px; font-size: 10px; letter-spacing: 0.1em; }
     .lead-name { font-size: 25px; }
     .row { gap: 12px; }
+    .row-thumb { flex-basis: 64px; }
+    .row-thumb img { width: 64px; height: 44px; }
     .footer-inner { flex-direction: column; align-items: flex-start; }
     .footer-right { text-align: left; }
   }
@@ -161,6 +172,7 @@
     <div class="lead-label">This week</div>
     <div class="lead-name"><a href="/ghost-tracks/memphis-arkansas-speedway/">Memphis-Arkansas Speedway</a></div>
     <div class="meta">Lehi, Arkansas &nbsp;&middot;&nbsp; Five Cup races, 1954–1957</div>
+    <figure class="art lead-art"><img src="/images/ghost-tracks-memphis-arkansas.jpg" alt="A loose sepia ink drawing of a wide banked dirt oval on aged cream paper, water at both ends, most of the sheet left blank." /><figcaption>A mile and a half of dirt, drawn from the description. Imagined drawing. Not an archive image, and not to scale.</figcaption></figure>
     <div class="lead-body">NASCAR never ran on anything else like it. A mile and a half of dirt in the Arkansas bottomland near Lehi, banked high with soil dug out of two ponds at either end, it was the longest oval the series visited in the 1950s and it remains the longest dirt oval NASCAR has ever raced on. Five Grand National races were held there between 1954 and 1957, and the surface was the problem from the first one: heavy cars chewed the clay into a dust storm thick enough to stop the racing for long stretches. Two drivers were killed on the same June weekend in 1956, Clint McHugh in a qualifying crash that put his car in the lake fifty feet below the third turn, and Cotton Priddy in the race the following day. The owners could not raise the hundred thousand dollars it would have cost to pave it. They sold the land to a farmer in 1958, who raised catfish in the flooded infield and then leveled the banking for rice and soybeans.</div>
   </div>
 

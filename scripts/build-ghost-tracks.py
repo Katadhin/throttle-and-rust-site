@@ -123,6 +123,12 @@ CSS = """
     text-transform: uppercase; color: var(--ink-faint); margin-bottom: 16px;
   }
   .lead-body { font-size: 15px; line-height: 1.75; color: var(--ink-soft); }
+  .lead-art { margin: 20px 0 22px; }
+  .row-thumb { flex: 0 0 96px; display: block; }
+  .row-thumb img { display: block; width: 96px; height: 64px; object-fit: cover;
+    border: 1px solid rgba(28, 31, 38, 0.18);
+    filter: saturate(0.94) contrast(0.97); }
+  .row-thumb.is-empty { border: none; }
   .register-label {
     font-family: 'Special Elite', monospace; font-size: 11px; letter-spacing: 0.25em;
     text-transform: uppercase; color: var(--ink-faint); margin: 46px 0 6px;
@@ -183,6 +189,8 @@ CSS = """
     .topbar { padding: 18px 20px; font-size: 10px; letter-spacing: 0.1em; }
     .lead-name { font-size: 25px; }
     .row { gap: 12px; }
+    .row-thumb { flex-basis: 64px; }
+    .row-thumb img { width: 64px; height: 44px; }
     .footer-inner { flex-direction: column; align-items: flex-start; }
     .footer-right { text-align: left; }
   }
@@ -308,14 +316,41 @@ def detail(entry, prev_e, next_e):
 def index(entries):
     e = html.escape
     lead, rest = entries[0], entries[1:]
+
+    # The thumbnail column switches itself on once enough of the register is
+    # illustrated to justify the width, and stays off until then. One thumbnail
+    # beside twenty-eight blank spacers reads as broken, not sparse, so the
+    # trigger is a third of the register rather than a single image. Lower the
+    # divisor if you want it on sooner.
+    illustrated = sum(1 for x in rest if have(x.get("image")))
+    thumbs_on = illustrated >= max(3, len(rest) // 3)
+
+    def row_thumb(x):
+        if not thumbs_on:
+            return ""
+        if have(x.get("image")):
+            return (f'<a class="row-thumb" href="/ghost-tracks/{x["slug"]}/" tabindex="-1" '
+                    f'aria-hidden="true"><img src="{x["image"]}" alt="" loading="lazy" /></a>')
+        return '<div class="row-thumb is-empty"></div>'
+
     rows = "".join(f"""
     <div class="row">
-      <div class="row-state">{e(x['state'])}</div>
+      <div class="row-state">{e(x['state'])}</div>{row_thumb(x)}
       <div class="row-main">
         <div class="row-name"><a href="/ghost-tracks/{x['slug']}/">{e(x['name'])}</a></div>
         <div class="row-meta">{e(x['place'])} &nbsp;&middot;&nbsp; {e(x['era'])}</div>
       </div>
     </div>""" for x in rest)
+
+    # Art for the featured entry, shown in the lead block. Same self-healing
+    # rule as everywhere else: missing file means the lead renders text-only.
+    lead_img = lead.get("image")
+    lead_art = ""
+    if have(lead_img):
+        stamp = DISCLAIM_IMAGINED if lead.get("imagined") else DISCLAIM
+        cap = f'{e(lead["caption"])} {stamp}' if lead.get("caption") else stamp
+        lead_art = (f'<figure class="art lead-art"><img src="{lead_img}" '
+                    f'alt="{e(lead.get("alt", ""))}" /><figcaption>{cap}</figcaption></figure>')
 
     banner = ""
     if have(BANNER):
@@ -341,6 +376,7 @@ def index(entries):
     <div class="lead-label">This week</div>
     <div class="lead-name"><a href="/ghost-tracks/{lead['slug']}/">{e(lead['name'])}</a></div>
     <div class="meta">{e(lead['place'])} &nbsp;&middot;&nbsp; {e(lead['era'])}</div>
+    {lead_art}
     <div class="lead-body">{e(lead['body'])}</div>
   </div>
 
@@ -349,9 +385,14 @@ def index(entries):
 
   <div class="tail">Every one of these had a last race that nobody in the stands knew was the last one.</div>
 </div>"""
+    # The section's share card follows the featured entry when that entry has
+    # art, so a link to /ghost-tracks/ posted this week looks like this week.
+    # Falls back to the standing banner otherwise.
+    card_img = lead_img if have(lead_img) else BANNER
+    card_alt = lead.get("alt") if have(lead_img) else BANNER_ALT
     return shell("Ghost Tracks — Throttle & Rust",
                  "A register of racetracks that held a national-series stock car race and do not run anymore.",
-                 f"{SITE}/ghost-tracks/", body, image=BANNER, image_alt=BANNER_ALT)
+                 f"{SITE}/ghost-tracks/", body, image=card_img, image_alt=card_alt)
 
 
 def sitemap(entries):
