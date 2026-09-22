@@ -1,7 +1,14 @@
 #!/usr/bin/env python3
 """Burn an "imagined, not archival" label into a generated track image.
 
-    python3 scripts/label-imagined.py <in.jpg> <out.jpg> [--text "..."]
+    python3 scripts/label-imagined.py <in.jpg> <out.jpg> [--name "TRACK NAME"] [--text "..."]
+
+With --name the bar runs two lines: the track name above, the disclaimer below.
+Two lines rather than one long string on purpose, so the disclaimer keeps a
+readable size instead of shrinking to fit beside a long place name.
+
+Always run this on the ORIGINAL generated file. Running it on an already
+labelled image stacks a second bar under the first.
 
 Why this exists, because it will look like belt-and-braces later and it is not:
 
@@ -65,29 +72,47 @@ def _tracked_width(draw, text, font, spacing):
     return sum(draw.textlength(c, font=font) + spacing for c in text) - spacing
 
 
-def label(src, dst, text=DEFAULT_TEXT):
+def _fit(draw, text, w, start_px):
+    """Largest font at or below start_px whose tracked width fits the margins."""
+    size = start_px
+    while size > 8:
+        font = _font(size)
+        spacing = max(1.0, size * 0.16)
+        if _tracked_width(draw, text, font, spacing) <= w - size * 4:
+            return font, spacing, size
+        size -= 1
+    font = _font(8)
+    return font, 1.0, 8
+
+
+def label(src, dst, text=DEFAULT_TEXT, name=None):
     im = Image.open(src).convert("RGB")
     w, h = im.size
+
+    lines = [name.upper(), text] if name else [text]
     bar = max(BAR_MIN, int(h * BAR_RATIO))
+    if name:
+        bar = int(bar * 1.75)
 
     out = Image.new("RGB", (w, h + bar), INK)
     out.paste(im, (0, 0))
     draw = ImageDraw.Draw(out)
 
-    size = max(9, int(bar * 0.36))
-    font = _font(size)
-    spacing = max(1.0, size * 0.16)
-
-    # Shrink until it fits the width with margins, rather than letting it clip.
-    while _tracked_width(draw, text, font, spacing) > w - bar and size > 8:
-        size -= 1
-        font = _font(size)
-        spacing = max(1.0, size * 0.16)
-
-    tw = _tracked_width(draw, text, font, spacing)
-    x = (w - tw) / 2
-    y = h + (bar - size) / 2 - size * 0.12
-    _track(draw, (x, y), text, font, CREAM, spacing)
+    if name:
+        # Name slightly larger than the disclaimer, both centred, name on top.
+        fonts = [_fit(draw, lines[0], w, int(bar * 0.26)),
+                 _fit(draw, lines[1], w, int(bar * 0.21))]
+        total = sum(f[2] for f in fonts) + bar * 0.16
+        y = h + (bar - total) / 2
+        for line, (font, spacing, size) in zip(lines, fonts):
+            tw = _tracked_width(draw, line, font, spacing)
+            _track(draw, ((w - tw) / 2, y), line, font, CREAM, spacing)
+            y += size + bar * 0.16
+    else:
+        font, spacing, size = _fit(draw, text, w, int(bar * 0.36))
+        tw = _tracked_width(draw, text, font, spacing)
+        _track(draw, ((w - tw) / 2, h + (bar - size) / 2 - size * 0.12),
+               text, font, CREAM, spacing)
 
     out.save(dst, "JPEG", quality=92, optimize=True, progressive=True)
     return out.size
@@ -95,13 +120,19 @@ def label(src, dst, text=DEFAULT_TEXT):
 
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:]]
-    text = DEFAULT_TEXT
-    if "--text" in args:
-        i = args.index("--text")
-        text = args[i + 1]
-        args = args[:i] + args[i + 2:]
+    text, name = DEFAULT_TEXT, None
+    for flag in ("--text", "--name"):
+        if flag in args:
+            i = args.index(flag)
+            value = args[i + 1]
+            if flag == "--text":
+                text = value
+            else:
+                name = value
+            args = args[:i] + args[i + 2:]
     if len(args) != 2:
         print(__doc__.strip().splitlines()[2])
         sys.exit(1)
-    size = label(args[0], args[1], text)
-    print("wrote %s at %dx%d with label: %s" % (args[1], size[0], size[1], text))
+    size = label(args[0], args[1], text, name)
+    print("wrote %s at %dx%d | %s%s"
+          % (args[1], size[0], size[1], (name.upper() + " / ") if name else "", text))

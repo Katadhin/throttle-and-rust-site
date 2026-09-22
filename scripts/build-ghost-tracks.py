@@ -11,11 +11,19 @@ entry, and rewrites the ghost-track block in sitemap.xml.
 House rules this generator enforces, because the pages are permanent and the
 social posts they come from were not:
   - No byline anywhere. The section is an unattributed record.
-  - Generated art only, and it never depicts a cited track. Archive photography
-    on this domain is a rights problem the social channel does not have, and an
-    AI photograph of a real, sourced place sitting above its own citations reads
-    as evidence of that place. So the art here is textless ephemera — a stub, a
-    program, weeds in asphalt — never a rendering of the track in the entry.
+  - Generated art only, never archive photography. That is a rights problem on
+    this domain which the ephemeral social channel does not have.
+  - Two art lanes. Lane 1 is textless ephemera (a stub, a program, weeds in
+    asphalt), shot photographically, never depicting a track. Lane 2 may depict
+    the track itself and is opted into with "imagined": true on the entry.
+  - Lane 2 art must carry a disclaimer burned into the image by
+    scripts/label-imagined.py before it is placed. The risk was never a picture
+    of a track, it was a picture that could pass as evidence of one while
+    sitting above that entry's own citations, and a page caption does not
+    survive being scraped into a social card or screenshotted. Caption for
+    readers, pixels for everyone else.
+  - No lettering in any generated frame, no faces or people, no identifiable
+    liveries or numbers, no logos.
   - Images are optional and self-healing. An entry with no "image" key, or one
     whose file is not on disk yet, renders text-only and prints a warning.
   - Every entry carries its sources.
@@ -50,7 +58,25 @@ DISCLAIM = "Illustration. Not an archive photograph."
 # scripts/label-imagined.py, because this text does not survive being scraped
 # into a social card, screenshotted, or reposted, and those are the normal ways
 # these images travel. Caption for readers, pixels for everyone else.
-DISCLAIM_IMAGINED = "Imagined from the record. Not an archive photograph."
+#
+# Kept short because imagined-lane captions are now plate titles that already
+# end in "Imagined" ("Turn Three, Imagined"), so restating it here would be the
+# third time on one page. The burned-in bar carries the full sentence.
+DISCLAIM_IMAGINED = "Not an archive photograph."
+
+
+def caption_with(caption, stamp):
+    """Join a caption to its disclaimer stamp with sane punctuation.
+
+    Imagined-lane captions are plate titles ("Turn Three, Imagined") and carry
+    no terminal punctuation, so a bare space ran them into the stamp.
+    """
+    if not caption:
+        return stamp
+    caption = caption.strip()
+    if caption[-1] not in ".!?":
+        caption += "."
+    return f"{caption} {stamp}"
 
 
 def have(path):
@@ -280,8 +306,7 @@ def detail(entry, prev_e, next_e):
               % (entry["slug"], img))
     elif img:
         stamp = DISCLAIM_IMAGINED if entry.get("imagined") else DISCLAIM
-        cap = (f'{e(entry["caption"])} {stamp}'
-               if entry.get("caption") else stamp)
+        cap = caption_with(e(entry["caption"]) if entry.get("caption") else "", stamp)
         art = (f'<figure class="art entry-art"><img src="{img}" alt="{e(entry.get("alt", ""))}" '
                f'loading="lazy" /><figcaption>{cap}</figcaption></figure>')
 
@@ -350,7 +375,7 @@ def index(entries):
     lead_art = ""
     if have(lead_img):
         stamp = DISCLAIM_IMAGINED if lead.get("imagined") else DISCLAIM
-        cap = f'{e(lead["caption"])} {stamp}' if lead.get("caption") else stamp
+        cap = caption_with(e(lead["caption"]) if lead.get("caption") else "", stamp)
         lead_art = (f'<figure class="art lead-art"><img src="{lead_img}" '
                     f'alt="{e(lead.get("alt", ""))}" /><figcaption>{cap}</figcaption></figure>')
 
