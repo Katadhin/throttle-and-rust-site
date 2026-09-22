@@ -1,5 +1,51 @@
 [
   {
+    "slug": "birmingham-international-raceway",
+    "name": "Birmingham International Raceway",
+    "place": "Birmingham, Alabama",
+    "state": "AL",
+    "era": "Eight Cup races, 1958–1968",
+    "body": "Racing started at the Alabama State Fairgrounds in 1906, on a one-mile dirt oval built for horses, and kept going on and off for a hundred and two years. Eight Cup races ran there between 1958 and 1968, on the five-eighths-mile pavement they called Birmingham International Raceway, and the Alabama Gang treated it as home ground, though Fireball Roberts, Richard Petty and Ned Jarrett all won there too. NASCAR took the date away in 1969 and gave it to a new 2.66-mile track at Talladega, Birmingham never got another one, and the grandstand came down in 2009.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Birmingham_International_Raceway",
+      "https://www.bhamwiki.com/w/Birmingham_International_Raceway",
+      "https://www.na-motorsports.com/Tracks/AL/Birmingham.html"
+    ],
+    "first": "2026-09-21",
+    "note": "Known over the years as Fairgrounds Raceway, Birmingham Super Speedway, Birmingham Super Raceway and Birmingham International Speedway; the Five Points West site held a one-mile dirt oval, then a half-mile from 1932, a quarter-mile from 1958, and the five-eighths-mile configuration from June 1962. Last race October 26, 2008; grandstand demolition began January 30, 2009."
+  },
+  {
+    "slug": "greenville-pickens-speedway",
+    "name": "Greenville-Pickens Speedway",
+    "place": "Easley, South Carolina",
+    "state": "SC",
+    "era": "Twenty-eight Cup races, 1950s–1971",
+    "body": "The first time America watched a whole NASCAR race live from green flag to checkered, it came off a half-mile in Easley, South Carolina. Greenville-Pickens Speedway put the sport on ABC in April 1971, hosted twenty-eight Cup races, and sent Richard Petty, Junior Johnson, David Pearson and Ned Jarrett to victory lane. The track closed in 2022, the infield has gone to weeds, and this spring Pickens County was arguing over whether to preserve it or let a developer have the ground.",
+    "sources": [
+      "https://www.wbtv.com/2026/05/11/historic-nascar-track-could-be-torn-down-amid-development-push-south-carolina/",
+      "https://www.foxcarolina.com/2026/05/11/public-hearing-set-greenville-pickens-speedway-preservation/",
+      "https://www.nbcsports.com/watch/nascar/squier-recounts-first-nationally-televised-nascar-race",
+      "https://greenvillejournal.com/community/get-your-motor-running-greenville-pickens-speedway-still-brings-the-thrills/"
+    ],
+    "first": "2026-09-17",
+    "note": "The often-repeated detail that the track opened in 1940 and reopened on July 4, 1946, in a race promoted by Bill France Sr. appears only on fan wikis and is left out here. WBTV reports twenty-eight Cup races and a last Cup race in the summer of 1971; Pickens County Council voted 4-2 on May 4, 2026, to create a track preservation committee."
+  },
+  {
+    "slug": "beltsville-speedway",
+    "name": "Beltsville Speedway",
+    "place": "Laurel, Maryland",
+    "state": "MD",
+    "era": "Ten Cup races, 1965–1970",
+    "body": "The suburbs grew out to meet Beltsville Speedway and then complained about the noise. The Maryland half-mile ran ten Cup races between 1965 and 1970, with Ned Jarrett, Tiny Lund, Bobby Allison, David Pearson and Richard Petty among the winners, and it raced on weekly for eight more years after NASCAR left. By the last year the county was monitoring the races, a sound wall stood around the place, cars had to run mufflers, and in 1978 it closed for good, leaving the ground to the university that owns it today.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Beltsville_Speedway",
+      "https://www.motorsportmagazine.com/database/circuits/beltsville/",
+      "https://frcs.pro/nascar/tracks/beltsville-speedway"
+    ],
+    "first": "2026-09-10",
+    "note": "Named for Beltsville and known by that name, but the 9200 Powder Mill Road site sits in the South Laurel area of Prince George's County; Capitol Technology University bought the 52-acre property in the early 1980s."
+  },
+  {
     "slug": "texas-world-speedway",
     "name": "Texas World Speedway",
     "place": "College Station, Texas",

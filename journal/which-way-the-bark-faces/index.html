@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1c1f26" />
+  <title>Which Way the Bark Faces | Throttle &amp; Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Which Way the Bark Faces" />
+  <meta property="og:description" content="The rack went up against the garage six years ago and it has never once been full on the first day of fall. Bark faces out, the way a man on my first crew showed me without ever saying a word about it." />
+  <meta property="og:image" content="https://throttleandrust.com/images/which-way-the-bark-faces.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/which-way-the-bark-faces" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 65%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+
+    .footer-social { margin-bottom: 12px; }
+    footer a { color: var(--cream); text-decoration: none; border-bottom: 1px solid transparent; }
+    footer a:hover { border-bottom-color: var(--cream); }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Which Way the Bark Faces",
+  "description": "The rack went up against the garage six years ago and it has never once been full on the first day of fall. Bark faces out, the way a man on my first crew showed me without ever saying a word about it.",
+  "image": "https://throttleandrust.com/images/which-way-the-bark-faces.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Caleb Whitaker"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Throttle & Rust",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://throttleandrust.com/images/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://throttleandrust.com/journal/which-way-the-bark-faces"
+  },
+  "url": "https://throttleandrust.com/journal/which-way-the-bark-faces",
+  "datePublished": "2026-09-21",
+  "dateModified": "2026-09-21"
+}
+  </script>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/ghost-tracks">Ghost Tracks</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/which-way-the-bark-faces.jpg"
+    alt="A man's two bare hands setting a split piece of oak bark-side-out onto a waist-high stack of firewood against the weathered board siding of a garage early on a cold morning with his face out of frame, a scarred chopping round with a splitting maul laid head-down and a steaming ceramic mug and bark curls in the foreground, an old yellow lab asleep and soft just inside the open roll-up door, one low tree-covered ridge catching the first light beyond"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Caleb</span>
+      <span class="divider"></span>
+      <span class="location">Happy Valley, NC</span>
+    </div>
+
+    <h1>Which Way the Bark Faces</h1>
+
+    <div class="post-body">
+
+      <p>Rack went up against the garage wall six years back and it has never once been full in September. Gets full in December, every year, about two weeks after the point where being full would have helped.</p>
+
+      <p>Cold this morning for the first time that counted. Yard still in shade at seven, breath showing, sun only up far enough to put a line on the crown of the ridge and the top course of the stack. Everything below that stayed blue for another half hour.</p>
+
+      <p>Split a truckload of oak Saturday and left it laying, which is its own kind of decision. Stacked it this morning with a cold mug on the chopping round going colder.</p>
+
+      <p>Bark faces out. Cut ends toward you, bark to the weather. That is how the wood sheds rain instead of drinking it, and a rick stacked the other way will still be wet in February when you need it dry.</p>
+
+      <p>Nobody told me that. Man who ran the first crew I ever worked on took a piece out of my hands when I was eighteen, turned it over, and set it back in the stack. Did not look at me. Did not say anything. Went back to what he was doing.</p>
+
+      <p>Four years later I was stacking wood at a rental house and it rained for a week and I understood the whole thing standing there. He could have told me in six words. He used none.</p>
+
+      <p>Thing is, everything that stuck came in about that way. Nobody sat me down and explained a retaining wall. Somebody handed me a level and let me be wrong with it for a while. The stuff I got told, I forgot. The stuff I got shown, I still do without thinking about it.</p>
+
+      <p>Caught myself last week taking a stone out of a kid's hands on a job in Lenoir, turning it, setting it back down. Did not say anything either. Walked off before I could think better of it.</p>
+
+      <p>Crank slept in the garage door the whole time, which is the only job he has ever been good at. The duck worked the bark pile like there was something in it.</p>
+
+      <p>Sarah says we will not need a fire for three more weeks. She is probably right. Rack is a third full anyway.</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Happy Valley, NC &nbsp;·&nbsp; Build Season</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    <div class="footer-social"><a href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener">TikTok</a> · <a href="https://x.com/throttleandrust" target="_blank" rel="noopener">X</a> · <a href="https://www.youtube.com/@Throttle_and_Rust" target="_blank" rel="noopener">YouTube</a></div>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA &nbsp;·&nbsp; <a class="footer-note" href="/about/#how-this-is-made">How this is made</a>
+  </footer>
+
+</body>
+</html>
