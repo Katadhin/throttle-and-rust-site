@@ -43,12 +43,14 @@ BANNER_ALT = ("A folded, sun-bleached race program on a truck dash, print worn "
 DISCLAIM = "Illustration. Not an archive photograph."
 
 # Used instead of DISCLAIM when an entry sets "imagined": true, which marks art
-# that depicts the track itself rather than an object. Permitted only in a
-# non-photographic register (see the art-lane rules in the prompts file), because
-# the hazard was never "a picture of the track" but "a picture that could pass as
-# evidence of the track." A drawing cannot. It still must not claim accuracy it
-# does not have, hence "not to scale."
-DISCLAIM_IMAGINED = "Imagined drawing. Not an archive image, and not to scale."
+# depicting the track itself rather than an object.
+#
+# This caption is the second line of defence, not the first. Any imagined track
+# image must also carry the label burned into its pixels by
+# scripts/label-imagined.py, because this text does not survive being scraped
+# into a social card, screenshotted, or reposted, and those are the normal ways
+# these images travel. Caption for readers, pixels for everyone else.
+DISCLAIM_IMAGINED = "Imagined from the record. Not an archive photograph."
 
 
 def have(path):
@@ -317,13 +319,13 @@ def index(entries):
     e = html.escape
     lead, rest = entries[0], entries[1:]
 
-    # The thumbnail column switches itself on once enough of the register is
-    # illustrated to justify the width, and stays off until then. One thumbnail
-    # beside twenty-eight blank spacers reads as broken, not sparse, so the
-    # trigger is a third of the register rather than a single image. Lower the
-    # divisor if you want it on sooner.
+    # The thumbnail column switches itself on once at least two register
+    # entries are illustrated, and stays off until then. Rows without art get an
+    # invisible spacer rather than a box, so a sparse column reads as a
+    # consistent indent that fills in over time instead of a grid full of holes.
+    # One lone thumbnail looked like a mistake, which is why the floor is two.
     illustrated = sum(1 for x in rest if have(x.get("image")))
-    thumbs_on = illustrated >= max(3, len(rest) // 3)
+    thumbs_on = illustrated >= 2
 
     def row_thumb(x):
         if not thumbs_on:
