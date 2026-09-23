@@ -54,7 +54,7 @@ window.TR_CALENDAR = [
   {
     date: "2026-10-11",
     kicker: "Charlotte. October 11.",
-    body: "An hour down the road, which is close enough that the light over the ridge and the noise on the radio belong to the same evening. Ricky worked a dealership counter through the years the sport moved to that town. He has never once called it a coincidence."
+    body: "An hour and a half down the road, which is close enough that the light over the ridge and the noise on the radio belong to the same evening. Ricky worked a dealership counter through the years the sport moved to that town. He has never once called it a coincidence."
   },
 
   {
@@ -168,7 +168,7 @@ window.TR_CALENDAR = [
   {
     date: "2027-05-23",
     kicker: "North Wilkesboro. May 23.",
-    body: "An hour and fifteen up the road, which is close enough that nobody in this family watches this one on a television. Ricky ran that place when it was still a stop on the schedule, then watched it sit empty the better part of thirty years. Ella Mae has never liked racing and will be in the stands anyway."
+    body: "An hour and fifteen up the road, which is close enough that nobody in this family watches this one on a television. Ricky ran that place when it was still a stop on the schedule, then watched it sit empty the better part of thirty years. It is the All-Star race this time and not the points race, and he will mention the difference more than once. Ella Mae has never liked racing and will be in the stands anyway."
   }
 
 ];
