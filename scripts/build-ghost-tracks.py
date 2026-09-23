@@ -33,6 +33,7 @@ import html
 import json
 import os
 import re
+import shutil
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data", "ghost-tracks.json")
@@ -79,9 +80,123 @@ def caption_with(caption, stamp):
     return f"{caption} {stamp}"
 
 
+STATE_NAMES = {
+    "AL": "Alabama", "AR": "Arkansas", "CA": "California", "FL": "Florida",
+    "GA": "Georgia", "IL": "Illinois", "MD": "Maryland", "NC": "North Carolina",
+    "NH": "New Hampshire", "NJ": "New Jersey", "NY": "New York",
+    "PA": "Pennsylvania", "SC": "South Carolina", "TN": "Tennessee",
+    "TX": "Texas", "VA": "Virginia",
+}
+
+
+def years_of(entry):
+    """Every four-digit year mentioned in an entry's era string.
+
+    Era is free text and deliberately varied ("Eight Cup races, 1958-1968",
+    "Closed 1958 - demolished 1967", "Twenty-eight Cup races, 1950s-1971"), so
+    this reads years out rather than expecting a schema. One entry has no year
+    at all, which is why callers must handle an empty result.
+    """
+    return [int(y) for y in re.findall(r"(?:19|20)\d{2}", entry.get("era", ""))]
+
+
+def span_of(entry):
+    """(first year, last year) an entry covers, or None if no year is recorded.
+
+    Matching on the opening decade alone was wrong: Langhorne ran 1926 to 1971
+    and got filed by itself in the 1920s, which left its page a dead end while
+    it in fact overlapped nearly every other track in the register. Spans
+    overlap, decades do not.
+    """
+    ys = years_of(entry)
+    return (min(ys), max(ys)) if ys else None
+
+
+def overlaps(a, b):
+    return a and b and a[0] <= b[1] and b[0] <= a[1]
+
+
+def related(entry, entries, limit=4):
+    """Cross-links by state and by decade, derived purely from existing data.
+
+    A register that can only be walked in posting order is a list, not a
+    reference. These two axes are the ones a reader actually arrives with:
+    somewhere near me, or somewhere from the same stretch of years. Nothing here
+    asserts a new fact, so it costs no sourcing.
+    """
+    blocks = []
+
+    same_state = [x for x in entries
+                  if x["state"] == entry["state"] and x["slug"] != entry["slug"]]
+    if same_state:
+        label = "Elsewhere in %s" % STATE_NAMES.get(entry["state"], entry["state"])
+        blocks.append((label, same_state[:limit]))
+
+    span = span_of(entry)
+    if span:
+        # Closest overlap first, so a 1926-1971 track leads with contemporaries
+        # rather than whatever happens to sit at the top of the file.
+        mid = (span[0] + span[1]) / 2
+        concurrent = [x for x in entries
+                      if x["slug"] != entry["slug"] and x["state"] != entry["state"]
+                      and overlaps(span, span_of(x))]
+        concurrent.sort(key=lambda x: abs(sum(span_of(x)) / 2 - mid))
+        if concurrent:
+            blocks.append(("Running at the same time", concurrent[:limit]))
+
+    if not blocks:
+        return ""
+
+    e = html.escape
+    out = ['<div class="related">']
+    for label, items in blocks:
+        links = " &nbsp;&middot;&nbsp; ".join(
+            f'<a href="/ghost-tracks/{x["slug"]}/">{e(x["name"])}</a>' for x in items)
+        out.append(f'<div class="related-row">'
+                   f'<span class="related-label">{e(label)}</span>{links}</div>')
+    out.append("</div>")
+    return "".join(out)
+
+
 def have(path):
     """True if a site-root-relative image path exists on disk."""
     return bool(path) and os.path.isfile(os.path.join(ROOT, path.lstrip("/")))
+
+
+def jpeg_size(path):
+    """(width, height) of a JPEG, read from its headers. None if unreadable.
+
+    Pure stdlib on purpose. This generator has never needed Pillow and should
+    not start: it runs on whatever machine happens to be doing a deploy.
+
+    Worth emitting because Facebook will defer rendering a card while it goes
+    and fetches an image whose dimensions it was not told, which shows up as a
+    share with no picture on the first post and a correct one later.
+    """
+    try:
+        with open(os.path.join(ROOT, path.lstrip("/")), "rb") as f:
+            if f.read(2) != b"\xff\xd8":
+                return None
+            while True:
+                b = f.read(1)
+                while b and b != b"\xff":
+                    b = f.read(1)
+                marker = f.read(1)
+                while marker == b"\xff":
+                    marker = f.read(1)
+                if not marker:
+                    return None
+                if marker[0] in range(0xC0, 0xCF) and marker[0] not in (0xC4, 0xC8, 0xCC):
+                    f.read(3)
+                    h = int.from_bytes(f.read(2), "big")
+                    w = int.from_bytes(f.read(2), "big")
+                    return w, h
+                length = int.from_bytes(f.read(2), "big")
+                if length < 2:
+                    return None
+                f.seek(length - 2, 1)
+    except OSError:
+        return None
 
 NAV = (
     '<span class="links"><a href="/journal/">Journal</a> &middot; '
@@ -152,6 +267,16 @@ CSS = """
   }
   .lead-body { font-size: 15px; line-height: 1.75; color: var(--ink-soft); }
   .lead-art { margin: 20px 0 22px; }
+  .related { margin: 34px 0 6px; border-top: 1px solid rgba(28, 31, 38, 0.15); padding-top: 20px; }
+  .related-row { margin-bottom: 12px; font-size: 13.5px; line-height: 1.8; }
+  .related-row:last-child { margin-bottom: 0; }
+  .related-label {
+    display: block; font-family: 'Special Elite', monospace; font-size: 10.5px;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-faint);
+    margin-bottom: 4px;
+  }
+  .related a { color: var(--ink-soft); text-decoration: none; border-bottom: 1px solid rgba(28, 31, 38, 0.2); }
+  .related a:hover { color: var(--rust); border-bottom-color: var(--rust); }
   .row-thumb { flex: 0 0 96px; display: block; }
   .row-thumb img { display: block; width: 96px; height: 64px; object-fit: cover;
     border: 1px solid rgba(28, 31, 38, 0.18);
@@ -242,7 +367,13 @@ def shell(title, desc, url, body, image=None, image_alt=None):
     card = ""
     if have(image):
         card = (f'\n<meta property="og:image" content="{SITE}{image}" />'
+                f'\n<meta property="og:image:secure_url" content="{SITE}{image}" />'
+                f'\n<meta property="og:image:type" content="image/jpeg" />'
                 f'\n<meta name="twitter:card" content="summary_large_image" />')
+        dims = jpeg_size(image)
+        if dims:
+            card += (f'\n<meta property="og:image:width" content="{dims[0]}" />'
+                     f'\n<meta property="og:image:height" content="{dims[1]}" />')
         if image_alt:
             card += (f'\n<meta property="og:image:alt" content="{e(image_alt)}" />'
                      f'\n<meta name="twitter:image:alt" content="{e(image_alt)}" />')
@@ -292,7 +423,7 @@ def shell(title, desc, url, body, image=None, image_alt=None):
     return re.sub(r"\n{3,}", "\n\n", page)
 
 
-def detail(entry, prev_e, next_e):
+def detail(entry, prev_e, next_e, entries=()):
     e = html.escape
     paras = "".join(f"<p>{e(p)}</p>" for p in re.split(r"\n{2,}", entry["body"].strip()))
     srcs = "".join(
@@ -309,6 +440,8 @@ def detail(entry, prev_e, next_e):
         cap = caption_with(e(entry["caption"]) if entry.get("caption") else "", stamp)
         art = (f'<figure class="art entry-art"><img src="{img}" alt="{e(entry.get("alt", ""))}" '
                f'loading="lazy" /><figcaption>{cap}</figcaption></figure>')
+
+    rel = related(entry, entries)
 
     pager = '<div class="pager">'
     pager += (f'<a href="/ghost-tracks/{prev_e["slug"]}/">&larr; {e(prev_e["name"])}</a>'
@@ -330,6 +463,8 @@ def detail(entry, prev_e, next_e):
   <ul class="sources">{srcs}</ul>
   {note}
 
+  {rel}
+
   {pager}
   <a class="back" href="/ghost-tracks/">&larr; The whole register</a>
 </div>"""
@@ -340,17 +475,17 @@ def detail(entry, prev_e, next_e):
                  image_alt=entry.get("alt") if have(img) else BANNER_ALT)
 
 
-def index(entries):
-    e = html.escape
-    lead, rest = entries[0], entries[1:]
+def rows_html(items):
+    """The register row list, shared by the main index and the browse pages.
 
-    # The thumbnail column switches itself on once at least two register
-    # entries are illustrated, and stays off until then. Rows without art get an
-    # invisible spacer rather than a box, so a sparse column reads as a
-    # consistent indent that fills in over time instead of a grid full of holes.
-    # One lone thumbnail looked like a mistake, which is why the floor is two.
-    illustrated = sum(1 for x in rest if have(x.get("image")))
-    thumbs_on = illustrated >= 2
+    The thumbnail column switches itself on once at least two of the listed
+    entries are illustrated, and stays off until then. Rows without art get an
+    invisible spacer rather than a box, so a sparse column reads as a consistent
+    indent that fills in over time instead of a grid full of holes. One lone
+    thumbnail looked like a mistake, which is why the floor is two.
+    """
+    e = html.escape
+    thumbs_on = sum(1 for x in items if have(x.get("image"))) >= 2
 
     def row_thumb(x):
         if not thumbs_on:
@@ -360,14 +495,112 @@ def index(entries):
                     f'aria-hidden="true"><img src="{x["image"]}" alt="" loading="lazy" /></a>')
         return '<div class="row-thumb is-empty"></div>'
 
-    rows = "".join(f"""
+    return "".join(f"""
     <div class="row">
       <div class="row-state">{e(x['state'])}</div>{row_thumb(x)}
       <div class="row-main">
         <div class="row-name"><a href="/ghost-tracks/{x['slug']}/">{e(x['name'])}</a></div>
         <div class="row-meta">{e(x['place'])} &nbsp;&middot;&nbsp; {e(x['era'])}</div>
       </div>
-    </div>""" for x in rest)
+    </div>""" for x in items)
+
+
+def browse_groups(entries):
+    """(states, decades) worth their own page.
+
+    A state page needs at least two entries. A one-entry state page is a thin
+    page that answers a query worse than the entry itself does, so those states
+    are simply left to the register and the cross-links.
+
+    Decades use overlapping spans, so a track that ran 1926 to 1971 appears on
+    every decade page it was actually open for, rather than only its first.
+    """
+    states = {}
+    for x in entries:
+        states.setdefault(x["state"], []).append(x)
+    states = {k: v for k, v in states.items() if len(v) >= 2}
+
+    decades = {}
+    for x in entries:
+        span = span_of(x)
+        if not span:
+            continue
+        for d in range((span[0] // 10) * 10, (span[1] // 10) * 10 + 10, 10):
+            decades.setdefault(d, []).append(x)
+
+    # Decades need a higher floor than states, and for a different reason.
+    # Because long-lived tracks appear on every decade they were open, the tail
+    # decades filled with the same handful of entries over and over: the 1990s,
+    # 2000s, 2010s and 2020s pages were an identical pair of tracks four times.
+    # State pages with two entries are at least unique to each other. Adjacent
+    # decade pages with two entries are the same page with a different heading,
+    # which is thin and duplicative. Those tracks still appear on the busier
+    # decade pages their spans cover, so nothing is lost by dropping the tails.
+    decades = {k: v for k, v in decades.items() if len(v) >= 4}
+
+    return states, decades
+
+
+def chrono(items):
+    """Oldest first. Posting order means nothing to a reader of a reference."""
+    return sorted(items, key=lambda x: (span_of(x) or (9999, 9999))[0])
+
+
+def browse_page(kind, key, items, total):
+    e = html.escape
+    if kind == "state":
+        name = STATE_NAMES.get(key, key)
+        title = "%s — Ghost Tracks" % name
+        eyebrow = "Ghost tracks"
+        heading = name
+        sub = ("%d tracks in %s that held a national-series stock car race and "
+               "do not run anymore." % (len(items), name))
+        url = "%s/ghost-tracks/state/%s/" % (SITE, key.lower())
+    else:
+        title = "The %ss — Ghost Tracks" % key
+        eyebrow = "Ghost tracks"
+        heading = "The %ss" % key
+        sub = ("%d tracks in this record were open at some point during the "
+               "%ss." % (len(items), key))
+        url = "%s/ghost-tracks/era/%ss/" % (SITE, key)
+
+    body = f"""<div class="container">
+  <div class="header">
+    <div class="header-eyebrow">{eyebrow}</div>
+    <div class="header-title">{e(heading)}</div>
+    <div class="header-sub">{e(sub)}</div>
+  </div>
+
+  <div class="register-label">{len(items)} of {total}</div>
+  {rows_html(chrono(items))}
+
+  <div class="tail"><a class="back" href="/ghost-tracks/">&larr; The whole register</a></div>
+</div>"""
+    return shell(title + " — Throttle & Rust", sub, url, body,
+                 image=BANNER, image_alt=BANNER_ALT)
+
+
+def browse_block(states, decades):
+    """The browse rail on the main register page."""
+    e = html.escape
+    st = " &nbsp;&middot;&nbsp; ".join(
+        f'<a href="/ghost-tracks/state/{k.lower()}/">{e(STATE_NAMES.get(k, k))} ({len(v)})</a>'
+        for k, v in sorted(states.items(), key=lambda kv: (-len(kv[1]), kv[0])))
+    de = " &nbsp;&middot;&nbsp; ".join(
+        f'<a href="/ghost-tracks/era/{k}s/">{k}s ({len(v)})</a>'
+        for k, v in sorted(decades.items()))
+    return (f'<div class="related browse">'
+            f'<div class="related-row"><span class="related-label">By state</span>{st}</div>'
+            f'<div class="related-row"><span class="related-label">By decade</span>{de}</div>'
+            f'</div>')
+
+
+def index(entries):
+    e = html.escape
+    lead, rest = entries[0], entries[1:]
+    rows = rows_html(rest)
+    states, decades = browse_groups(entries)
+    browse = browse_block(states, decades)
 
     # Art for the featured entry, shown in the lead block. Same self-healing
     # rule as everywhere else: missing file means the lead renders text-only.
@@ -407,6 +640,8 @@ def index(entries):
     <div class="lead-body">{e(lead['body'])}</div>
   </div>
 
+  {browse}
+
   <div class="register-label">The register &middot; {len(entries)} tracks</div>
   {rows}
 
@@ -422,7 +657,7 @@ def index(entries):
                  f"{SITE}/ghost-tracks/", body, image=card_img, image_alt=card_alt)
 
 
-def sitemap(entries):
+def sitemap(entries, states=None, decades=None):
     path = os.path.join(ROOT, "sitemap.xml")
     xml = open(path).read()
     xml = re.sub(r"\s*<url>\s*<loc>https://throttleandrust\.com/ghost-tracks/[^<]*</loc>.*?</url>",
@@ -432,9 +667,16 @@ def sitemap(entries):
     for x in entries:
         block += "\n  <url>\n    <loc>%s/ghost-tracks/%s/</loc>\n    <lastmod>%s</lastmod>\n  </url>" % (
             SITE, x["slug"], x["first"])
+    newest = entries[0]["first"]
+    for code in sorted(states or {}):
+        block += "\n  <url>\n    <loc>%s/ghost-tracks/state/%s/</loc>\n    <lastmod>%s</lastmod>\n  </url>" % (
+            SITE, code.lower(), newest)
+    for dec in sorted(decades or {}):
+        block += "\n  <url>\n    <loc>%s/ghost-tracks/era/%ss/</loc>\n    <lastmod>%s</lastmod>\n  </url>" % (
+            SITE, dec, newest)
     xml = xml.replace("</urlset>", block + "\n</urlset>")
     open(path, "w").write(xml)
-    return len(entries) + 1
+    return len(entries) + 1 + len(states or {}) + len(decades or {})
 
 
 def homepage(entries):
@@ -471,12 +713,36 @@ def main():
         os.makedirs(d, exist_ok=True)
         prev_e = entries[i - 1] if i > 0 else None
         next_e = entries[i + 1] if i + 1 < len(entries) else None
-        open(os.path.join(d, "index.html"), "w").write(detail(x, prev_e, next_e))
+        open(os.path.join(d, "index.html"), "w").write(detail(x, prev_e, next_e, entries))
+
+    states, decades = browse_groups(entries)
+    for code, items in states.items():
+        d = os.path.join(OUT, "state", code.lower())
+        os.makedirs(d, exist_ok=True)
+        open(os.path.join(d, "index.html"), "w").write(
+            browse_page("state", code, items, len(entries)))
+    for dec, items in decades.items():
+        d = os.path.join(OUT, "era", "%ss" % dec)
+        os.makedirs(d, exist_ok=True)
+        open(os.path.join(d, "index.html"), "w").write(
+            browse_page("era", dec, items, len(entries)))
+
+    # state/ and era/ are wholly generated, so anything there this run did not
+    # write is left over from an older grouping rule. Stale pages stay live on
+    # Pages, unlinked and out of the sitemap, so remove them.
+    keep = {"state": {c.lower() for c in states}, "era": {"%ss" % d for d in decades}}
+    for sub, wanted in keep.items():
+        base = os.path.join(OUT, sub)
+        for name in sorted(os.listdir(base)) if os.path.isdir(base) else []:
+            if name not in wanted and os.path.isdir(os.path.join(base, name)):
+                shutil.rmtree(os.path.join(base, name))
+                print("  removed stale %s/%s/" % (sub, name))
 
     homepage(entries)
-    n = sitemap(entries)
-    print("ghost-tracks: %d detail pages + index, %d sitemap urls, homepage block set to %s"
-          % (len(entries), n, entries[0]["slug"]))
+    n = sitemap(entries, states, decades)
+    print("ghost-tracks: %d detail pages + index, %d state pages, %d decade pages, "
+          "%d sitemap urls, homepage block set to %s"
+          % (len(entries), len(states), len(decades), n, entries[0]["slug"]))
 
 
 if __name__ == "__main__":

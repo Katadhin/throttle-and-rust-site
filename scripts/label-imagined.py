@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """Burn an "imagined, not archival" label into a generated track image.
 
-    python3 scripts/label-imagined.py <in.jpg> <out.jpg> [--name "TRACK NAME"] [--text "..."]
+    python3 scripts/label-imagined.py <in.jpg> <out.jpg> [--name "TRACK NAME"] [--card]
+
+--card writes exactly 1200x630, the size Facebook and X want for a large social
+card. Below 1200 wide they tend to render a small square thumbnail instead, or
+drop the image. Use it for anything that will be shared.
 
 With --name the bar runs two lines: the track name above, the disclaimer below.
 Two lines rather than one long string on purpose, so the disclaimer keeps a
@@ -85,14 +89,32 @@ def _fit(draw, text, w, start_px):
     return font, 1.0, 8
 
 
-def label(src, dst, text=DEFAULT_TEXT, name=None):
-    im = Image.open(src).convert("RGB")
-    w, h = im.size
+# Facebook and X want a social card at 1200x630 (1.91:1). Below 1200 wide,
+# Facebook will often render a small square thumbnail instead of the large card,
+# or skip the image entirely. Card mode produces exactly that size with the
+# label bar included, so the file that ships is the file the scrapers want.
+CARD_W, CARD_H = 1200, 630
 
+
+def label(src, dst, text=DEFAULT_TEXT, name=None, card=False):
+    im = Image.open(src).convert("RGB")
+
+    if card:
+        bar = 74 if name else 46
+        photo_h = CARD_H - bar
+        # Cover-fit the source into the photo area, centred.
+        scale = max(CARD_W / im.width, photo_h / im.height)
+        rw, rh = int(im.width * scale + 0.5), int(im.height * scale + 0.5)
+        im = im.resize((rw, rh), Image.LANCZOS)
+        left, top = (rw - CARD_W) // 2, (rh - photo_h) // 2
+        im = im.crop((left, top, left + CARD_W, top + photo_h))
+
+    w, h = im.size
     lines = [name.upper(), text] if name else [text]
-    bar = max(BAR_MIN, int(h * BAR_RATIO))
-    if name:
-        bar = int(bar * 1.75)
+    if not card:
+        bar = max(BAR_MIN, int(h * BAR_RATIO))
+        if name:
+            bar = int(bar * 1.75)
 
     out = Image.new("RGB", (w, h + bar), INK)
     out.paste(im, (0, 0))
@@ -120,7 +142,10 @@ def label(src, dst, text=DEFAULT_TEXT, name=None):
 
 if __name__ == "__main__":
     args = [a for a in sys.argv[1:]]
-    text, name = DEFAULT_TEXT, None
+    text, name, card = DEFAULT_TEXT, None, False
+    if "--card" in args:
+        card = True
+        args.remove("--card")
     for flag in ("--text", "--name"):
         if flag in args:
             i = args.index(flag)
@@ -133,6 +158,6 @@ if __name__ == "__main__":
     if len(args) != 2:
         print(__doc__.strip().splitlines()[2])
         sys.exit(1)
-    size = label(args[0], args[1], text, name)
+    size = label(args[0], args[1], text, name, card)
     print("wrote %s at %dx%d | %s%s"
           % (args[1], size[0], size[1], (name.upper() + " / ") if name else "", text))
