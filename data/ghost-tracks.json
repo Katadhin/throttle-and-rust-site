@@ -1,5 +1,21 @@
 [
   {
+    "slug": "michigan-state-fairgrounds-speedway",
+    "name": "Michigan State Fairgrounds Speedway",
+    "place": "Detroit, Michigan",
+    "state": "MI",
+    "era": "Two Cup races, 1951–1952",
+    "body": "Detroit turned 250 in 1951 and threw itself a stock car race. The Motor City 250 ran August 12 on the old one-mile horse track at the Michigan State Fairgrounds, and by the finish the southeast turn was chewed into ruts and Tommy Thompson of Louisville had outlasted Curtis Turner in a Chrysler, right in the automakers' own backyard. NASCAR came back once, in 1952, when Hudson Hornets swept the top three, and then never again; the grandstand was declared unsafe in 1971, the fair left in 2009, and a warehouse stands on the ground now.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Michigan_State_Fairgrounds_Speedway",
+      "https://www.detroitnews.com/story/sports/motor/2016/08/24/motor-citys-nascar-debut-rough-tumble/89316778/",
+      "https://en.wikipedia.org/wiki/Tommy_Thompson_(NASCAR_racing_driver)",
+      "https://www.crainsdetroit.com/real-estate/amazon-fulfillment-center-opens-detroit-fairgrounds-site/"
+    ],
+    "first": "2026-09-24",
+    "note": "Built in 1899 as a horse track at Woodward Avenue and what is now 8 Mile Road, on land donated by J.L. Hudson; AAA and USAC Indy cars also raced there between 1928 and 1957. The 1952 Motor City 250 finished Tim Flock, Buddy Shuman, Herb Thomas, all in Hudson Hornets. Crowd figures (about 16,000 in 1951, 26,000 in 1952) are the Detroit News and organizers' numbers. Grandstand demolished 2001; an Amazon fulfillment center opened on the site in 2023."
+  },
+  {
     "slug": "birmingham-international-raceway",
     "name": "Birmingham International Raceway",
     "place": "Birmingham, Alabama",
