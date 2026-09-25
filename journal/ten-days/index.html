@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1c1f26" />
+  <title>Ten Days | Throttle &amp; Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Ten Days" />
+  <meta property="og:description" content="There is a bare spot by the gravel turnaround that has been bare four years running, and the window to fix it is about ten days wide." />
+  <meta property="og:image" content="https://throttleandrust.com/images/seeding-the-thin-spot.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/ten-days" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 65%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+
+    .footer-social { margin-bottom: 12px; }
+    footer a { color: var(--cream); text-decoration: none; border-bottom: 1px solid transparent; }
+    footer a:hover { border-bottom-color: var(--cream); }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Ten Days",
+  "description": "There is a bare spot by the gravel turnaround that has been bare four years running, and the window to fix it is about ten days wide.",
+  "image": "https://throttleandrust.com/images/seeding-the-thin-spot.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Caleb Whitaker"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Throttle & Rust",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://throttleandrust.com/images/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://throttleandrust.com/journal/ten-days"
+  },
+  "url": "https://throttleandrust.com/journal/ten-days",
+  "datePublished": "2026-09-25",
+  "dateModified": "2026-09-25"
+}
+  </script>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/ghost-tracks">Ghost Tracks</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/seeding-the-thin-spot.jpg"
+    alt="A man's two hands tipping a torn, unprinted paper sack of grass seed into the green hopper of a walk-behind spreader, seed falling in a thin stream, his face out of frame above, rubber boots on wet grass beside a freshly raked patch of dark dirt, a straw bale with a coiled ball of twine in the foreground, a white duck working the bare ground, one low green tree-covered ridge close behind"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Caleb</span>
+      <span class="divider"></span>
+      <span class="location">Happy Valley, NC</span>
+    </div>
+
+    <h1>Ten Days</h1>
+
+    <div class="post-body">
+
+      <p>Rained all day yesterday and most of the night before. Ground this afternoon was still dark and soft and the grass came up wet on the boots, which is the whole reason today happened at all.</p>
+
+      <p>There is a thin spot in the front yard, out where the gravel turns around. Hard-packed from everybody who has ever backed a truck up to the garage, and it has been bare four years running. Every fall it goes on the list. Most falls it stays there.</p>
+
+      <p>The seeding window in this valley runs about ten days. Ground still holding summer heat, air already giving it up at night, enough runway for roots to take before the first hard frost gets down here. Go early and it cooks. Go late and you have thrown good seed on dirt that is done cooperating.</p>
+
+      <p>Nobody I work for can see that window. That is what they are buying. They think it is the labor, and the labor is the easy part, honestly. Anybody can push a spreader. What I get paid for is knowing which ten days, and the only way I know is that I have been wrong enough times to stop guessing.</p>
+
+      <p>Raked the patch first. You have to open the ground up before anything will take, and it always looks like damage while you are doing it. Sarah came out on the step with coffee and asked why I was tearing up the yard. Fair question. It looked like I was tearing up the yard.</p>
+
+      <p>Two passes with the spreader, crossed at right angles, walking slower than feels right. Then straw over the top of it, thin enough to still see dirt through. Crank slept through all of it on the step. The duck came over and worked the fresh dirt for about twenty minutes, which I have decided not to think about.</p>
+
+      <p>And then there is nothing to do. That is the part of this job I have never gotten used to. You do the work right, on the right day, in the right ground, and then you walk away and look at bare dirt for three weeks with no way to know.</p>
+
+      <p>The rest of it is weather. Rain when it needs it or not. Cold early or cold on time. I do not get a say in any of that, and neither does anybody who hands me a check.</p>
+
+      <p>Four years that spot has been on the list. Went and stood out there again before supper. Still just dirt and straw.</p>
+
+      <p>Ask me in October.</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Happy Valley, NC &nbsp;·&nbsp; The Trade</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    <div class="footer-social"><a href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener">TikTok</a> · <a href="https://x.com/throttleandrust" target="_blank" rel="noopener">X</a> · <a href="https://www.youtube.com/@Throttle_and_Rust" target="_blank" rel="noopener">YouTube</a></div>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA &nbsp;·&nbsp; <a class="footer-note" href="/about/#how-this-is-made">How this is made</a>
+  </footer>
+
+</body>
+</html>
