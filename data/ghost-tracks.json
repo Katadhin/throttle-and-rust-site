@@ -1,5 +1,21 @@
 [
   {
+    "slug": "portland-speedway",
+    "name": "Portland Speedway",
+    "place": "Portland, Oregon",
+    "state": "OR",
+    "era": "Seven Cup races, 1956–1957",
+    "body": "Portland Speedway opened as a clay oval in north Portland in 1924 and ran for 77 years. NASCAR's top series came west for seven races there in 1956 and 1957, with Herb Thomas and Eddie Pagan among the winners, and after the Grand National tour left for good, Oregon's own Hershel McGriff kept winning there in the West Series. The half-mile went back to dirt in 2000 for one last run and closed in 2001. West Coast racing never needed Daytona's permission.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Portland_Speedway",
+      "https://en.wikipedia.org/wiki/West_Series_races_at_Portland_Speedway",
+      "https://en.wikipedia.org/wiki/Hershel_McGriff",
+      "https://www.nascarhall.com/hall-of-famers/inductees/hershel-mcgriff"
+    ],
+    "first": "2026-09-28",
+    "note": "Began as a five-eighths-mile clay oval in 1924, paved as a half-mile in 1946; NASCAR sanctioning returned under a Western Speedways lease in 1984, and the track hosted four Craftsman Truck Series races, 1995 to 1998. The last pavement race ran July 30, 2000, before the conversion to clay for World of Outlaws sprint cars in 2000 and 2001. McGriff's five West Series wins came 1971 to 1973. The 1956 to 1957 races appear in the West Series table as combination events; the seven-race Cup count is Wikipedia's, citing Racing-Reference."
+  },
+  {
     "slug": "michigan-state-fairgrounds-speedway",
     "name": "Michigan State Fairgrounds Speedway",
     "place": "Detroit, Michigan",
