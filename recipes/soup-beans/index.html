@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1c1f26" />
+  <title>Sarah's Soup Beans and Cornbread | Throttle & Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Sarah's Soup Beans and Cornbread" />
+  <meta property="og:description" content="The pot that goes on the first night the heat comes on. Pintos picked over and soaked, a ham hock, three hours nobody has to watch, and cornbread out of the skillet with no sugar in it." />
+  <meta property="og:image" content="https://throttleandrust.com/images/soup-beans-hero.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/recipes/soup-beans" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 62%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 24px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-intro p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-intro p:last-child { margin-bottom: 0; }
+
+    .recipe-card {
+      border: 1px solid var(--light-rule);
+      background-color: rgba(255, 255, 255, 0.4);
+      padding: 36px 32px 32px;
+      margin: 40px 0 8px;
+    }
+
+    .recipe-card .recipe-eyebrow {
+      font-family: 'Special Elite', serif;
+      font-size: 0.66rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 12px;
+    }
+
+    .recipe-card .recipe-yield {
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.5;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--light-rule);
+      margin-bottom: 4px;
+    }
+
+    .recipe-card h2 {
+      font-family: 'Special Elite', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin: 24px 0 12px;
+    }
+
+    .recipe-card ul { list-style: none; }
+
+    .recipe-card ul li {
+      padding: 7px 0;
+      border-bottom: 1px dotted var(--light-rule);
+      font-size: 0.9rem;
+    }
+
+    .recipe-card ul li:last-child { border-bottom: none; }
+
+    .recipe-card ol {
+      margin: 0;
+      padding-left: 1.2em;
+    }
+
+    .recipe-card ol li {
+      margin-bottom: 14px;
+      font-size: 0.92rem;
+      padding-left: 6px;
+    }
+
+    .recipe-card ol li:last-child { margin-bottom: 0; }
+
+    .story-link {
+      margin-top: 40px;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--charcoal);
+      opacity: 0.8;
+    }
+
+    .story-link a {
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+      font-style: normal;
+    }
+
+    .story-link a:hover { border-bottom-color: var(--rust); }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 48px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+      .recipe-card { padding: 28px 22px; }
+    }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Recipe",
+  "name": "Sarah's Soup Beans and Cornbread",
+  "description": "The pot that goes on the first night the heat comes on. Pintos picked over and soaked, a ham hock, three hours nobody has to watch, and cornbread out of the skillet with no sugar in it.",
+  "image": "https://throttleandrust.com/images/soup-beans-hero.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Sarah Whitaker"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Throttle & Rust",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://throttleandrust.com/images/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://throttleandrust.com/recipes/soup-beans"
+  },
+  "url": "https://throttleandrust.com/recipes/soup-beans",
+  "recipeIngredient": [
+      "1 pound dried pinto beans",
+      "1 smoked ham hock",
+      "1 yellow onion, halved",
+      "2 teaspoons salt, added late",
+      "Black pepper",
+      "3 tablespoons bacon grease, or butter",
+      "2 cups stone-ground cornmeal",
+      "1 teaspoon salt",
+      "1 teaspoon baking powder",
+      "1/2 teaspoon baking soda",
+      "1 egg",
+      "2 cups buttermilk"
+  ],
+  "recipeInstructions": [
+      {
+          "@type": "HowToStep",
+          "text": "The night before, pour the beans out on a dish towel a handful at a time and pick out the stones, the shriveled ones, and anything that is not a bean. Rinse them, cover with cold water by a few inches, and leave them overnight."
+      },
+      {
+          "@type": "HowToStep",
+          "text": "Drain the beans and put them in a heavy pot with the ham hock and the halved onion. Cover with fresh water by about two inches and bring it up to a boil."
+      },
+      {
+          "@type": "HowToStep",
+          "text": "Turn it down to the lowest simmer the stove will hold and leave the lid cracked. Three hours, give or take. Stir when you walk past and add hot water if they start to show above the liquid."
+      },
+      {
+          "@type": "HowToStep",
+          "text": "Once the beans are soft all the way through, pull the hock, take the meat off the bone, and put it back in the pot. Fish out what is left of the onion. Now the salt goes in, and pepper. Salt any earlier and the skins stay tough."
+      },
+      {
+          "@type": "HowToStep",
+          "text": "Mash a ladle of beans against the side of the pot and stir them back in. That is what makes the broth. Let it go another half hour."
+      },
+      {
+          "@type": "HowToStep",
+          "text": "For the cornbread, put the grease in a 10-inch cast-iron skillet and set the skillet in the oven while it heats to 450°F. The skillet has to be hot. That is the crust."
+      },
+      {
+          "@type": "HowToStep",
+          "text": "Whisk the cornmeal, salt, baking powder, and soda together. Beat the egg into the buttermilk and stir it into the dry just until it comes together."
+      },
+      {
+          "@type": "HowToStep",
+          "text": "Pull the skillet out, swirl the grease around, and pour most of it into the batter. Stir once and pour the batter into the skillet. It should sizzle."
+      },
+      {
+          "@type": "HowToStep",
+          "text": "Bake 20 to 25 minutes, until the top is golden and the edges pull away. Turn it out onto a board."
+      },
+      {
+          "@type": "HowToStep",
+          "text": "Beans in a bowl, cornbread on the side or broken right into them, raw onion over the top. Chowchow if you have it."
+      }
+  ],
+  "recipeCategory": "Main",
+  "recipeCuisine": "Southern",
+  "keywords": "soup beans, pinto beans, cornbread, Appalachian, fall",
+  "cookTime": "PT3H30M",
+  "prepTime": "PT12H",
+  "recipeYield": "Serves 6",
+  "datePublished": "2026-10-02"
+}
+  </script>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/recipes">Recipes</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/soup-beans-hero.jpg"
+    alt="A woman's flannel-sleeved arm stirring a cream enamel pot of soup beans with a wooden spoon on a white electric stove, her face out of frame, a colander of soaked pintos, a dish towel with a few picked-out stones, and a cast-iron skillet of cornbread on the counter, an old yellow lab asleep by the floor register, a green ridge through the kitchen window at early evening — Happy Valley, NC"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Sarah</span>
+      <span class="divider"></span>
+      <span class="location">Happy Valley, NC</span>
+    </div>
+
+    <h1>Sarah's Soup Beans and Cornbread</h1>
+
+    <div class="post-intro">
+      <p>First night the heat comes on, the house smells like a summer of dust burning off the vents, and that is when the beans go on. Nobody decided that. It is just what happens in this kitchen, the way the porch chairs come in after the first frost.</p>
+      <p>Soup beans are not much of a recipe. Pintos, a ham hock, water, salt, and the afternoon. The only real work is sorting the beans before they soak, because a bag of dried beans from anywhere still has a few small stones in it, and you find out the hard way only once. The cornbread is the part people argue about. Ours has no sugar in it. If you want cake, make cake.</p>
+    </div>
+
+    <div class="recipe-card">
+      <div class="recipe-eyebrow">From the kitchen</div>
+      <div class="recipe-yield">Serves 6 · Soak overnight, then most of an afternoon</div>
+
+      <h2>For the beans</h2>
+      <ul>
+        <li>1 pound dried pinto beans</li>
+        <li>1 smoked ham hock</li>
+        <li>1 yellow onion, halved</li>
+        <li>2 teaspoons salt, added late</li>
+        <li>Black pepper</li>
+        <li>Chopped raw onion and a jar of chowchow, for the table</li>
+      </ul>
+
+      <h2>For the cornbread</h2>
+      <ul>
+        <li>3 tablespoons bacon grease, or butter</li>
+        <li>2 cups stone-ground cornmeal</li>
+        <li>1 teaspoon salt</li>
+        <li>1 teaspoon baking powder</li>
+        <li>1/2 teaspoon baking soda</li>
+        <li>1 egg</li>
+        <li>2 cups buttermilk</li>
+      </ul>
+
+      <h2>How it goes</h2>
+      <ol>
+        <li>The night before, pour the beans out on a dish towel a handful at a time and pick out the stones, the shriveled ones, and anything that is not a bean. Rinse them, cover with cold water by a few inches, and leave them overnight.</li>
+        <li>Drain the beans and put them in a heavy pot with the ham hock and the halved onion. Cover with fresh water by about two inches and bring it up to a boil.</li>
+        <li>Turn it down to the lowest simmer the stove will hold and leave the lid cracked. Three hours, give or take. Stir when you walk past and add hot water if they start to show above the liquid.</li>
+        <li>Once the beans are soft all the way through, pull the hock, take the meat off the bone, and put it back in the pot. Fish out what is left of the onion. Now the salt goes in, and pepper. Salt any earlier and the skins stay tough.</li>
+        <li>Mash a ladle of beans against the side of the pot and stir them back in. That is what makes the broth. Let it go another half hour.</li>
+        <li>For the cornbread, put the grease in a 10-inch cast-iron skillet and set the skillet in the oven while it heats to 450&deg;F. The skillet has to be hot. That is the crust.</li>
+        <li>Whisk the cornmeal, salt, baking powder, and soda together. Beat the egg into the buttermilk and stir it into the dry just until it comes together.</li>
+        <li>Pull the skillet out, swirl the grease around, and pour most of it into the batter. Stir once and pour the batter into the skillet. It should sizzle.</li>
+        <li>Bake 20 to 25 minutes, until the top is golden and the edges pull away. Turn it out onto a board.</li>
+        <li>Beans in a bowl, cornbread on the side or broken right into them, raw onion over the top. Chowchow if you have it.</li>
+      </ol>
+    </div>
+
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Happy Valley, NC &nbsp;·&nbsp; From the Kitchen</span>
+
+    <br />
+    <a href="/recipes" class="back-link">← Back to the recipes</a>
+
+  </div>
+
+  <footer>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+  </footer>
+
+</body>
+</html>
