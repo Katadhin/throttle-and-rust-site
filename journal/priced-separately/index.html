@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1c1f26" />
+  <title>Priced Separately | Throttle &amp; Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Priced Separately" />
+  <meta property="og:description" content="Rain took Friday&#x27;s install off the board, so Crank and I drove down to Sherrills Ford, where a man was closing out his shop one strip of masking tape at a time." />
+  <meta property="og:image" content="https://throttleandrust.com/images/priced-separately.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/priced-separately" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 42%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+
+    .footer-social { margin-bottom: 12px; }
+    footer a { color: var(--cream); text-decoration: none; border-bottom: 1px solid transparent; }
+    footer a:hover { border-bottom-color: var(--cream); }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Priced Separately",
+  "description": "Rain took Friday's install off the board, so Crank and I drove down to Sherrills Ford, where a man was closing out his shop one strip of masking tape at a time.",
+  "image": "https://throttleandrust.com/images/priced-separately.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Caleb Whitaker"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Throttle & Rust",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://throttleandrust.com/images/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://throttleandrust.com/journal/priced-separately"
+  },
+  "url": "https://throttleandrust.com/journal/priced-separately",
+  "datePublished": "2026-09-28",
+  "dateModified": "2026-09-28"
+}
+  </script>
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/ghost-tracks">Ghost Tracks</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/priced-separately.jpg"
+    alt="A man's two grease-stained hands holding a used cast-iron water pump at chest height inside an old block-walled two-bay garage, his head out of frame above, a bare tungsten bulb hanging from the rafters, an older man with his back turned working at a bench by a pegboard, an old yellow lab asleep in the open bay door, a wet gravel lot gone gold in low light outside, and in the foreground a plain tin can of bolts and fan belts and brackets wearing strips of blank masking tape, one low tree-covered ridge close behind"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Caleb</span>
+      <span class="divider"></span>
+      <span class="location">Sherrills Ford, NC</span>
+    </div>
+
+    <h1>Priced Separately</h1>
+
+    <div class="post-body">
+
+      <p>Rain took Friday's install off the board by nine in the morning. Late September, that is less a surprise than a schedule.</p>
+
+      <p>Wade had texted Wednesday. A photo of a sheet of plywood leaned against a mailbox in Sherrills Ford with EVERYTHING GOES painted on it, then a second photo of the same sign from closer, then a call to make sure I had seen the photos. Man down there was closing out his shop.</p>
+
+      <p>So Crank and I drove down. Hour and a half, most of it in the rain, the last mile on gravel.</p>
+
+      <p>The place was about what you would hope. Two bays, block building gone green on the north side, a floor that had been swept every day for longer than I have been alive and was still dirty. Steel shelves to the rafters, and every single thing on them wearing a strip of masking tape with a number in grease pencil.</p>
+
+      <p>He was at the back bench when I came in. Nodded, did not get up. Said the building was listed separate. Said his son had done the tape.</p>
+
+      <p>That second part rode home with me. The son priced the parts. Somebody else priced the building. A man is coming for the lift, and the hand tools are going in one lot to whoever wants them. Every piece of that shop has a number on it now, and not one of the numbers is for the reason you would have driven down there five years ago, which was him.</p>
+
+      <p>Found a water pump for the '54 on the second shelf. Tape said fifteen. He took it out of my hands, turned it over twice, and told me the casting was good and the bearing was not, and to do the bearing before I trusted it. That was not on the tape either. Paid the fifteen.</p>
+
+      <p>Crank slept in the bay door the whole visit with the rain coming off the roof edge about a foot from his head. The man said he was the best customer he had all week, which is probably true and says something about the week.</p>
+
+      <p>Rain quit about the time I left. Sun came in low under the back edge of it and lit the wet lot up gold, and I sat in the truck a minute before I started it.</p>
+
+      <p>You can price every piece of a place, add it up right, and still not have priced the place. Pump is on the bench at home now, beside the Bustelo can, waiting on a bearing.</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Sherrills Ford, NC &nbsp;·&nbsp; Build Season</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    <div class="footer-social"><a href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener">TikTok</a> · <a href="https://x.com/throttleandrust" target="_blank" rel="noopener">X</a> · <a href="https://www.youtube.com/@Throttle_and_Rust" target="_blank" rel="noopener">YouTube</a></div>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA &nbsp;·&nbsp; <a class="footer-note" href="/about/#how-this-is-made">How this is made</a>
+  </footer>
+
+</body>
+</html>
