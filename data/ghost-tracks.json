@@ -1,5 +1,20 @@
 [
   {
+    "slug": "heidelberg-raceway",
+    "name": "Heidelberg Raceway",
+    "place": "Scott Township, near Pittsburgh, Pennsylvania",
+    "state": "PA",
+    "era": "Four Cup races, 1949–1960",
+    "body": "Heidelberg Raceway sat in Scott Township, a few miles southwest of Pittsburgh, and ran from 1948 to 1973. NASCAR's top series stopped by four times, and the first stop mattered: on October 2, 1949, Lee Petty won the 100-mile Strictly Stock race there in a Plymouth, the first win of his career. The tour came back in 1951, 1959 and 1960, and Petty took the last one too. The track hung on as a local bullring until the early 1970s, when the oil crisis, sprawl and a lease nobody could agree on shut it down. The ground that gave Lee Petty his first win has a Walmart and a Lowe's on it now.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Heidelberg_Raceway",
+      "https://en.wikipedia.org/wiki/1949_NASCAR_Strictly_Stock_Series",
+      "https://bleacherreport.com/articles/27976-nascar-history-the-good-old-days-pennsylvania-style"
+    ],
+    "first": "2026-10-01",
+    "note": "Opened 1948 as a half-mile dirt oval with a quarter-mile cut into the infield; both were paved before 1967. The four top-series races were won by Lee Petty (1949, 1960), Herb Thomas (1951) and Jim Reed (1959). Lee Petty's first-win claim and the closing causes come from Wikipedia and Bleacher Report; the shopping-center detail (Raceway Plaza) is Wikipedia only. Sources disagree on whether Sara Christian's fifth place in 1949 is still the best finish by a woman in the series, so the entry leaves it out."
+  },
+  {
     "slug": "portland-speedway",
     "name": "Portland Speedway",
     "place": "Portland, Oregon",
