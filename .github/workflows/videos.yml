@@ -1,0 +1,42 @@
+name: Refresh videos page
+
+# Pulls new uploads from the YouTube channel into data/videos.json and re-renders /videos/.
+# A push made with GITHUB_TOKEN does not start other workflows, so this kicks the deploy itself.
+
+on:
+  schedule:
+    - cron: "15 11 * * *"   # 7:15am Eastern (EDT)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: videos
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Pull the channel feed and render
+        run: python3 scripts/update-videos.py
+      - name: Commit and deploy if anything changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- data/videos.json videos/index.html; then
+            echo "No new videos."
+            exit 0
+          fi
+          git config user.name "Throttle and Rust"
+          git config user.email "caleb@throttleandrust.com"
+          git add data/videos.json videos/index.html
+          git commit -m "Videos: refresh from YouTube channel"
+          git push
+          gh workflow run deploy.yml --ref main

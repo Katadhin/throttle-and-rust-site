@@ -42,3 +42,22 @@ Pick the staged frame you want, then either rename it yourself or tell Claude
 - Files still downloading (`.crdownload`) or written in the last 2 seconds are
   skipped so a half-written frame never gets processed.
 - Logs: `scripts/gemini-ingest.log` (staged frames), plus `.out.log` / `.err.log`.
+
+---
+
+# Videos page (`/videos/`)
+
+`update-videos.py` keeps `/videos/` in step with the YouTube channel. It merges the
+channel feed (newest 15 uploads) into `data/videos.json`, which keeps every video
+ever seen, then renders `videos/index.html` from `videos-template.html`.
+
+- Runs daily at 7:15am Eastern via `.github/workflows/videos.yml`, which commits
+  any change and triggers the Pages deploy. Run it by hand from the repo's
+  Actions tab ("Refresh videos page" → Run workflow) or locally with
+  `python3 scripts/update-videos.py`.
+- Edit the page through `videos-template.html`, never `videos/index.html`, which
+  is overwritten on every run. `--render` re-renders without touching the feed.
+- Anything 5 minutes or longer is filed under Full episodes; shorter is a clip.
+  The newest full episode is the featured video.
+- To drop a video from the page, delete its entry from `data/videos.json` and
+  re-render. It will not come back unless it is re-uploaded.

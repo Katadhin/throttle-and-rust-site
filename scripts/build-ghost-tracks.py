@@ -200,7 +200,7 @@ def jpeg_size(path):
 
 NAV = (
     '<span class="links"><a href="/journal/">Journal</a> &middot; '
-    '<a href="/recipes/">Recipes</a> &middot; <a href="/places/">Places</a> &middot; '
+    '<a href="/recipes/">Recipes</a> &middot; <a href="/videos/">Videos</a> &middot; <a href="/places/">Places</a> &middot; '
     '<a href="/calendar/">Calendar</a> &middot; <a href="/ghost-tracks/">Ghost Tracks</a></span>'
 )
 
