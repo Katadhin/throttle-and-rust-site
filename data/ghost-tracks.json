@@ -1,5 +1,22 @@
 [
   {
+    "slug": "wilson-speedway",
+    "name": "Wilson Speedway",
+    "place": "Wilson, North Carolina",
+    "state": "NC",
+    "era": "Twelve Cup races, 1951–1960",
+    "body": "Wilson Speedway was a half-mile dirt oval on the fairgrounds in Wilson, North Carolina. NASCAR's top series ran there twelve times between 1951 and 1960, and Fonty Flock won the first one. Junior Johnson won both races in 1959. The last one, on April 17, 1960, came down to the rule book: Emanuel Zervakis won on the track and was disqualified because his fuel tank was too big, so the win went to Joe Weatherly. Local racing carried on until 1989, and the site has been reported abandoned since.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Wilson_Speedway",
+      "https://www.racing-reference.info/tracks/Wilson_Speedway/",
+      "https://www.racing-reference.info/race-results/1960-12/W",
+      "https://en.wikipedia.org/wiki/Emanuel_Zervakis",
+      "https://bleacherreport.com/articles/27976-nascar-history-the-good-old-days-pennsylvania-style"
+    ],
+    "first": "2026-10-05",
+    "note": "Half-mile dirt oval on the Wilson County fairgrounds; opened 1934 (horse racing first), local racing until 1989. The twelve Cup winners: Fonty Flock (1951, 1953), Herb Thomas (1952, 1953, 1956), Buck Baker (1954, 1956), Ralph Moody (1957), Lee Petty (1958), Junior Johnson (1959 twice), Joe Weatherly (1960). Race count and winners agree on Wikipedia and Racing-Reference. The Zervakis disqualification is on both Wikipedia and Racing-Reference. No source gives a reason for the 1989 closing. The abandoned-site status traces to a 2012 book via Wikipedia and is not independently confirmed. A 1959 grandstand fire is reported with conflicting timing and left out."
+  },
+  {
     "slug": "heidelberg-raceway",
     "name": "Heidelberg Raceway",
     "place": "Scott Township, near Pittsburgh, Pennsylvania",
