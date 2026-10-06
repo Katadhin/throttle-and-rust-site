@@ -99,7 +99,7 @@
   }
   .pull {
     max-width: 720px;
-    margin: 0 auto 56px;
+    margin: 72px auto 56px;
     padding: 0 16px;
     text-align: center;
   }
@@ -277,7 +277,7 @@
     .topbar { padding: 18px 20px; font-size: 10px; }
     .hero { padding: 24px 20px 0; }
     .logo-mark { width: 180px; }
-    .pull { margin-bottom: 40px; }
+    .pull { margin: 48px auto 40px; }
     .pull-line { font-size: 22px; }
     .about { margin-top: 64px; }
     .about p { font-size: 15px; }
@@ -298,16 +298,30 @@
   .fade-in.d4 { animation-delay: 0.8s; }
   @keyframes rise { to { opacity: 1; transform: translateY(0); } }
 
-  /* Journal carousel */
-  .carousel-wrap { max-width: 880px; margin: 96px auto 0; padding: 0 32px; }
-  .carousel-eyebrow {
+  /* Journal carousel: the opening image of the page, with the badge stamped on its corner */
+  .carousel-wrap { position: relative; margin: 18px 0 0; }
+  .c-badge {
+    position: absolute;
+    z-index: 4;
+    left: 24px;
+    top: -30px;
+    width: 138px;
+    height: auto;
+    border-radius: 18px;
+    filter: drop-shadow(0 6px 18px rgba(28, 31, 38, 0.35));
+  }
+  .c-tag {
+    position: absolute;
+    z-index: 3;
+    top: 22px;
+    right: 24px;
     font-family: 'Special Elite', monospace;
-    font-size: 11px;
-    letter-spacing: 0.3em;
+    font-size: 10px;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: var(--rust);
-    text-align: center;
-    margin-bottom: 22px;
+    color: #f6f0e3;
+    background: rgba(20,20,24,0.45);
+    padding: 6px 10px;
   }
   .carousel {
     position: relative;
@@ -404,7 +418,13 @@
   .c-dot:hover { background: rgba(162,59,31,0.6); }
   .c-dot.is-active { background: var(--rust); }
   @media (max-width: 720px) {
-    .carousel-wrap { padding: 0 20px; margin-top: 64px; }
+    .carousel-wrap { margin-top: 26px; }
+    .carousel { aspect-ratio: 4 / 5; }
+    .c-badge { width: 92px; left: 14px; top: -20px; border-radius: 12px; }
+    .c-tag { top: 14px; right: 14px; }
+    .c-nav { display: none; }
+    .c-blurb { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .c-dots { flex-wrap: wrap; gap: 9px; padding: 0 8px; }
     .c-text { padding: 18px 20px; }
     .c-blurb { font-size: 12px; }
     .c-nav { width: 34px; height: 34px; font-size: 18px; }
@@ -440,70 +460,10 @@
 
 <section class="hero">
 
-  <div class="logo-block fade-in d2">
-    <img class="logo-mark" src="images/logo.png" alt="Throttle and Rust" />
-  </div>
-
-  <div class="pull fade-in d3">
-    <div class="pull-line">
-      Old trucks, slow meat, and the race on the radio. <span class="accent">That's pretty much it.</span>
-    </div>
-    <div class="pull-attr">Caleb &amp; Sarah Whitaker</div>
-  </div>
-
-  <div class="photo fade-in d4">
-    <img src="images/hero-property.jpg" alt="The property at golden hour" />
-  </div>
-  <div class="photo-caption">Late afternoon, the valley.</div>
-
-  <div class="note">
-    <div class="note-body">
-      I kept telling Caleb we should write some of this down. The
-      Saturdays, the people, the things that get fixed and the things
-      that don't. So <span class="em">this is that.</span> A small place
-      to put the photos and a few sentences about what was happening
-      when we took them. Megan, my friend from school, put this
-      together for us one weekend. She has more taste than the two
-      of us combined.
-    </div>
-    <div class="note-attr">— Sarah</div>
-  </div>
-
-  <div class="about">
-    <div class="about-eyebrow">About us</div>
-    <p>
-      I'm Caleb. My wife Sarah and I started this little corner of the
-      internet because we kept taking pictures of stuff in the driveway
-      and didn't really have anywhere to put them.
-    </p>
-    <p>
-      I run a landscaping company. Spent a lot of years on crews
-      working high-end properties — a couple NASCAR guys' places out
-      toward Mooresville, a few others — before I went out on my own.
-      Sarah went to App State for teaching and now stays home with
-      our kids. Her dad raced short-track for years up at Wilkesboro
-      and Hickory, and the radio in the garage was his father's
-      before that. So the race on Saturday isn't a new thing for us.
-      It's just always been there.
-    </p>
-    <p>
-      Most weekends I'm under a hood and Sarah's got the smoker
-      going. Friends drift in and out. Crank finds shade. The duck
-      gets into something he shouldn't. That's about the size of it.
-    </p>
-    <div class="about-signoff">— Caleb &amp; Sarah</div>
-  </div>
-
-  <div class="contact">
-    <div class="contact-line">If you need us, write Sarah.</div>
-    <a href="mailto:sarah@throttleandrust.com">sarah@throttleandrust.com</a>
-    <div class="contact-social"><a href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener">TikTok</a> · <a href="https://x.com/throttleandrust" target="_blank" rel="noopener">X</a> · <a href="https://www.youtube.com/@Throttle_and_Rust" target="_blank" rel="noopener">YouTube</a></div>
-  </div>
-
-
-  <div class="carousel-wrap fade-in">
-    <div class="carousel-eyebrow">Latest from the journal</div>
+  <div class="carousel-wrap fade-in d2">
+    <img class="c-badge" src="images/logo.png" alt="Throttle and Rust" />
     <div class="carousel" id="journalCarousel" aria-label="Latest journal posts" aria-roledescription="carousel">
+      <div class="c-tag">From the journal</div>
 
       <a class="c-slide is-active" href="journal/priced-separately/">
         <img src="images/priced-separately.jpg" alt="A man's two grease-stained hands holding a used cast-iron water pump at chest height inside an old block-walled two-bay garage, his head out of frame above, a bare tungsten bulb hanging from the rafters, an older man with his back turned working at a bench by a pegboard, an old yellow lab asleep in the open bay door, a wet gravel lot gone gold in low light outside, and in the foreground a plain tin can of bolts and fan belts and brackets wearing strips of blank masking tape, one low tree-covered ridge close behind" />
@@ -742,6 +702,63 @@
     <div class="c-dots" id="journalDots" role="tablist" aria-label="Choose a post"></div>
   </div>
 
+  <div class="pull fade-in d3">
+    <div class="pull-line">
+      Old trucks, slow meat, and the race on the radio. <span class="accent">That's pretty much it.</span>
+    </div>
+    <div class="pull-attr">Caleb &amp; Sarah Whitaker</div>
+  </div>
+
+  <div class="photo fade-in d4">
+    <img src="images/hero-property.jpg" alt="The property at golden hour" />
+  </div>
+  <div class="photo-caption">Late afternoon, the valley.</div>
+
+  <div class="note">
+    <div class="note-body">
+      I kept telling Caleb we should write some of this down. The
+      Saturdays, the people, the things that get fixed and the things
+      that don't. So <span class="em">this is that.</span> A small place
+      to put the photos and a few sentences about what was happening
+      when we took them. Megan, my friend from school, put this
+      together for us one weekend. She has more taste than the two
+      of us combined.
+    </div>
+    <div class="note-attr">— Sarah</div>
+  </div>
+
+  <div class="about">
+    <div class="about-eyebrow">About us</div>
+    <p>
+      I'm Caleb. My wife Sarah and I started this little corner of the
+      internet because we kept taking pictures of stuff in the driveway
+      and didn't really have anywhere to put them.
+    </p>
+    <p>
+      I run a landscaping company. Spent a lot of years on crews
+      working high-end properties — a couple NASCAR guys' places out
+      toward Mooresville, a few others — before I went out on my own.
+      Sarah went to App State for teaching and now stays home with
+      our kids. Her dad raced short-track for years up at Wilkesboro
+      and Hickory, and the radio in the garage was his father's
+      before that. So the race on Saturday isn't a new thing for us.
+      It's just always been there.
+    </p>
+    <p>
+      Most weekends I'm under a hood and Sarah's got the smoker
+      going. Friends drift in and out. Crank finds shade. The duck
+      gets into something he shouldn't. That's about the size of it.
+    </p>
+    <div class="about-signoff">— Caleb &amp; Sarah</div>
+  </div>
+
+  <div class="contact">
+    <div class="contact-line">If you need us, write Sarah.</div>
+    <a href="mailto:sarah@throttleandrust.com">sarah@throttleandrust.com</a>
+    <div class="contact-social"><a href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener">TikTok</a> · <a href="https://x.com/throttleandrust" target="_blank" rel="noopener">X</a> · <a href="https://www.youtube.com/@Throttle_and_Rust" target="_blank" rel="noopener">YouTube</a></div>
+  </div>
+
+
   <!-- On the calendar. Copy lives in /calendar.js and advances by date on its
        own. The markup below is the no-JS fallback; keep it current-ish but it
        does not need weekly attention. -->
@@ -837,6 +854,17 @@
   car.addEventListener('mouseleave', start);
   car.addEventListener('focusin', stop);
   car.addEventListener('focusout', start);
+
+  // Swipe on phones, where the arrows are hidden
+  var x0 = null;
+  car.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; stop(); }, { passive: true });
+  car.addEventListener('touchend', function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    x0 = null;
+    if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); }
+    start();
+  }, { passive: true });
 
   start();
 })();
