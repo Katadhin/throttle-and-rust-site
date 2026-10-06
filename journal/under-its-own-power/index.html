@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1c1f26" />
+  <title>Under Its Own Power | Throttle &amp; Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Under Its Own Power" />
+  <meta property="og:description" content="Megan called Sunday with a race-week cruise-in at the Signature Bar on Thursday and one condition: Caleb brings the &#x27;54." />
+  <meta property="og:image" content="https://throttleandrust.com/images/under-its-own-power.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/under-its-own-power" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 70%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+
+    .footer-social { margin-bottom: 12px; }
+    footer a { color: var(--cream); text-decoration: none; border-bottom: 1px solid transparent; }
+    footer a:hover { border-bottom-color: var(--cream); }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Under Its Own Power",
+  "description": "Megan called Sunday with a race-week cruise-in at the Signature Bar on Thursday and one condition: Caleb brings the '54.",
+  "image": "https://throttleandrust.com/images/under-its-own-power.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Sarah Whitaker"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Throttle & Rust",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://throttleandrust.com/images/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://throttleandrust.com/journal/under-its-own-power"
+  },
+  "url": "https://throttleandrust.com/journal/under-its-own-power",
+  "datePublished": "2026-10-06",
+  "dateModified": "2026-10-06"
+}
+  </script>
+<link rel="stylesheet" href="/assets/social-icons.css" />
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/ghost-tracks">Ghost Tracks</a></li>
+      <li><a href="/videos">Videos</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/under-its-own-power.jpg"
+    alt="A man's two hands resting flat on the rusted navy fender of an old two-tone pickup with its hood raised in a garage at night, his head out of frame above, a caged trouble light hooked on the hood throwing warm light into the engine bay, a faded yellow and red coffee tin of bolts and a white enamel mug on the fender, a pegboard of hand tools behind him, an old yellow lab's tail and hind leg under the bench, deep blue night through the open garage door"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Sarah</span>
+      <span class="divider"></span>
+      <span class="location">Happy Valley, NC</span>
+    </div>
+
+    <h1>Under Its Own Power</h1>
+
+    <div class="post-body">
+
+      <p>Megan called Sunday night, which in October means Charlotte. Race week runs the whole lake side of the state loud from Monday on, and she lives for it. There is a cruise-in Thursday evening at the Signature Bar at Eleven Lakes, she said, and she had already told people we were coming. Then she got to the part she called about. Bring the truck.</p>
+
+      <p>The truck is the '54. Navy and cream where it isn't rust, five years into a project Caleb calls almost there every spring and a long way off every fall. It drives. That is the most anybody in this family has ever claimed for it.</p>
+
+      <p>He said no before she finished. Said it wasn't ready, that a cruise-in is a parking lot full of cars somebody already finished, and he was not driving an hour and a half to Cornelius to park a question mark between two answers.</p>
+
+      <p>Megan said fine and hung up, which is how she wins.</p>
+
+      <p>By Monday night he was in the garage. Not working on it, exactly. Standing at the fender with a coffee gone cold, the way Daddy used to stand at the back of a car on a Friday, deciding which of the things wrong with it mattered by Saturday.</p>
+
+      <p>So I called Daddy, mostly to hear what he would say. He was quiet a while. Then he said he never once took a car to Hickory that was ready. You fix what keeps it running and you go, and the rest of it is what you work on Monday. He raced that way for years and came home most nights.</p>
+
+      <p>Mama got on the line after and asked if we were really taking that thing in the driveway to a bar. I said maybe. She said in that case she wanted a picture of the people's faces when it pulled in.</p>
+
+      <p>Tonight he has the hood up and the trouble light hooked on the latch, and the Bustelo can is out on the fender, which is a sign. He has not said yes. He has not said no again, either. Crank is asleep under the bench like none of this concerns him, which it does not.</p>
+
+      <p>Here is what I know about Caleb. He will never call it finished. There is no finished. There is the version that starts in the morning and the version that does not, and on Thursday afternoon one of them is going to be sitting in the driveway.</p>
+
+      <p>Megan texted an hour ago asking what time we are leaving. I told her to ask him. She sent back a thumbs up, which means she already knows.</p>
+
+      <p>S</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Happy Valley, NC &nbsp;·&nbsp; Build Season</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    <div class="footer-social"><span class="social-icons"><a class="soc" href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on Facebook" title="Facebook"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#facebook"/></svg></a><a class="soc" href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on Instagram" title="Instagram"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#instagram"/></svg></a><a class="soc" href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on TikTok" title="TikTok"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#tiktok"/></svg></a><a class="soc" href="https://x.com/throttleandrust" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on X" title="X"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#x"/></svg></a><a class="soc" href="https://www.youtube.com/@Throttle_and_Rust" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on YouTube" title="YouTube"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#youtube"/></svg></a></span></div>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA &nbsp;·&nbsp; <a class="footer-note" href="/about/#how-this-is-made">How this is made</a>
+  </footer>
+
+</body>
+</html>
