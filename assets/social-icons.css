@@ -1,0 +1,19 @@
+/* Social links as stamped tags: a square plate with a hairline border in the
+   surrounding text color, the platform glyph inside. Hover fills it rust.
+   Works on the cream pages and the navy journal footers because it all runs
+   on currentColor. Markup: <span class="social-icons"><a class="soc" ...><svg><use href="/assets/social-icons.svg#facebook"/></svg></a>…</span> */
+.social-icons { display: inline-flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: inherit; vertical-align: middle; }
+.social-icons .soc {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 7px;
+  border: 1.5px solid currentColor; color: inherit;
+  text-decoration: none; border-bottom-width: 1.5px;
+  transition: background-color .2s ease, border-color .2s ease, color .2s ease, transform .2s ease;
+}
+.social-icons .soc svg { width: 17px; height: 17px; fill: currentColor; display: block; }
+.social-icons .soc:hover, .social-icons .soc:focus-visible {
+  background: #a23b1f; border-color: #a23b1f; color: #f3eddf; outline: none; transform: translateY(-1px);
+}
+.social-icons .soc:focus-visible { box-shadow: 0 0 0 3px rgba(162, 59, 31, .35); }
+.contact-social .social-icons { justify-content: center; color: #1c1f26; }
+@media (prefers-reduced-motion: reduce) { .social-icons .soc { transition: none; } .social-icons .soc:hover { transform: none; } }

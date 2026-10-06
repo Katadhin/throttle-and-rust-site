@@ -205,11 +205,7 @@ NAV = (
 )
 
 SOCIAL = (
-    '<a href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener">Facebook</a> · '
-    '<a href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener">Instagram</a> · '
-    '<a href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener">TikTok</a> · '
-    '<a href="https://x.com/throttleandrust" target="_blank" rel="noopener">X</a> · '
-    '<a href="https://www.youtube.com/@Throttle_and_Rust" target="_blank" rel="noopener">YouTube</a>'
+    '<span class="social-icons"><a class="soc" href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on Facebook" title="Facebook"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#facebook"/></svg></a><a class="soc" href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on Instagram" title="Instagram"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#instagram"/></svg></a><a class="soc" href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on TikTok" title="TikTok"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#tiktok"/></svg></a><a class="soc" href="https://x.com/throttleandrust" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on X" title="X"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#x"/></svg></a><a class="soc" href="https://www.youtube.com/@Throttle_and_Rust" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on YouTube" title="YouTube"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#youtube"/></svg></a></span>'
 )
 
 CSS = """
@@ -396,6 +392,7 @@ def shell(title, desc, url, body, image=None, image_alt=None):
 <meta property="og:url" content="{url}" />{card}
 {FONTS}
 <style>{CSS}</style>
+<link rel="stylesheet" href="/assets/social-icons.css" />
 </head>
 <body>
 
