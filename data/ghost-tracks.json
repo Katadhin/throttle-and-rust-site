@@ -1,5 +1,20 @@
 [
   {
+    "slug": "dog-track-speedway",
+    "name": "Dog Track Speedway",
+    "place": "Moyock, North Carolina",
+    "state": "NC",
+    "era": "Seven Cup races, 1962–1966",
+    "body": "Dog Track Speedway sat on NC 168 in Moyock, North Carolina, a quarter-mile dirt oval that was paved and stretched to a third of a mile in 1964. NASCAR's top series ran there seven times between 1962 and 1966, and Ned Jarrett won four of them. David Pearson won the last one on May 29, 1966. Seven races in five seasons, and Jarrett took more than half.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Dog_Track_Speedway",
+      "https://www.racing-reference.info/tracks/Dog_Track_Speedway/",
+      "https://www.jayski.com/race-results/1966-nascar-grand-national-series/100-miles-at-dog-track-speedway/"
+    ],
+    "first": "2026-10-08",
+    "note": "Seven Grand National races and the winners agree on Wikipedia and Racing-Reference: Ned Jarrett (Sep 11 1962, Sep 24 1963, Aug 13 1964, Nov 7 1965), Jimmy Pardue (Jul 11 1963), Dick Hutcherson (Aug 24 1965), David Pearson (May 29 1966). The dirt-to-paved change in 1964 is Wikipedia only. Wikipedia gives a closing date of later in 1966 and says declining attendance, poor revenues and larger tracks nearby, but no second source was found, so no closure reason is stated. Wikipedia's page conflicts with itself on which 1965 race was the Tidewater 300 and on the championship clincher, so neither is used."
+  },
+  {
     "slug": "wilson-speedway",
     "name": "Wilson Speedway",
     "place": "Wilson, North Carolina",

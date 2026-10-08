@@ -393,6 +393,7 @@ def shell(title, desc, url, body, image=None, image_alt=None):
 {FONTS}
 <style>{CSS}</style>
 <link rel="stylesheet" href="/assets/social-icons.css" />
+<link rel="stylesheet" href="/assets/footer-legal.css" />
 </head>
 <body>
 
@@ -408,7 +409,8 @@ def shell(title, desc, url, body, image=None, image_alt=None):
     <div class="footer-left"><a href="/">Throttle &amp; Rust</a></div>
     <div class="footer-right">
       <span class="footer-social">{SOCIAL}</span><br />
-      <span class="credit">site by the Meg</span> &middot; 2026 &middot; <a href="/about/#how-this-is-made">How this is made</a>
+      <span class="credit">site by the Meg</span> · 2026<br />
+      <span class="footer-legal"><a href="/about/#how-this-is-made">How this is made</a><span class="sep">·</span><a href="/privacy/">Privacy</a></span>
     </div>
   </div>
 </footer>
