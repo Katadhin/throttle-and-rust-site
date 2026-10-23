@@ -380,7 +380,10 @@
       "https://www.the-fastlane.co.uk/racingcircuits/archives/Lakewood/index.html"
     ],
     "first": "2026-07-23",
-    "note": null
+    "note": null,
+    "image": "/images/ghost-tracks-lakewood-speedway.jpg",
+    "imagined": true,
+    "caption": "The Lake Oval, Imagined"
   },
   {
     "slug": "charlotte-speedway",
