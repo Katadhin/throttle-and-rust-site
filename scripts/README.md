@@ -61,3 +61,37 @@ ever seen, then renders `videos/index.html` from `videos-template.html`.
   The newest full episode is the featured video.
 - To drop a video from the page, delete its entry from `data/videos.json` and
   re-render. It will not come back unless it is re-uploaded.
+
+---
+
+# Ghost Tracks imagined-image generator (`gen-ghost-track.py`)
+
+The hands-off version of making a Ghost Tracks imagined scene. No browser, no
+download, no filename guessing: the Gemini/Imagen API returns the image into the
+response, the script labels it with `label-imagined.py`, names it by slug, and
+optionally wires it into `data/ghost-tracks.json` and rebuilds.
+
+Runs on your Mac (open network), not in the cloud session (which firewalls
+Google's API host).
+
+## One-time setup
+1. Free key: https://aistudio.google.com/apikey
+2. `export GEMINI_API_KEY="xxxx"`  (or `echo xxxx > scripts/.gemini_key`, gitignored)
+
+## Use
+    # generate + label only, review first
+    python3 scripts/gen-ghost-track.py <slug> --prompt "Documentary-style vintage photo, ..."
+
+    # generate, label, wire into the register, rebuild
+    python3 scripts/gen-ghost-track.py <slug> --prompt "..." --caption "The Big Left Turn, Imagined" --deploy
+
+    # let the prompt be built from the entry (rough; a hand prompt is better)
+    python3 scripts/gen-ghost-track.py <slug> --deploy
+
+    # see what your key can run
+    python3 scripts/gen-ghost-track.py --list-models
+
+The house prompt wrapper (distant soft crowd, no readable text or numbers, no
+close-up hands or faces, film grain, palette) is baked in, so every generation
+carries the anti-slop guardrails from the image audit. Nothing commits or
+pushes; review `git diff` and deploy the site the way you always do.

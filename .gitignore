@@ -22,3 +22,6 @@ images/*.png
 !images/logo.png
 
 # Staged, not live until its hero exists and its date arrives (Sep 7 2026)
+
+# local Gemini API key for scripts/gen-ghost-track.py
+scripts/.gemini_key
