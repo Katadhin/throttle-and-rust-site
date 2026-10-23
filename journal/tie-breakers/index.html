@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1c1f26" />
+  <title>Tie Breakers | Throttle & Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Tie Breakers" />
+  <meta property="og:description" content="The new place by the college is not all the way finished. The wings do not care." />
+  <meta property="og:image" content="https://throttleandrust.com/images/tie-breakers-hero.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/tie-breakers" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 60%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-figure { margin: 44px 0; }
+    .post-figure img { width: 100%; display: block; filter: saturate(0.88) contrast(1.04); }
+    .post-figure figcaption { font-family: 'Special Elite', serif; font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--charcoal); opacity: 0.45; margin-top: 10px; text-align: right; }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+
+    .footer-social { margin-bottom: 12px; }
+    footer a { color: var(--cream); text-decoration: none; border-bottom: 1px solid transparent; }
+    footer a:hover { border-bottom-color: var(--cream); }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Tie Breakers",
+  "description": "The new place by the college is not all the way finished. The wings do not care.",
+  "image": "https://throttleandrust.com/images/tie-breakers-hero.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Caleb Whitaker"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Throttle & Rust",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://throttleandrust.com/images/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://throttleandrust.com/journal/tie-breakers"
+  },
+  "url": "https://throttleandrust.com/journal/tie-breakers",
+  "datePublished": "2026-10-23",
+  "dateModified": "2026-10-23"
+}
+  </script>
+<link rel="stylesheet" href="/assets/social-icons.css" />
+<link rel="stylesheet" href="/assets/footer-legal.css" />
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/ghost-tracks">Ghost Tracks</a></li>
+      <li><a href="/videos">Videos</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/tie-breakers-hero.jpg"
+    alt="A wall mural inside the new Tie Breakers in Hickory: the Lenoir-Rhyne University gate and the old Hickory bridge in gray behind TIE BREAKERS in tall letters, warm track light above, the room still being finished"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Caleb</span>
+      <span class="divider"></span>
+      <span class="location">Hickory, NC</span>
+    </div>
+
+    <h1>Tie Breakers</h1>
+
+    <div class="post-body">
+
+      <p>The new place by the college is not all the way finished. The wings do not care.</p>
+
+      <p>Half the room is still going up. There is a ladder parked where nobody will want a ladder once people are sitting down, and boxes stacked along a wall waiting to be whatever they are going to be. But the kitchen is open, and that is the part that counts first. We got a basket of hot and a cup of ranch and did not talk for a while.</p>
+
+      <figure class="post-figure">
+        <img src="../../images/tie-breakers-wings.jpg" alt="A basket of buffalo wings on parchment with a cup of ranch, on a dark bar table" />
+        <figcaption>Hot, with ranch. The napkins came later.</figcaption>
+      </figure>
+
+      <p>They come out the right kind of messy. Crisp at the edge, sauce that has some heat to it without trying to prove a point, the kind you finish and then look at your hands and decide the napkins are a later problem. Sarah ate more than she will admit to. I counted.</p>
+
+      <p>The walls are already telling you where you are, and where you are is Hickory, not some bar you could drop off any interstate into any town. The place itself is up there in gray. The old bridge. The campus down the road. Whoever built this wanted you to know whose town you were eating in. Michael's name on another wall in that hand-done script. Between bites Sarah turned half around on the stool and saw the place it is going to be. Screens all going. A Friday in the fall. Loud.</p>
+
+      <p>She is right about it. You can tell a good room before it fills up, same as you can tell a good truck before it runs. This one has the bones. Close to the college, close enough to home that close is the whole point.</p>
+
+      <p>We boxed up what we did not finish and got Crank the two plain ones we set aside for him, which is the only reason he tolerates being left in the truck. Then we drove back north already talking about when we come again, which is how you know a place took.</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Hickory, NC &nbsp;·&nbsp; Built Not Bought</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    <div class="footer-social"><span class="social-icons"><a class="soc" href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on Facebook" title="Facebook"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#facebook"/></svg></a><a class="soc" href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on Instagram" title="Instagram"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#instagram"/></svg></a><a class="soc" href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on TikTok" title="TikTok"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#tiktok"/></svg></a><a class="soc" href="https://x.com/throttleandrust" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on X" title="X"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#x"/></svg></a><a class="soc" href="https://www.youtube.com/@Throttle_and_Rust" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on YouTube" title="YouTube"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#youtube"/></svg></a></span></div>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+    <div class="footer-legal"><a href="/about/#how-this-is-made">How this is made</a><span class="sep">·</span><a href="/privacy/">Privacy</a></div>
+  </footer>
+
+</body>
+</html>
