@@ -408,7 +408,10 @@
       "https://en.wikipedia.org/wiki/Langhorne_Speedway"
     ],
     "first": "2026-07-20",
-    "note": null
+    "note": null,
+    "image": "/images/ghost-tracks-langhorne-speedway.jpg",
+    "imagined": true,
+    "caption": "The Big Left Turn, Imagined"
   },
   {
     "slug": "columbia-speedway",
