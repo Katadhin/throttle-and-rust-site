@@ -138,9 +138,10 @@
     ],
     "first": "2026-09-08",
     "note": "storm name deliberately omitted; the source text naming it was truncated",
-    "image": "/images/ghost-tracks-stub.jpg",
-    "alt": "A torn ticket stub gone soft and colorless on a sun-cracked vinyl bench seat, its print worn past reading.",
-    "caption": "A stub off a season that ended."
+    "image": "/images/ghost-tracks-texas-world-speedway.jpg",
+    "imagined": true,
+    "alt": "A wide high-banked two-mile paved superspeedway under a big hazy sky, a pack of early-1970s stock cars low on the banking, a long grandstand behind.",
+    "caption": "The Forgotten Two-Mile, Imagined"
   },
   {
     "slug": "soldier-field",
@@ -427,7 +428,10 @@
       "https://en.wikipedia.org/wiki/Columbia_Speedway"
     ],
     "first": "2026-07-13",
-    "note": null
+    "note": null,
+    "image": "/images/ghost-tracks-columbia-speedway.jpg",
+    "imagined": true,
+    "caption": "Too Fast to Handle, Imagined"
   },
   {
     "slug": "asheville-weaverville-speedway",
@@ -440,7 +444,10 @@
       "https://en.wikipedia.org/wiki/Asheville%E2%80%93Weaverville_Speedway"
     ],
     "first": "2026-07-06",
-    "note": null
+    "note": null,
+    "image": "/images/ghost-tracks-asheville-weaverville-speedway.jpg",
+    "imagined": true,
+    "caption": "The Bootlegger's Half-Mile, Imagined"
   },
   {
     "slug": "raleigh-speedway",
