@@ -25,3 +25,4 @@ images/*.png
 
 # local Gemini API key for scripts/gen-ghost-track.py
 scripts/.gemini_key
+scripts/.gemini_key.save

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1c1f26" />
+  <title>Ten Miles Out | Throttle &amp; Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Ten Miles Out" />
+  <meta property="og:description" content="The trailer tire let go ten miles from the track, and the spare was flat. No hot laps this Saturday." />
+  <meta property="og:image" content="https://throttleandrust.com/images/ten-miles-out.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/ten-miles-out" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 55%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+
+    .footer-social { margin-bottom: 12px; }
+    footer a { color: var(--cream); text-decoration: none; border-bottom: 1px solid transparent; }
+    footer a:hover { border-bottom-color: var(--cream); }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Ten Miles Out",
+  "description": "The trailer tire let go ten miles from the track, and the spare was flat. No hot laps this Saturday.",
+  "image": "https://throttleandrust.com/images/ten-miles-out.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Caleb Whitaker"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Throttle & Rust",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://throttleandrust.com/images/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://throttleandrust.com/journal/ten-miles-out"
+  },
+  "url": "https://throttleandrust.com/journal/ten-miles-out",
+  "datePublished": "2026-10-26",
+  "dateModified": "2026-10-26"
+}
+  </script>
+<link rel="stylesheet" href="/assets/social-icons.css" />
+<link rel="stylesheet" href="/assets/footer-legal.css" />
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/ghost-tracks">Ghost Tracks</a></li>
+      <li><a href="/videos">Videos</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/ten-miles-out.jpg"
+    alt="A dropped tailgate on a weathered tow truck at golden hour on a gravel highway shoulder, an open cooler and two plain unlabeled cans sitting on the gate, a covered race car strapped to a rusted flatbed trailer behind, a blown tire leaning against the bumper, cars streaked past in motion blur on the road, long shadows and film grain"
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Caleb</span>
+      <span class="divider"></span>
+      <span class="location">The foothills, NC</span>
+    </div>
+
+    <h1>Ten Miles Out</h1>
+
+    <div class="post-body">
+
+      <p>The trailer tire let go about ten miles out, loud enough that I had us on the shoulder before I was done deciding to brake. The '78 was strapped down tight behind us and didn't shift, which is the one thing that went right all afternoon.</p>
+
+      <p>Got out into the smoke and the gravel dust. Sarah was already around back looking at it. Shredded down to the belts, nothing you drive on. Pulled the spare off the rack and it was flat too. Flat since who knows when, eight dollars of air I had meant to check on Tuesday and didn't, the kind of thing you don't find out you skipped until you're standing on the side of a road finding it out.</p>
+
+      <p>Hot laps were in an hour. We were not making hot laps.</p>
+
+      <p>Sarah kicked the blown tire and laughed, not the polite kind, the kind that means we will be telling this one at the shop for a while. Nobody to call. You either carry what you need to fix your own stuff or you learn something about yourself on the shoulder of a two-lane. Texted Wes. A jack and a good spare whenever you're loose. He sent back a thumbs up and give me forty.</p>
+
+      <p>So we dropped the tailgate on the tow rig instead of sitting in the cab feeling sorry about it. Two cans out of the dented cooler in the bed, still cold enough to count. Crank climbed down and found himself a spot in the grass like he had planned the stop all along. Cars came by close enough to move your hair, and we sat there and went back through every bad night we own. The motor that let go right on the grid with everybody watching. The year it rained so hard they called it before the feature and we ate cold chicken in the truck bed until midnight anyway.</p>
+
+      <p>Wes rolled up right around the forty-minute mark, faded work shirt, in no hurry. Grabbed a can before he looked at the tire. Leaned on the trailer and said it would keep, which it did. We changed it eventually. Nobody rushed it.</p>
+
+      <p>Never turned a lap. Never got closer than that gravel shoulder. First Saturday in a month I was not running the list of everything still left to do on the car, and I have got a ruined spare to thank for it.</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">The foothills, NC &nbsp;·&nbsp; Cold Ones &amp; Tall Tales</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    <div class="footer-social"><span class="social-icons"><a class="soc" href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on Facebook" title="Facebook"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#facebook"/></svg></a><a class="soc" href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on Instagram" title="Instagram"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#instagram"/></svg></a><a class="soc" href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on TikTok" title="TikTok"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#tiktok"/></svg></a><a class="soc" href="https://x.com/throttleandrust" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on X" title="X"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#x"/></svg></a><a class="soc" href="https://www.youtube.com/@Throttle_and_Rust" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on YouTube" title="YouTube"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#youtube"/></svg></a></span></div>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+    <div class="footer-legal"><a href="/about/#how-this-is-made">How this is made</a><span class="sep">·</span><a href="/privacy/">Privacy</a></div>
+  </footer>
+
+</body>
+</html>
