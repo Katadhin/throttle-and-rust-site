@@ -1,5 +1,74 @@
 [
   {
+    "slug": "shangri-la-speedway",
+    "name": "Shangri-La Speedway",
+    "place": "Owego, New York",
+    "state": "NY",
+    "era": "One Grand National race, July 4, 1952",
+    "body": "Shangri-La Speedway in Owego, New York, hosted a single NASCAR Grand National race, on July 4, 1952, and Tim Flock won it on his way to that season's championship. The half-mile paved oval kept racing for decades afterward, later under the name Tioga Motorsports Park, and closed in 2005.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Shangri-La_Speedway",
+      "https://www.thethirdturn.com/wiki/Shangri-La_Speedway",
+      "https://en.wikipedia.org/wiki/1952_NASCAR_Grand_National_Series"
+    ],
+    "first": "2026-11-09",
+    "note": "The race date and winner come from The Third Turn and the 1952 season record. Sources disagree on the race's length, listed as both 100 miles and 200 laps, so the entry leaves it out, along with details of the track's later years that only one source carries."
+  },
+  {
+    "slug": "old-dominion-speedway",
+    "name": "Old Dominion Speedway",
+    "place": "Near Manassas, Virginia",
+    "state": "VA",
+    "era": "Grand National races in 1958 and 1963–1966",
+    "body": "Old Dominion Speedway, just south of Manassas, Virginia, hosted NASCAR Grand National races in 1958 and from 1963 to 1966. Frankie Schneider won the first, on April 25, 1958, the only Grand National win of his career, and Richard Petty and Ned Jarrett were among the winners who followed. The complex ran its final race in 2012.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Old_Dominion_Speedway",
+      "https://en.wikipedia.org/wiki/Frankie_Schneider",
+      "https://en.wikipedia.org/wiki/Dominion_Raceway"
+    ],
+    "first": "2026-11-05",
+    "note": "Published winner lists for 1964 and 1965 disagree with each other, so the entry names only the 1958 winner and two later winners every list agrees on, and states no race count. Later accounts tie the track to Dominion Raceway in Thornburg, but the sources do not settle how, so the entry leaves that out."
+  },
+  {
+    "slug": "palm-beach-speedway",
+    "name": "Palm Beach Fairgrounds Speedway",
+    "place": "West Palm Beach, Florida",
+    "state": "FL",
+    "era": "Seven Cup races, 1952–1956",
+    "body": "Palm Beach Fairgrounds Speedway in West Palm Beach, Florida, was a half-mile oval that hosted seven NASCAR Grand National races between 1952 and 1956. Tim Flock won the first, in January 1952, leading 194 of 200 laps. Herb Thomas won four of the seven. The county tore the track down in 1984 after attendance and revenue had fallen.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Palm_Beach_Speedway",
+      "https://www.wflx.com/2024/02/16/racing-legends-reflect-palm-beach-fairgrounds-speedway",
+      "https://www.racing-reference.info/race-results/1952-01/W",
+      "https://www.racing-reference.info/race/1956-07/W",
+      "https://www.jayski.com/race-results/1952-nascar-grand-national-series/",
+      "https://www.jayski.com/race-results/1953-nascar-grand-national-series/",
+      "https://www.jayski.com/race-results/1954-nascar-grand-national-series/",
+      "https://www.jayski.com/race-results/1955-nascar-grand-national-series/",
+      "https://www.jayski.com/race-results/1956-nascar-grand-national-series/"
+    ],
+    "first": "2026-11-02",
+    "note": "Seven Grand National races (Jan 20 1952 Tim Flock; Nov 30 1952, Feb 7 1954, Feb 6 1955 and Dec 11 1955 Herb Thomas; Feb 1 1953 Lee Petty; Mar 4 1956 Billy Myers) per Wikipedia's count and Jayski season pages; only the 1952 and 1956 races are confirmed on Racing-Reference. Wikipedia's 'to December 1956' looks like a typo for Dec 1955 and is not used. Closure reason (declining attendance and revenue, county demolition in 1984) is a single local-TV source (WFLX); no source found for current use of the site. Opening 1949 and paving 1955 are Wikipedia only, so not stated."
+  },
+  {
+    "slug": "cleveland-county-fairgrounds",
+    "name": "Cleveland County Fairgrounds",
+    "place": "Shelby, North Carolina",
+    "state": "NC",
+    "era": "Five Cup races, 1956–1957 and 1965",
+    "body": "Cleveland County Fairgrounds in Shelby, North Carolina, was a half-mile dirt oval that hosted five NASCAR Grand National races. Speedy Thompson won the first in July 1956, Buck Baker won two, Fireball Roberts won in May 1957, and Ned Jarrett won the last in May 1965. A quarter-mile dirt track was later built on the same spot.",
+    "sources": [
+      "https://www.racing-reference.info/race-results/1956-34/W",
+      "https://www.racing-reference.info/race-results/1956-53/W/",
+      "https://www.racing-reference.info/race-results/1957-15/W",
+      "https://www.racing-reference.info/race-results/1957-47/W",
+      "https://www.racing-reference.info/race-results/1965-20/W",
+      "https://en.wikipedia.org/wiki/List_of_NASCAR_tracks"
+    ],
+    "first": "2026-10-29",
+    "note": "Five Grand National races from Racing-Reference race pages (Jul 27 1956 Speedy Thompson, Oct 23 1956 Buck Baker, May 4 1957 Fireball Roberts, Sep 21 1957 Buck Baker, May 27 1965 Ned Jarrett). Wikipedia's List of NASCAR tracks gives the years and says a quarter-mile dirt track was later built on the same spot. The Racing-Reference track summary page could not be fetched, so the count rests on the five race pages. No source found states when the track opened or closed or why racing ended, so no closure reason is given."
+  },
+  {
     "slug": "hamburg-speedway",
     "name": "Hamburg Speedway",
     "place": "Hamburg, New York",
