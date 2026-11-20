@@ -1,5 +1,52 @@
 [
   {
+    "slug": "bay-meadows",
+    "name": "Bay Meadows",
+    "place": "San Mateo, California",
+    "state": "CA",
+    "era": "Grand National races, 1954–1956",
+    "body": "Bay Meadows in San Mateo, California, opened as a thoroughbred track in 1934, and from 1954 through 1956 NASCAR's Grand National cars ran its one-mile dirt oval. Eddie Pagan won there in August 1956, the first Cup win of his career. The horses ran their last race in 2008 and redevelopment started within weeks. West Coast stock car history runs deeper than most fans think.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/Bay_Meadows_Racetrack",
+      "https://en.wikipedia.org/wiki/1956_NASCAR_Grand_National_Series",
+      "https://en.wikipedia.org/wiki/Eddie_Pagan",
+      "https://www.motorsportmagazine.com/database/races/1956-san-mateo-nascar",
+      "https://www.motorsportmagazine.com/database/races/1955-san-mateo-nascar/"
+    ],
+    "first": "2026-11-19",
+    "note": "NASCAR use in 1954, 1955 and 1956 comes from the Bay Meadows article; the 1955 and 1956 race dates and the one-mile dirt oval come from Motor Sport's database; Pagan's 1956 win comes from Wikipedia's season and driver pages. Jayski and Racing-Reference pages would not load, so the exact race count is not stated."
+  },
+  {
+    "slug": "tar-heel-speedway",
+    "name": "Tar Heel Speedway",
+    "place": "Randleman, North Carolina",
+    "state": "NC",
+    "era": "Three Grand National races, 1962–1963",
+    "body": "Tar Heel Speedway was a quarter-mile in Randleman, North Carolina, and it hosted three NASCAR Grand National races. The first ran on Thanksgiving Day 1962. Petty Enterprises won all three: Jim Paschal twice, then Richard Petty in October 1963. The track has been gone for decades. The Petty sweep is still in the books.",
+    "sources": [
+      "https://www.racing-reference.info/race/1963-03/W",
+      "https://www.racing-reference.info/race-results/1963-22/W",
+      "https://www.racing-reference.info/race/1963-51/W",
+      "https://en.wikipedia.org/wiki/1963_Turkey_Day_200"
+    ],
+    "first": "2026-11-16",
+    "note": "Race dates, winners and Petty Enterprises ownership come from Racing-Reference, with the Thanksgiving 1962 race also on Wikipedia. Sources disagree on the surface (paved per Racing-Reference, dirt per Wikipedia's track list) and on the closing year (1967 vs 1975), so neither is stated."
+  },
+  {
+    "slug": "new-asheville-speedway",
+    "name": "New Asheville Speedway",
+    "place": "Asheville, North Carolina",
+    "state": "NC",
+    "era": "Eight Grand National races, 1962–1971",
+    "body": "New Asheville Speedway hosted eight NASCAR Grand National races between 1962 and 1971, and the winners read like a Hall of Fame roll call: Ned Jarrett and Richard Petty twice each, plus Junior Johnson and David Pearson. The last race ran in 1999. Today the land is Carrier Park, and the old oval survives as a bicycle track.",
+    "sources": [
+      "https://en.wikipedia.org/wiki/New_Asheville_Speedway",
+      "https://www.ashevillenc.gov/news/speedway-memorial-dedicated-at-carrier-park/"
+    ],
+    "first": "2026-11-12",
+    "note": "Race count, winners and the 1999 final race come from Wikipedia. The City of Asheville confirms the speedway became Carrier Park after closing in the late 1990s. Not to be confused with Asheville-Weaverville Speedway, a separate track already in the register."
+  },
+  {
     "slug": "shangri-la-speedway",
     "name": "Shangri-La Speedway",
     "place": "Owego, New York",

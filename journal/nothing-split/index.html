@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#1c1f26" />
+  <title>Nothing Split | Throttle &amp; Rust</title>
+
+  <!-- OG / Social -->
+  <meta property="og:title" content="Nothing Split" />
+  <meta property="og:description" content="The first hard freeze came through Sunday night." />
+  <meta property="og:image" content="https://throttleandrust.com/images/nothing-split.jpg" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://throttleandrust.com/journal/nothing-split" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Special+Elite&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f5f0e8;
+      --navy: #1c2b3a;
+      --rust: #b94a2c;
+      --charcoal: #2e2e2e;
+      --light-rule: #ddd8ce;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--charcoal);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 15px;
+      line-height: 1.85;
+    }
+
+    nav {
+      background-color: var(--navy);
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .wordmark {
+      font-family: 'Special Elite', serif;
+      color: var(--cream);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+
+    nav .wordmark span { color: var(--rust); }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--cream);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      transition: opacity 0.2s;
+    }
+
+    nav ul a:hover { opacity: 1; }
+
+    .post-hero {
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+      object-position: center 60%;
+      display: block;
+      filter: saturate(0.88) contrast(1.04);
+    }
+
+    .post-wrap {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    .post-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+    }
+
+    .post-meta .divider {
+      width: 32px;
+      height: 1px;
+      background-color: var(--rust);
+      opacity: 0.5;
+    }
+
+    .post-meta .location {
+      color: var(--charcoal);
+      opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Special Elite', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      color: var(--navy);
+      line-height: 1.15;
+      margin-bottom: 36px;
+      letter-spacing: 0.01em;
+    }
+
+    .post-body p {
+      margin-bottom: 1.6em;
+      font-size: 0.95rem;
+      color: var(--charcoal);
+    }
+
+    .post-body p:last-child { margin-bottom: 0; }
+
+    .post-rule {
+      border: none;
+      border-top: 1px solid var(--light-rule);
+      margin: 56px 0 40px;
+    }
+
+    .post-tag {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      opacity: 0.4;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 48px;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--rust);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .back-link:hover { border-bottom-color: var(--rust); }
+
+    footer {
+      background-color: var(--navy);
+      padding: 32px;
+      text-align: center;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 600px) {
+      nav ul { display: none; }
+      .post-wrap { padding: 40px 20px 72px; }
+    }
+
+    .footer-social { margin-bottom: 12px; }
+    footer a { color: var(--cream); text-decoration: none; border-bottom: 1px solid transparent; }
+    footer a:hover { border-bottom-color: var(--cream); }
+  </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Nothing Split",
+  "description": "The first hard freeze came through Sunday night.",
+  "image": "https://throttleandrust.com/images/nothing-split.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Sarah Whitaker"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Throttle & Rust",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://throttleandrust.com/images/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://throttleandrust.com/journal/nothing-split"
+  },
+  "url": "https://throttleandrust.com/journal/nothing-split",
+  "datePublished": "2026-10-19",
+  "dateModified": "2026-10-19"
+}
+  </script>
+<link rel="stylesheet" href="/assets/social-icons.css" />
+<link rel="stylesheet" href="/assets/footer-legal.css" />
+</head>
+
+<body>
+
+  <nav>
+    <a href="/" class="wordmark">Throttle <span>&</span> Rust</a>
+    <ul>
+      <li><a href="/journal">Journal</a></li>
+      <li><a href="/ghost-tracks">Ghost Tracks</a></li>
+      <li><a href="/videos">Videos</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+
+  <img
+    class="post-hero"
+    src="../../images/nothing-split.jpg"
+    alt="A man coils a garden hose at a wooden spigot post beside a box of green tomatoes, with dead garden vines and a sleeping dog in an autumn field."
+  />
+
+  <div class="post-wrap">
+
+    <div class="post-meta">
+      <span>Sarah</span>
+      <span class="divider"></span>
+      <span class="location">Happy Valley, NC</span>
+    </div>
+
+    <h1>Nothing Split</h1>
+
+    <div class="post-body">
+
+      <p>The forecast called for the first hard freeze by Monday morning, and Caleb has been gone before daylight every day since Wednesday. October is when his phone does not stop. Every client with a sprinkler system wants it blown out before the first cold night, and every one of them wants to be first.</p>
+
+      <p>He explained it to me years ago, standing in a client's side yard up the hill. You hook a compressor to the line and push the water out of every pipe in the ground, one zone at a time, until each head spits air instead of water. Leave a little in a low spot and it freezes, the pipe splits, and nobody finds out until April, when part of the yard turns into a pond.</p>
+
+      <p>So the whole job is making sure nothing happens. Nobody calls in April to say thank you for the pipe that held.</p>
+
+      <p>He got to our place Sunday afternoon with the sun already low. He drained the garden hose and walked it out straight across the grass so the last of the water ran downhill. Then he coiled it over his arm, every loop the same size, the way he coils everything. He shut the valve in the crawlspace and hung the hose on its nail in the garage. The duck stood in the puddle it left and acted like it had been given a present.</p>
+
+      <p>I was in the garden at the same time doing the panicked version. Every tomato left on the vines went in a cardboard box, green or not. There were more than I would have guessed for this late in October. They are lined up on newspaper on the garage shelf now. Some will turn, and the rest will go into a skillet with cornmeal before they get the chance.</p>
+
+      <p>I taught third grade for four years before our kids, and the best days in that classroom were never the ones anybody heard about at dinner. On those days the fire drill went right, and the boy who cried every morning at the bell didn't. Nobody writes home about a day like that. You only notice the other kind.</p>
+
+      <p>Caleb's business runs on that kind of day. People see the stone walls and the new sod. What keeps his clients coming back is the coldest morning in January, when their yard is just a yard.</p>
+
+      <p>There was frost on the porch rail at six this morning and on the windshield of the truck. Caleb was already gone, two more systems before lunch. Crank did not get up for any of it.</p>
+
+      <p>I went out to the garage after breakfast to check the tomatoes. Two of them had started to turn overnight. The hose was on its nail, coiled tight, without a drop under it.</p>
+
+      <p>Nothing split. Around here that counts as news.</p>
+
+      <p>S</p>
+
+    </div>
+
+    <hr class="post-rule" />
+
+    <span class="post-tag">Happy Valley, NC &nbsp;·&nbsp; Build Season</span>
+
+    <br />
+    <a href="/journal" class="back-link">← Back to the journal</a>
+
+  </div>
+
+  <footer>
+    <div class="footer-social"><span class="social-icons"><a class="soc" href="https://www.facebook.com/throttleandrust/" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on Facebook" title="Facebook"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#facebook"/></svg></a><a class="soc" href="https://www.instagram.com/throttleandrust/" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on Instagram" title="Instagram"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#instagram"/></svg></a><a class="soc" href="https://www.tiktok.com/@throttleandrust" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on TikTok" title="TikTok"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#tiktok"/></svg></a><a class="soc" href="https://x.com/throttleandrust" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on X" title="X"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#x"/></svg></a><a class="soc" href="https://www.youtube.com/@Throttle_and_Rust" target="_blank" rel="noopener" aria-label="Throttle &amp; Rust on YouTube" title="YouTube"><svg aria-hidden="true" focusable="false"><use href="/assets/social-icons.svg#youtube"/></svg></a></span></div>
+    &copy; Throttle &amp; Rust &nbsp;·&nbsp; Shoulder Lane, USA
+    <div class="footer-legal"><a href="/about/#how-this-is-made">How this is made</a><span class="sep">·</span><a href="/privacy/">Privacy</a></div>
+  </footer>
+
+</body>
+</html>
